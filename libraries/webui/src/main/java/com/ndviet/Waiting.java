@@ -1,8 +1,7 @@
-package com.ndviet.automation.libraries.webui;
+package com.ndviet;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -18,21 +17,17 @@ public class Waiting {
         ELEMENT_TO_BE_CLICKABLE {
             @Override
             public WebElement waitForElement(WebDriver driver, boolean isWait, Object obj) {
-                WebElement element = null;
-                if(obj instanceof WebElement) {
-                    element = (WebElement) obj;
-                } else {
-                    List<WebElement> list_element = (List<WebElement>) obj;
-                    element = list_element.get(0);
-                }
+                WebElement element = getWebElement(obj);
                 getWaitDriver(driver, isWait).until(ExpectedConditions.elementToBeClickable(element));
                 return element;
             }
         },
-        ELEMENT_TO_BE_PRESENT {
+        VISIBILITY_OF {
             @Override
             public WebElement waitForElement(WebDriver driver, boolean isWait, Object obj) {
-                return null;
+                WebElement element = getWebElement(obj);
+                getWaitDriver(driver, isWait).until(ExpectedConditions.visibilityOf(element));
+                return element;
             }
         };
 
@@ -44,6 +39,17 @@ public class Waiting {
                 wait = new WebDriverWait(driver, Duration.ZERO);
             }
             return wait;
+        }
+
+        public WebElement getWebElement(Object obj) {
+            WebElement element = null;
+            if(obj instanceof WebElement) {
+                element = (WebElement) obj;
+            } else {
+                List<WebElement> list_element = (List<WebElement>) obj;
+                element = list_element.get(0);
+            }
+            return element;
         }
     }
 

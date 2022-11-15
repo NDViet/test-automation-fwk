@@ -1,15 +1,10 @@
-package com.ndviet.automation.libraries.webui;
+package com.ndviet;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.chrome.ChromeOptions;
-import org.openqa.selenium.remote.CapabilityType;
-import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
-
-import java.net.URL;
 
 public class BrowserManagement {
     public static WebDriver m_driver = null;

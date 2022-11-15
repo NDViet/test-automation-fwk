@@ -1,0 +1,7 @@
+homePage:
+  searchTextBox: //*[@aria-label="Tìm kiếm"]
+  searchButton: //*[@aria-label="Tìm trên Google"]
+  level1:
+    level2:
+      level3:
+        value: "This is value"
