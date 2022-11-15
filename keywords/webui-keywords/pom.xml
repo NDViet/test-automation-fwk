@@ -14,6 +14,7 @@
         <dependency>
             <groupId>com.ndviet</groupId>
             <artifactId>webui</artifactId>
+            <classifier>shaded</classifier>
             <version>1.0.0-SNAPSHOT</version>
         </dependency>
     </dependencies>
@@ -51,6 +52,7 @@
                                 <artifactItem>
                                     <groupId>com.ndviet</groupId>
                                     <artifactId>webui</artifactId>
+                                    <classifier>shaded</classifier>
                                     <version>1.0.0-SNAPSHOT</version>
                                     <type>jar</type>
                                     <overWrite>false</overWrite>

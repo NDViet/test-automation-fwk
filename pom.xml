@@ -11,8 +11,6 @@
     <modules>
         <module>libraries</module>
         <module>keywords</module>
-        <module>tests</module>
-        <module>libraries/utilities</module>
     </modules>
 
     <properties>
