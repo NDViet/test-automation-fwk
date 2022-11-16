@@ -1,0 +1,1 @@
+[![Java CI with Maven](https://github.com/vietnd96/test-automation-fwk/actions/workflows/maven.yml/badge.svg?branch=master)](https://github.com/vietnd96/test-automation-fwk/actions/workflows/maven.yml)
