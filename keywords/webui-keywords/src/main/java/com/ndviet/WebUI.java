@@ -13,7 +13,62 @@ public class WebUI extends AnnotationLibrary {
     }
 
     @RobotKeyword
-    public void openBrowser() throws Exception {
-        BrowserManagement.getInstance().goToUrl("https://google.com");
+    public void openBrowser(String url) throws Exception {
+        BrowserManagement.getInstance().goToUrl(url);
+    }
+
+    @RobotKeyword
+    public void closeBrowser() {
+        BrowserManagement.getInstance().getDriver().quit();
+    }
+
+    @RobotKeyword
+    public void click() {
+
+    }
+
+    @RobotKeyword
+    public void setText() {
+
+    }
+
+    @RobotKeyword
+    public void verifyElementPresent() {
+
+    }
+
+    @RobotKeyword
+    public void verifyElementNotPresent() {
+
+    }
+
+    @RobotKeyword
+    public void verifyElementHasAttribute() {
+
+    }
+
+    @RobotKeyword
+    public void verifyElementNotHasAttribute() {
+
+    }
+
+    @RobotKeyword
+    public void verifyElementAttributeValue() {
+
+    }
+
+    @RobotKeyword
+    public void verifyElementText() {
+
+    }
+
+    @RobotKeyword
+    public void verifyElementVisible() {
+
+    }
+
+    @RobotKeyword
+    public void verifyElementNotVisible() {
+
     }
 }
