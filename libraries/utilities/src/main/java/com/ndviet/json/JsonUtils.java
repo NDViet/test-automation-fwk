@@ -1,4 +1,4 @@
-package com.ndviet;
+package com.ndviet.json;
 
 public class JsonUtils {
 }
