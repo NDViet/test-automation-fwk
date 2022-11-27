@@ -9,11 +9,11 @@ import java.time.Duration;
 import java.util.List;
 
 public class Waiting {
-    protected interface Strategy {
+    private interface WaitCondition {
         WebElement waitForElement(WebDriver driver, boolean isWait, Object obj);
     }
 
-    protected enum WaitEnum implements Strategy {
+    protected enum Condition implements WaitCondition {
         ELEMENT_TO_BE_CLICKABLE {
             @Override
             public WebElement waitForElement(WebDriver driver, boolean isWait, Object obj) {
