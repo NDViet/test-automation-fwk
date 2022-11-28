@@ -1,9 +1,12 @@
-package com.ndviet;
+package com.ndviet.yaml;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
-import java.util.*;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Arrays;
+import java.util.Iterator;
 
 import org.yaml.snakeyaml.Yaml;
 
@@ -15,10 +18,17 @@ public class YamlUtils {
         return map;
     }
 
-    public static String getValueAsString(Map yamlMap, String yamlPath) {
-        List<String> segments = Arrays.asList(yamlPath.split("\\."));
+    private static List<String> getSegments(String yamlPath) {
+        return Arrays.asList(yamlPath.split("\\."));
+    }
+
+    public static String getValueAsString(LinkedHashMap yamlMap, String yamlPath) {
+        List<String> segments = getSegments(yamlPath);
         Object value = getValueAsObject(yamlMap, segments.listIterator());
-        return value.toString();
+        if(value != null) {
+            return value.toString();
+        }
+        return null;
     }
 
     public static Object getValueAsObject(Object obj, Iterator<String> segments) {

@@ -3,24 +3,19 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <artifactId>test-automation-fwk</artifactId>
+        <artifactId>keywords</artifactId>
         <groupId>com.ndviet</groupId>
         <version>${revision}</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>libraries</artifactId>
-    <packaging>pom</packaging>
-    <modules>
-        <module>webui</module>
-        <module>utilities</module>
-    </modules>
+    <artifactId>configuration-keywords</artifactId>
 
     <dependencies>
         <dependency>
-            <groupId>log4j</groupId>
-            <artifactId>log4j</artifactId>
-            <version>${log4j.version}</version>
+            <groupId>com.ndviet</groupId>
+            <artifactId>utilities</artifactId>
+            <version>${revision}</version>
         </dependency>
     </dependencies>
 
