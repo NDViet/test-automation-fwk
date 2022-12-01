@@ -6,11 +6,11 @@
 
     <groupId>com.ndviet</groupId>
     <artifactId>test-automation-fwk</artifactId>
+    <name>Test Automation Framework</name>
     <packaging>pom</packaging>
     <version>${revision}</version>
     <modules>
         <module>libraries</module>
-        <module>keywords</module>
     </modules>
 
     <properties>

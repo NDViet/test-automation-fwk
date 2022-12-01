@@ -10,10 +10,11 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>libraries</artifactId>
+    <name>Test Automation Libraries</name>
     <packaging>pom</packaging>
     <modules>
-        <module>webui</module>
         <module>utilities</module>
+        <module>webui</module>
     </modules>
 
     <dependencies>

@@ -9,7 +9,8 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>webui</artifactId>
+    <artifactId>library-webui</artifactId>
+    <name>Test Automation Libraries - Web</name>
 
     <properties>
         <maven.compiler.source>11</maven.compiler.source>
