@@ -1,7 +1,7 @@
 package com.ndviet.configuration;
 
 import com.ndviet.json.JsonUtils;
-import com.ndviet.yaml.YamlUtils;
+import com.ndviet.map.MapUtils;
 
 public class JsonConfiguration extends Configuration implements ConfigurationInterface {
     public JsonConfiguration() {
@@ -15,6 +15,6 @@ public class JsonConfiguration extends Configuration implements ConfigurationInt
 
     @Override
     public String getValue(String key) {
-        return YamlUtils.getValueAsString(this.m_data, key);
+        return MapUtils.getValueAsString(this.m_data, key);
     }
 }

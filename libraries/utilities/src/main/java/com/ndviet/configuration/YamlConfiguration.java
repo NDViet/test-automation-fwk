@@ -1,5 +1,6 @@
 package com.ndviet.configuration;
 
+import com.ndviet.map.MapUtils;
 import com.ndviet.yaml.YamlUtils;
 
 public class YamlConfiguration extends Configuration implements ConfigurationInterface {
@@ -14,6 +15,6 @@ public class YamlConfiguration extends Configuration implements ConfigurationInt
 
     @Override
     public String getValue(String key) {
-        return YamlUtils.getValueAsString(this.m_data, key);
+        return MapUtils.getValueAsString(this.m_data, key);
     }
 }

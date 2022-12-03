@@ -3,33 +3,28 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <artifactId>test-automation-fwk</artifactId>
+        <artifactId>libraries</artifactId>
         <groupId>com.ndviet</groupId>
         <version>${revision}</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>libraries</artifactId>
-    <name>Test Automation Libraries</name>
-    <packaging>pom</packaging>
-    <modules>
-        <module>utilities</module>
-        <module>webui</module>
-        <module>api</module>
-    </modules>
-
-    <dependencies>
-        <dependency>
-            <groupId>log4j</groupId>
-            <artifactId>log4j</artifactId>
-            <version>${log4j.version}</version>
-        </dependency>
-    </dependencies>
+    <artifactId>library-api</artifactId>
+    <name>Test Automation Libraries - API</name>
 
     <properties>
+        <rest-assured.version>5.3.0</rest-assured.version>
         <maven.compiler.source>11</maven.compiler.source>
         <maven.compiler.target>11</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>io.rest-assured</groupId>
+            <artifactId>rest-assured</artifactId>
+            <version>${rest-assured.version}</version>
+        </dependency>
+    </dependencies>
 
 </project>
