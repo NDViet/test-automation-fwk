@@ -1,0 +1,3 @@
+postgresql-db:
+  image:
+    registry: ${env.getValue("homePage.level1.level2.level3.value")}

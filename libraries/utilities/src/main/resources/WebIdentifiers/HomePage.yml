@@ -1,0 +1,12 @@
+HomePage:
+  Main Menu: xpath1
+  Banner Welcome: xpath 2
+  Brand Logo: xpath3
+  Search Textbox: //*[@aria-label="Tìm kiếm"]
+  Search Button: //*[@aria-label="Tìm trên Google"]
+
+
+Google:
+  Search:
+    Textbox: //*[@aria-label="Tìm kiếm"]
+    Button: //*[@aria-label="Tìm trên Google"]

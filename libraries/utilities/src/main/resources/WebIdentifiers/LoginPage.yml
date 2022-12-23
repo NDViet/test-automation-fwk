@@ -1,0 +1,6 @@
+Login Page:
+  Username Textbox: xpath1
+  Password Textbox: xpath2
+  Login Button: xpath3
+  Forgot Password Hyperlink: xpath4
+  Signup Hyperlink: xpath5
