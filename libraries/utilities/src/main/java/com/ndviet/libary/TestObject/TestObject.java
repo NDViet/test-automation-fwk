@@ -7,4 +7,9 @@ public abstract class TestObject {
     public String getValue() {
         return this.value;
     }
+
+    @Override
+    public String toString() {
+        return this.value;
+    }
 }

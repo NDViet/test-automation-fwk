@@ -4,7 +4,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FileUtils {
+public class FileHelpers {
     public static String getPath(String path) {
         if (path != null) {
             File file = new File(path);
@@ -12,6 +12,18 @@ public class FileUtils {
         } else {
             return path;
         }
+    }
+
+    public static boolean isDirectory(String path) {
+        return isDirectory(path, true);
+    }
+
+    public static boolean isDirectory(String path, boolean createIfNotExist) {
+        File file = new File(path);
+        if (!file.exists() && createIfNotExist) {
+            return file.mkdirs();
+        }
+        return file.isDirectory();
     }
 
     public static List<String> recursiveGetListFiles(String directory, List<String> allFiles) {

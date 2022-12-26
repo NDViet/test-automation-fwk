@@ -15,7 +15,8 @@ public class Browser {
             @Override
             public WebDriver openBrowser(Map prefs) {
                 ChromeOptions options = new ChromeOptions();
-                options.addArguments("--proxy-server=http://10.10.10.10:8080", "--incognito", "high-dpi-support=0.8", "force-device-scale-factor=0.8");
+                //options.addArguments("--proxy-server=http://10.10.10.10:8080", "--incognito", "high-dpi-support=0.8", "force-device-scale-factor=0.8");
+                options.addArguments("--incognito", "high-dpi-support=0.8", "force-device-scale-factor=0.8");
                 try {
                     WebDriver driver = new RemoteWebDriver(new URL("http://localhost:4444"), options);
                     return driver;

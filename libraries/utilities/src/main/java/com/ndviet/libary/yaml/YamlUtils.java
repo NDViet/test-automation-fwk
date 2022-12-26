@@ -1,6 +1,6 @@
 package com.ndviet.libary.yaml;
 
-import com.ndviet.libary.file.FileUtils;
+import com.ndviet.libary.file.FileHelpers;
 import org.yaml.snakeyaml.Yaml;
 
 import java.io.FileInputStream;
@@ -41,7 +41,7 @@ public class YamlUtils {
     public static LinkedHashMap readAllYamlInDirectory(String directory) throws Exception {
         LinkedHashMap<String, String> multiYaml = new LinkedHashMap<>();
         List<String> files = new ArrayList<>();
-        files = FileUtils.recursiveGetListFiles(directory, files, "y.*ml");
+        files = FileHelpers.recursiveGetListFiles(directory, files, "y.*ml");
         for (String filePath : files) {
             multiYaml.putAll(readAllYaml(filePath));
         }

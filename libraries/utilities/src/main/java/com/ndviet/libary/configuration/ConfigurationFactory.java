@@ -20,11 +20,14 @@ public class ConfigurationFactory implements ConfigurationInterface {
         m_configurations = new ConfigurationOrdering(propertiesConfiguration.getValue(PROP_CONFIGURATION_BASE), configurationOrdering);
     }
 
-    public static ConfigurationFactory getInstance() throws Exception {
+    public static ConfigurationFactory getInstance() {
         if (m_instance == null)
-            return new ConfigurationFactory();
-        else
-            return m_instance;
+            try {
+                m_instance = new ConfigurationFactory();
+            } catch (Exception ex) {
+
+            }
+        return m_instance;
     }
 
     private List<String> extractOrderingConfigurations(Configuration configuration) {

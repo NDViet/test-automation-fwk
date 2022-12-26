@@ -1,4 +1,11 @@
+Menu:
+  Statistics: //*[@class="navbar"]//a[normalize-space()="Statistics"]
+
 Statistics:
+  Tab:
+    General: //button[normalize-space()="General"]
+    Repayment: //button[normalize-space()="Repayment"]
+    Disbursement: //button[normalize-space()="Disbursement"]
   Details:
     Total funded:
     No. of financing:
@@ -6,8 +13,24 @@ Statistics:
     Financing fulfillment rate:
 
 Charts:
-  Line Chart: //*[local-name()='svg']//*[name()='g' and contains(@class,"highcharts-markers") and contains(@class,"highcharts-line-series")]//*[name()='path']
-  Pie Chart: //*[local-name()='svg']//*[name()='g' and contains(@class,"highcharts-tracker") and contains(@class,"highcharts-pie-series")]//*[name()='path']
-  Bar Chart: //*[local-name()='svg']//*[name()='g' and contains(@class,"highcharts-tracker") and contains(@class,"highcharts-bar-series")]//*[name()='rect']
-  Column Chart: //*[local-name()='svg']//*[name()='g' and contains(@class,"highcharts-tracker") and contains(@class,"highcharts-column-series")]//*[name()='rect']
-  Label Details: //*[local-name()='svg' and @class="highcharts-root"]//*[name()='g' and @visibility="visible"]//*[name()="text"]//*[name()="tspan" and contains(@style,"font")]
+  Line Chart Paths: //*[local-name()='svg']//*[name()='g' and contains(@class,"highcharts-markers") and contains(@class,"highcharts-line-series")]//*[name()='path' and contains(@class,"highcharts-point")]
+  Line Chart Path: (//*[local-name()='svg']//*[name()='g' and contains(@class,"highcharts-markers") and contains(@class,"highcharts-line-series")]//*[name()='path' and contains(@class,"highcharts-point")])[${index}]
+
+  Pie Chart Path: (//*[local-name()='svg']//*[name()='g' and contains(@class,"highcharts-tracker") and contains(@class,"highcharts-pie-series")]//*[name()='path' and contains(@class,"highcharts-point")])[${index}]
+  Pie Chart Paths: //*[local-name()='svg']//*[name()='g' and contains(@class,"highcharts-tracker") and contains(@class,"highcharts-pie-series")]//*[name()='path' and contains(@class,"highcharts-point")]
+
+  Bar Chart Paths: //*[local-name()='svg']//*[name()='g' and contains(@class,"highcharts-tracker") and contains(@class,"highcharts-bar-series")]//*[name()='rect' and contains(@class,"highcharts-point")]
+  Bar Chart Path: (//*[local-name()='svg']//*[name()='g' and contains(@class,"highcharts-tracker") and contains(@class,"highcharts-bar-series")]//*[name()='rect' and contains(@class,"highcharts-point")])[${index}]
+
+  Column Chart Paths: //*[local-name()='svg']//*[name()='g' and contains(@class,"highcharts-tracker") and contains(@class,"highcharts-column-series")]//*[name()='rect']
+  Column Chart Path: (//*[local-name()='svg']//*[name()='g' and contains(@class,"highcharts-tracker") and contains(@class,"highcharts-column-series")]//*[name()='rect'])[${index}]
+
+  Label Text: //*[local-name()='svg' and @class="highcharts-root"]//*[name()='g' and @visibility="visible"]//*[name()="text"]
+  Label Details: //*[local-name()='svg' and @class="highcharts-root"]//*[name()='g' and @visibility="visible"]//*[name()="text"]//*[name()="tspan" and @style]
+  Label Detail: (//*[local-name()='svg' and @class="highcharts-root"]//*[name()='g' and @visibility="visible"]//*[name()="text"]//*[name()="tspan" and @style])[${index}]
+  #Label Details: //*[local-name()='svg' and @class="highcharts-root"]//*[name()='g' and @visibility="visible"]//*[name()="text"]//*[name()="tspan" and contains(@style,"font")]
+
+Google:
+  Search:
+    Textbox: //*[@aria-label="${label}"]
+    Button: //*[@aria-label="${label}"]

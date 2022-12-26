@@ -1,6 +1,6 @@
 package com.ndviet.libary.template;
 
-import com.ndviet.libary.file.FileUtils;
+import com.ndviet.libary.file.FileHelpers;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
@@ -53,7 +53,7 @@ public class TemplateUtils {
     }
 
     public static String processFileTemplate(String sourcePath, Object variables, String targetPath) throws IOException, TemplateException {
-        sourcePath = FileUtils.getPath(sourcePath);
+        sourcePath = FileHelpers.getPath(sourcePath);
         String templateName = sourcePath.substring(sourcePath.lastIndexOf(File.separator) + 1).trim();
         String templateDirectory = sourcePath.substring(0, sourcePath.lastIndexOf(File.separator)).trim();
         Configuration templateConfiguration = getDefaultConfiguration();
