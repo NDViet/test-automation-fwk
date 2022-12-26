@@ -14,6 +14,11 @@ public class FileHelpers {
         }
     }
 
+    public static String getFileName(String path) {
+        String filePath = getPath(path);
+        return filePath.substring(filePath.lastIndexOf(File.separator) + 1);
+    }
+
     public static boolean isDirectory(String path) {
         return isDirectory(path, true);
     }

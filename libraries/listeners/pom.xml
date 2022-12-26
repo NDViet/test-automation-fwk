@@ -3,34 +3,28 @@
          xmlns="http://maven.apache.org/POM/4.0.0"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <artifactId>test-automation-fwk</artifactId>
+        <artifactId>libraries</artifactId>
         <groupId>com.ndviet</groupId>
         <version>${revision}</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>libraries</artifactId>
-    <name>Test Automation Libraries</name>
-    <packaging>pom</packaging>
-    <modules>
-        <module>utilities</module>
-        <module>webui</module>
-        <module>api</module>
-        <module>listeners</module>
-    </modules>
-
-    <dependencies>
-        <dependency>
-            <groupId>log4j</groupId>
-            <artifactId>log4j</artifactId>
-            <version>${log4j.version}</version>
-        </dependency>
-    </dependencies>
+    <artifactId>library-listeners</artifactId>
+    <name>Test Automation Libraries - Listeners</name>
 
     <properties>
         <maven.compiler.source>11</maven.compiler.source>
         <maven.compiler.target>11</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.ndviet</groupId>
+            <artifactId>library-webui</artifactId>
+            <classifier>shaded</classifier>
+            <version>${revision}</version>
+        </dependency>
+    </dependencies>
 
 </project>
