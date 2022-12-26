@@ -10,7 +10,7 @@ import static com.ndviet.libary.configuration.Constants.PROP_CONFIGURATION_ORDER
 
 public class ConfigurationFactory implements ConfigurationInterface {
 
-    static ConfigurationFactory m_instance = null;
+    private static ConfigurationFactory m_instance = null;
     private static ConfigurationOrdering m_configurations;
 
     public ConfigurationFactory() throws Exception {

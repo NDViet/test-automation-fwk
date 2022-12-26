@@ -1,6 +1,5 @@
 package com.ndviet.library;
 
-import com.ndviet.libary.TestObject.WebElementIdentifier;
 import org.openqa.selenium.WebElement;
 
 import java.util.List;
@@ -14,7 +13,6 @@ public class Main {
     public static void main(String[] args) throws Exception {
         System.setProperty(OBJECT_REPOSITORY_DIRECTORY, "D:/Code/test-automation-fwk/libraries/utilities/src/main/resources");
         System.setProperty(WEB_IDENTIFIERS_DIRECTORY, "WebIdentifiers");
-        WebElementIdentifier.setElementFiles();
         //General_LineChart();
         //General_BarChart();
         //Repayment_ColumnChart();

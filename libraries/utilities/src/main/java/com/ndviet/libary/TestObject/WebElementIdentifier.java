@@ -11,19 +11,31 @@ import static com.ndviet.libary.configuration.Constants.OBJECT_REPOSITORY_DIRECT
 import static com.ndviet.libary.configuration.Constants.WEB_IDENTIFIERS_DIRECTORY;
 
 public class WebElementIdentifier {
-    public static LinkedHashMap m_data = new LinkedHashMap<>();
+    private static LinkedHashMap m_data = new LinkedHashMap<>();
+    private static WebElementIdentifier m_instance;
 
-    public static void setElementFiles() throws Exception {
+    public WebElementIdentifier() throws Exception {
+        setElementFiles();
+    }
+
+    public static WebElementIdentifier getInstance() throws Exception {
+        if (m_instance == null) {
+            m_instance = new WebElementIdentifier();
+        }
+        return m_instance;
+    }
+
+    public void setElementFiles() throws Exception {
         String directory = ConfigurationFactory.getInstance().getValue(OBJECT_REPOSITORY_DIRECTORY)
                 + File.separator + ConfigurationFactory.getInstance().getValue(WEB_IDENTIFIERS_DIRECTORY);
         setElementFiles(directory);
     }
 
-    public static void setElementFiles(String directory) throws Exception {
+    public void setElementFiles(String directory) throws Exception {
         m_data.putAll(YamlUtils.readAllYamlInDirectory(directory));
     }
 
-    public static String getIdentifier(String key) {
+    public String getIdentifier(String key) {
         return MapUtils.getValueAsString(m_data, key);
     }
 }
