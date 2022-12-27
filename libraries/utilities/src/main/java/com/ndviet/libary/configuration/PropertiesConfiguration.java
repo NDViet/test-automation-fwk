@@ -3,6 +3,7 @@ package com.ndviet.libary.configuration;
 import java.io.FileInputStream;
 import java.io.InputStream;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Properties;
 
 public class PropertiesConfiguration extends Configuration implements ConfigurationInterface {
@@ -30,5 +31,10 @@ public class PropertiesConfiguration extends Configuration implements Configurat
     @Override
     public String getValue(String key) {
         return (String) this.m_data.get(key);
+    }
+
+    @Override
+    public List<String> getListValues(String key) {
+        return null;
     }
 }

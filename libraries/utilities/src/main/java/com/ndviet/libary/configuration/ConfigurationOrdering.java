@@ -52,4 +52,15 @@ public class ConfigurationOrdering implements ConfigurationInterface {
         } while (value == null && iterator.hasNext());
         return value;
     }
+
+    @Override
+    public List<String> getListValues(String key) {
+        List<String> values = null;
+        Iterator<Configuration> iterator = m_configurations.iterator();
+        do {
+            Configuration configuration = iterator.next();
+            values = configuration.getListValues(key);
+        } while (values == null && iterator.hasNext());
+        return values;
+    }
 }

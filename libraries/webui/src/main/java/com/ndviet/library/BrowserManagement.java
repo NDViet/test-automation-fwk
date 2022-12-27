@@ -1,18 +1,21 @@
 package com.ndviet.library;
 
+import com.ndviet.libary.configuration.ConfigurationFactory;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
-import java.util.Collections;
+import java.util.ArrayList;
+import java.util.List;
+
+import static com.ndviet.libary.configuration.Constants.SELENIUM_BROWSER_TYPE;
 
 public class BrowserManagement {
-    public static WebDriver m_driver = null;
-    public static BrowserManagement m_instance = null;
-    public static WebDriverWait m_wait = null;
+    private static WebDriver m_driver = null;
+    private static BrowserManagement m_instance = null;
+    private static String m_browser = null;
 
     BrowserManagement() {
-        m_driver = Browser.Type.CHROME.openBrowser(Collections.EMPTY_MAP);
-        m_driver.manage().window().maximize();
+        m_browser = ConfigurationFactory.getInstance().getValue(SELENIUM_BROWSER_TYPE);
     }
 
     public static BrowserManagement getInstance() {
@@ -26,8 +29,45 @@ public class BrowserManagement {
         return m_driver;
     }
 
+    public void openBrowser() {
+        if ("FIREFOX".equalsIgnoreCase(m_browser)) {
+            m_driver = Browser.Type.FIREFOX.openBrowser();
+        } else {
+            m_driver = Browser.Type.CHROME.openBrowser();
+        }
+        m_driver.manage().window().maximize();
+    }
+
+    public void openBrowser(String url) {
+        openBrowser();
+        goToUrl(url);
+    }
+
+    public void openBrowser(String browser, String url) {
+        m_browser = browser;
+        openBrowser(url);
+    }
+
+    public void openNewTab() {
+        ((JavascriptExecutor) m_driver).executeScript("window.open();");
+    }
+
     public void goToUrl(String url) {
         m_driver.get(url);
+    }
+
+    public void closeWindowIndex(int index) {
+        List<String> windowHandles = new ArrayList<>(m_driver.getWindowHandles());
+        if (windowHandles.size() == 1) {
+            closeBrowser();
+        } else {
+            m_driver.switchTo().window(windowHandles.get(index)).close();
+        }
+    }
+
+    public void closeBrowser() {
+        m_driver.quit();
+        m_instance = null;
     }
 
 }

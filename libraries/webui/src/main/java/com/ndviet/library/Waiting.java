@@ -1,6 +1,7 @@
 package com.ndviet.library;
 
 import com.ndviet.libary.TestObject.TestObject;
+import com.ndviet.libary.configuration.ConfigurationFactory;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -11,9 +12,11 @@ import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.ndviet.libary.configuration.Constants.SELENIUM_DEFAULT_TIMEOUT;
+
 public class Waiting {
-    //Integer.parseInt(ConfigurationFactory.getInstance().getValue("selenium.default.timeOut"));
-    public static int m_defaultTimeOut = 10;
+    private static final String configDefaultTimeOut = ConfigurationFactory.getInstance().getValue(SELENIUM_DEFAULT_TIMEOUT);
+    public static int m_defaultTimeOut = (configDefaultTimeOut == null) ? 10 : Integer.parseInt(configDefaultTimeOut);
 
     public static WebDriverWait getWaitDriver(WebDriver driver, boolean isWait) {
         return getWaitDriver(driver, isWait, m_defaultTimeOut);

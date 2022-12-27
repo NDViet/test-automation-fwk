@@ -7,23 +7,25 @@ import java.util.Map;
 
 import static com.ndviet.libary.TestObject.ObjectRepository.findTestObject;
 import static com.ndviet.libary.configuration.Constants.OBJECT_REPOSITORY_DIRECTORY;
+import static com.ndviet.libary.configuration.Constants.PROP_CONFIGURATION_BASE;
 import static com.ndviet.libary.configuration.Constants.WEB_IDENTIFIERS_DIRECTORY;
 
 public class Main {
     public static void main(String[] args) throws Exception {
+        System.setProperty(PROP_CONFIGURATION_BASE, "D:/Code/test-automation-fwk/libraries/utilities/src/main/resources/sample.yaml");
         System.setProperty(OBJECT_REPOSITORY_DIRECTORY, "D:/Code/test-automation-fwk/libraries/utilities/src/main/resources");
         System.setProperty(WEB_IDENTIFIERS_DIRECTORY, "WebIdentifiers");
-        //General_LineChart();
+        General_LineChart();
         //General_BarChart();
         //Repayment_ColumnChart();
         //Repayment_BarChart();
         //Disbursement_PieChart();
         //Disbursement_BarChart();
-        //BrowserManagement.getInstance().getDriver().quit();
+        //BrowserManagement.getInstance().closeBrowser();
     }
 
     public static void Repayment_BarChart() throws Exception {
-        BrowserManagement.getInstance().goToUrl("https://fundingsocieties.com");
+        BrowserManagement.getInstance().openBrowser("https://fundingsocieties.com");
         WebUI.click(findTestObject("Menu.Statistics"));
         WebUI.click(findTestObject("Statistics.Tab.Repayment"));
         WebUI.verifyElementPresent(findTestObject("Charts.Bar Chart Paths"));
@@ -40,7 +42,7 @@ public class Main {
     }
 
     public static void Repayment_ColumnChart() throws Exception {
-        BrowserManagement.getInstance().goToUrl("https://fundingsocieties.com");
+        BrowserManagement.getInstance().openBrowser("https://fundingsocieties.com");
         WebUI.click(findTestObject("Menu.Statistics"));
         WebUI.click(findTestObject("Statistics.Tab.Repayment"));
         WebUI.verifyElementPresent(findTestObject("Charts.Column Chart Paths"));
@@ -57,7 +59,7 @@ public class Main {
     }
 
     public static void General_BarChart() throws Exception {
-        BrowserManagement.getInstance().goToUrl("https://fundingsocieties.com");
+        BrowserManagement.getInstance().openBrowser("https://fundingsocieties.com");
         WebUI.click(findTestObject("Menu.Statistics"));
         WebUI.verifyElementPresent(findTestObject("Charts.Bar Chart Paths"));
         List<WebElement> paths = WebUI.findWebElements(findTestObject("Charts.Bar Chart Paths"));
@@ -73,7 +75,7 @@ public class Main {
     }
 
     public static void General_LineChart() throws Exception {
-        BrowserManagement.getInstance().goToUrl("https://fundingsocieties.com");
+        BrowserManagement.getInstance().openBrowser("https://fundingsocieties.com");
         WebUI.click(findTestObject("Menu.Statistics"));
         WebUI.verifyElementPresent(findTestObject("Charts.Line Chart Paths"));
         List<WebElement> paths = WebUI.findWebElements(findTestObject("Charts.Line Chart Paths"));
@@ -90,7 +92,7 @@ public class Main {
     }
 
     public static void Disbursement_PieChart() throws Exception {
-        BrowserManagement.getInstance().goToUrl("https://fundingsocieties.com");
+        BrowserManagement.getInstance().openBrowser("https://fundingsocieties.com");
         WebUI.click(findTestObject("Menu.Statistics"));
         WebUI.click(findTestObject("Statistics.Tab.Disbursement"));
         WebUI.verifyElementPresent(findTestObject("Charts.Pie Chart Paths"));
@@ -107,7 +109,7 @@ public class Main {
     }
 
     public static void Disbursement_BarChart() throws Exception {
-        BrowserManagement.getInstance().goToUrl("https://fundingsocieties.com");
+        BrowserManagement.getInstance().openBrowser("https://fundingsocieties.com");
         WebUI.click(findTestObject("Menu.Statistics"));
         WebUI.click(findTestObject("Statistics.Tab.Disbursement"));
         WebUI.verifyElementPresent(findTestObject("Charts.Bar Chart Paths"));

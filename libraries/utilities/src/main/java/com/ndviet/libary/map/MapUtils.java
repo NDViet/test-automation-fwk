@@ -20,6 +20,11 @@ public class MapUtils {
         return null;
     }
 
+    public static Object getValueAsObject(Object obj, String segmentsPath) {
+        List<String> segments = getSegments(segmentsPath);
+        return getValueAsObject(obj, segments.listIterator());
+    }
+
     public static Object getValueAsObject(Object obj, Iterator<String> segments) {
         if (segments.hasNext()) {
             String segment = segments.next();

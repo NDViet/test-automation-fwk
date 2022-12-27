@@ -50,4 +50,8 @@ public class ConfigurationFactory implements ConfigurationInterface {
         return m_configurations.getValue(key);
     }
 
+    @Override
+    public List<String> getListValues(String key) {
+        return m_configurations.getListValues(key);
+    }
 }
