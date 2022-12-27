@@ -1,6 +1,10 @@
 package com.ndviet.libary.configuration;
 
 public class Constants {
+    public static final String TARGET_DIR = "target";
+    public static final String SCREENSHOT_DIR = "screenshots";
+    public static final String APPLICATION_CONTEXT_PATH = "applicationContextPath";
+    public static final String CURRENT_WORKING_DIR = "user.dir";
     public static final String PROP_CONFIGURATION_BASE = "configuration.base";
     public static final String PROP_CONFIGURATION_ORDERING = "configuration.ordering";
 

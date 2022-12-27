@@ -40,7 +40,8 @@ public class ConfigurationFactory implements ConfigurationInterface {
         listKeys.stream().sorted().collect(Collectors.toList());
         List<String> listFiles = new ArrayList<>();
         for (String key : listKeys) {
-            listFiles.add(configuration.getValue(key));
+            if (configuration.getValue(key) != null && !configuration.getValue(key).isEmpty())
+                listFiles.add(configuration.getValue(key));
         }
         return listFiles;
     }

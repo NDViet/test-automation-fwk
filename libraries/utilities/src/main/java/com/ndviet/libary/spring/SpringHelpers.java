@@ -3,6 +3,8 @@ package com.ndviet.libary.spring;
 import org.springframework.context.support.AbstractApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
+import static com.ndviet.libary.configuration.Constants.APPLICATION_CONTEXT_PATH;
+
 public class SpringHelpers {
     private static volatile SpringHelpers m_instance;
     private final String m_applicationContextPath;
@@ -17,7 +19,7 @@ public class SpringHelpers {
         if (m_instance == null) {
             synchronized (SpringHelpers.class) {
                 if (m_instance == null) {
-                    String fileClassPathLocation = System.getProperty("applicationContextPath");
+                    String fileClassPathLocation = System.getProperty(APPLICATION_CONTEXT_PATH);
                     m_instance = new SpringHelpers(fileClassPathLocation);
                 }
             }

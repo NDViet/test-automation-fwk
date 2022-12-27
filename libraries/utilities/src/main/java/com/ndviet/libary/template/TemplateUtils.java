@@ -13,6 +13,9 @@ import java.io.StringReader;
 import java.io.StringWriter;
 import java.io.Writer;
 
+import static com.ndviet.libary.configuration.Constants.CURRENT_WORKING_DIR;
+import static com.ndviet.libary.configuration.Constants.TARGET_DIR;
+
 public class TemplateUtils {
     private static TemplateUtils m_instance;
     private static String m_templatesDirectory;
@@ -60,11 +63,10 @@ public class TemplateUtils {
         templateConfiguration.setDirectoryForTemplateLoading(new File(templateDirectory));
         if (targetPath == null) {
             File tempFile = File.createTempFile("output", "_" + templateName,
-                    new File(System.getProperty("user.dir") + File.separator + "target"));
+                    new File(System.getProperty(CURRENT_WORKING_DIR) + File.separator + TARGET_DIR));
             targetPath = tempFile.getPath();
         }
         Template template = templateConfiguration.getTemplate(templateName);
-        // File output
         Writer outputFile = null;
         try {
             outputFile = new FileWriter(targetPath);

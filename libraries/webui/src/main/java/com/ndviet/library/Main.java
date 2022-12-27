@@ -6,16 +6,17 @@ import java.util.List;
 import java.util.Map;
 
 import static com.ndviet.libary.TestObject.ObjectRepository.findTestObject;
+import static com.ndviet.libary.configuration.Constants.CURRENT_WORKING_DIR;
 import static com.ndviet.libary.configuration.Constants.OBJECT_REPOSITORY_DIRECTORY;
 import static com.ndviet.libary.configuration.Constants.PROP_CONFIGURATION_BASE;
 import static com.ndviet.libary.configuration.Constants.WEB_IDENTIFIERS_DIRECTORY;
 
 public class Main {
     public static void main(String[] args) throws Exception {
-        System.setProperty(PROP_CONFIGURATION_BASE, "D:/Code/test-automation-fwk/libraries/utilities/src/main/resources/sample.yaml");
-        System.setProperty(OBJECT_REPOSITORY_DIRECTORY, "D:/Code/test-automation-fwk/libraries/utilities/src/main/resources");
+        System.setProperty(PROP_CONFIGURATION_BASE, System.getProperty(CURRENT_WORKING_DIR) + "/libraries/utilities/src/main/resources/sample.yaml");
+        System.setProperty(OBJECT_REPOSITORY_DIRECTORY, System.getProperty(CURRENT_WORKING_DIR) + "/libraries/utilities/src/main/resources");
         System.setProperty(WEB_IDENTIFIERS_DIRECTORY, "WebIdentifiers");
-        General_LineChart();
+        //General_LineChart();
         //General_BarChart();
         //Repayment_ColumnChart();
         //Repayment_BarChart();
@@ -88,6 +89,20 @@ public class Main {
                 String text = WebUI.getText(findTestObject("Charts.Label Detail", Map.of("index", j)));
                 System.out.println(text);
             }
+        }
+    }
+
+    public static void General_LineChart_2() throws Exception {
+        BrowserManagement.getInstance().openBrowser("https://fundingsocieties.com");
+        WebUI.click(findTestObject("Menu.Statistics"));
+        WebUI.click(findTestObject("Statistics.Tab.Repayment"));
+        WebUI.verifyElementPresent(findTestObject("Charts.Column Chart Paths"));
+        List<WebElement> paths = WebUI.findWebElements(findTestObject("Charts.Column Chart Paths"));
+        for (int i = 1; i <= paths.size(); i++) {
+            WebUI.moveToElement(findTestObject("Charts.Column Chart Path", Map.of("index", i)));
+            WebUI.verifyElementPresent(findTestObject("Charts.Label Text"));
+            String text = WebUI.getText(findTestObject("Charts.Label Text"));
+            System.out.println(text);
         }
     }
 
