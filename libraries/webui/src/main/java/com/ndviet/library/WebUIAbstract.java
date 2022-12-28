@@ -62,4 +62,13 @@ public class WebUIAbstract {
         WebElement element = Waiting.Element.PRESENCE_OF_ELEMENT_LOCATED.waitForElement(driver, testObject, true, -1);
         Waiting.Element.VISIBILITY_OF.waitForElement(driver, testObject, true, -1);
     }
+
+    public static void verifyElementText(WebDriver driver, TestObject testObject, String expectText) {
+        WebElement element = Waiting.Element.PRESENCE_OF_ELEMENT_LOCATED.waitForElement(driver, testObject, true, -1);
+        element = Waiting.Element.ELEMENT_TO_BE_CLICKABLE.waitForElement(driver, testObject, true, -1);
+        String actualText = element.getText().trim();
+        if (!actualText.equals(expectText.trim())) {
+            throw new RuntimeException(actualText + " does not match the expect value " + expectText);
+        }
+    }
 }

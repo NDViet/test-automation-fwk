@@ -56,4 +56,9 @@ public class WebUI {
         WebDriver driver = BrowserManagement.getInstance().getDriver();
         WebUIAbstract.verifyElementVisible(driver, testObject);
     }
+
+    public static void verifyElementText(TestObject testObject, String expectText) throws Exception {
+        WebDriver driver = BrowserManagement.getInstance().getDriver();
+        WebUIAbstract.verifyElementText(driver, testObject, expectText);
+    }
 }
