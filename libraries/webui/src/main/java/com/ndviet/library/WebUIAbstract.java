@@ -63,12 +63,21 @@ public class WebUIAbstract {
         Waiting.Element.VISIBILITY_OF.waitForElement(driver, testObject, true, -1);
     }
 
-    public static void verifyElementText(WebDriver driver, TestObject testObject, String expectText) {
+    public static void verifyElementTextEquals(WebDriver driver, TestObject testObject, String expectText) {
         WebElement element = Waiting.Element.PRESENCE_OF_ELEMENT_LOCATED.waitForElement(driver, testObject, true, -1);
-        element = Waiting.Element.ELEMENT_TO_BE_CLICKABLE.waitForElement(driver, testObject, true, -1);
+        element = Waiting.ElementText.TEXT_TO_BE_PRESENT_IN_ELEMENT.waitForElement(driver, testObject, true, -1, expectText);
         String actualText = element.getText().trim();
         if (!actualText.equals(expectText.trim())) {
-            throw new RuntimeException(actualText + " does not match the expect value " + expectText);
+            throw new RuntimeException("Actual value: " + actualText + " does not equal the expect value: " + expectText);
+        }
+    }
+
+    public static void verifyElementTextContains(WebDriver driver, TestObject testObject, String expectText) {
+        WebElement element = Waiting.Element.PRESENCE_OF_ELEMENT_LOCATED.waitForElement(driver, testObject, true, -1);
+        element = Waiting.ElementText.TEXT_TO_BE_PRESENT_IN_ELEMENT.waitForElement(driver, testObject, true, -1, expectText);
+        String actualText = element.getText().trim();
+        if (!actualText.contains(expectText.trim())) {
+            throw new RuntimeException("Actual value: " + actualText + " does not contain the expect value: " + expectText);
         }
     }
 }

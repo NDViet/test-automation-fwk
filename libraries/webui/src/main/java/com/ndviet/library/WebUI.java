@@ -57,8 +57,13 @@ public class WebUI {
         WebUIAbstract.verifyElementVisible(driver, testObject);
     }
 
-    public static void verifyElementText(TestObject testObject, String expectText) throws Exception {
+    public static void verifyElementTextEquals(TestObject testObject, String expectText) throws Exception {
         WebDriver driver = BrowserManagement.getInstance().getDriver();
-        WebUIAbstract.verifyElementText(driver, testObject, expectText);
+        WebUIAbstract.verifyElementTextEquals(driver, testObject, expectText);
+    }
+
+    public static void verifyElementTextContains(TestObject testObject, String expectText) throws Exception {
+        WebDriver driver = BrowserManagement.getInstance().getDriver();
+        WebUIAbstract.verifyElementTextContains(driver, testObject, expectText);
     }
 }

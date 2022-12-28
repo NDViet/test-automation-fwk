@@ -88,6 +88,16 @@ public class Waiting {
         }
     }
 
+    protected enum ElementText implements WaitElementText {
+        TEXT_TO_BE_PRESENT_IN_ELEMENT {
+            @Override
+            public WebElement waitForElement(WebDriver driver, Object object, boolean isWait, int timeOut, String expectText) {
+                getWaitDriver(driver, isWait, timeOut).until(ExpectedConditions.textToBePresentInElement(getWebElement(driver, object), expectText));
+                return getWebElement(driver, object);
+            }
+        }
+    }
+
     protected enum Elements implements WaitElements {
         PRESENCE_OF_ALL_ELEMENTS_LOCATED {
             @Override
@@ -111,5 +121,9 @@ public class Waiting {
 
     private interface WaitElements {
         List<WebElement> waitForElements(WebDriver driver, Object object, boolean isWait, int timeOut);
+    }
+
+    private interface WaitElementText {
+        WebElement waitForElement(WebDriver driver, Object object, boolean isWait, int timeOut, String expectText);
     }
 }
