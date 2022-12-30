@@ -28,7 +28,7 @@ public class TemplateHelpers {
     public TemplateHelpers(String templatesDirectory) throws IOException {
         m_freeMarkerConfig = getDefaultConfiguration();
         m_templatesDirectory = templatesDirectory;
-        m_freeMarkerConfig.setDirectoryForTemplateLoading(new File(templatesDirectory));
+        m_freeMarkerConfig.setDirectoryForTemplateLoading(new File(m_templatesDirectory));
     }
 
     public static TemplateHelpers getInstance() {
@@ -38,7 +38,7 @@ public class TemplateHelpers {
     }
 
     private static Configuration getDefaultConfiguration() {
-        Configuration configuration = new Configuration(Configuration.getVersion());
+        Configuration configuration = new Configuration(Configuration.VERSION_2_3_31);
         configuration.setDefaultEncoding("UTF-8");
         configuration.setTemplateExceptionHandler(TemplateExceptionHandler.RETHROW_HANDLER);
         configuration.setLogTemplateExceptions(false);

@@ -29,6 +29,11 @@
             <artifactId>library-utilities</artifactId>
             <version>${revision}</version>
         </dependency>
+        <dependency>
+            <groupId>ru.yandex.qatools.ashot</groupId>
+            <artifactId>ashot</artifactId>
+            <version>${qatools.ashot}</version>
+        </dependency>
     </dependencies>
 
     <build>

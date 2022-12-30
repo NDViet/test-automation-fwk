@@ -1,6 +1,8 @@
 package com.ndviet.library;
 
 import com.ndviet.libary.configuration.ConfigurationFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxOptions;
@@ -15,6 +17,8 @@ import static com.ndviet.libary.configuration.Constants.SELENIUM_FIREFOX_ARGS;
 import static com.ndviet.libary.configuration.Constants.SELENIUM_HUB_URL;
 
 public class Browser {
+    private static final Logger LOGGER = LogManager.getLogger(Browser.class);
+
     public static boolean getEnableTracing() {
         return Boolean.valueOf(ConfigurationFactory.getInstance().getValue(SELENIUM_ENABLE_TRACING));
     }
@@ -30,6 +34,7 @@ public class Browser {
                     String hubUrl = ConfigurationFactory.getInstance().getValue(SELENIUM_HUB_URL);
                     return new RemoteWebDriver(new URL(hubUrl), options, getEnableTracing());
                 } catch (Exception e) {
+                    LOGGER.error("Could not open the browser.\n" + e.getStackTrace());
                     return null;
                 }
             }
@@ -44,7 +49,7 @@ public class Browser {
                     String hubUrl = ConfigurationFactory.getInstance().getValue(SELENIUM_HUB_URL);
                     return new RemoteWebDriver(new URL(hubUrl), options, getEnableTracing());
                 } catch (Exception e) {
-                    System.out.println("" + e);
+                    LOGGER.error("Could not open the browser.\n" + e.getStackTrace());
                     return null;
                 }
             }

@@ -1,22 +1,23 @@
 package com.ndviet.listener.RobotFramework;
 
 import com.ndviet.library.TakeScreenshot;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.Map;
 
 public class RFSeleniumListener implements RFListenerInterface {
     public static final int ROBOT_LISTENER_API_VERSION = 2;
+    private static final Logger LOGGER = LogManager.getLogger(RFSeleniumListener.class);
 
     @Override
     public String onKeywordFailure(String keywordName, Map attributes) {
         if (attributes.get("status").toString().equalsIgnoreCase("FAIL") &&
                 attributes.get("libname").toString().equalsIgnoreCase("WebUI")) {
             try {
-                String targetFile = TakeScreenshot.captureFullPageScreenshot();
-                System.out.println("\nFailed step details: " + attributes);
-                System.out.println("Kindly checkout screenshot for debugging: " + targetFile);
+                TakeScreenshot.captureFullPageScreenshot(null);
             } catch (Exception e) {
-                System.out.println("Failed to take screenshot");
+                LOGGER.error("Failed to take screenshot for debugging.");
             }
         }
         return null;
@@ -34,5 +35,9 @@ public class RFSeleniumListener implements RFListenerInterface {
 
     public void endKeyword(String name, Map attrs) {
         onKeywordFailure(name, attrs);
+    }
+
+    public void endTest(String name, Map attrs) {
+        TakeScreenshot.resetScreenshotCount();
     }
 }
