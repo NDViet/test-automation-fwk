@@ -10,10 +10,15 @@ import java.net.URL;
 import java.util.List;
 
 import static com.ndviet.libary.configuration.Constants.SELENIUM_CHROME_ARGS;
+import static com.ndviet.libary.configuration.Constants.SELENIUM_ENABLE_TRACING;
 import static com.ndviet.libary.configuration.Constants.SELENIUM_FIREFOX_ARGS;
 import static com.ndviet.libary.configuration.Constants.SELENIUM_HUB_URL;
 
 public class Browser {
+    public static boolean getEnableTracing() {
+        return Boolean.valueOf(ConfigurationFactory.getInstance().getValue(SELENIUM_ENABLE_TRACING));
+    }
+
     protected enum Type implements BrowserType {
         CHROME {
             @Override
@@ -23,7 +28,7 @@ public class Browser {
                 options.addArguments(listArgs.toArray(new String[0]));
                 try {
                     String hubUrl = ConfigurationFactory.getInstance().getValue(SELENIUM_HUB_URL);
-                    return new RemoteWebDriver(new URL(hubUrl), options);
+                    return new RemoteWebDriver(new URL(hubUrl), options, getEnableTracing());
                 } catch (Exception e) {
                     return null;
                 }
@@ -37,7 +42,7 @@ public class Browser {
                 options.addArguments(listArgs.toArray(new String[0]));
                 try {
                     String hubUrl = ConfigurationFactory.getInstance().getValue(SELENIUM_HUB_URL);
-                    return new RemoteWebDriver(new URL(hubUrl), options);
+                    return new RemoteWebDriver(new URL(hubUrl), options, getEnableTracing());
                 } catch (Exception e) {
                     System.out.println("" + e);
                     return null;
