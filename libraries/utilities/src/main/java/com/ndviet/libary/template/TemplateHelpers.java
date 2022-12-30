@@ -16,24 +16,24 @@ import java.io.Writer;
 import static com.ndviet.libary.configuration.Constants.CURRENT_WORKING_DIR;
 import static com.ndviet.libary.configuration.Constants.TARGET_DIR;
 
-public class TemplateUtils {
-    private static TemplateUtils m_instance;
+public class TemplateHelpers {
+    private static TemplateHelpers m_instance;
     private static String m_templatesDirectory;
     private Configuration m_freeMarkerConfig;
 
-    public TemplateUtils() {
+    public TemplateHelpers() {
         m_freeMarkerConfig = getDefaultConfiguration();
     }
 
-    public TemplateUtils(String templatesDirectory) throws IOException {
+    public TemplateHelpers(String templatesDirectory) throws IOException {
         m_freeMarkerConfig = getDefaultConfiguration();
         m_templatesDirectory = templatesDirectory;
         m_freeMarkerConfig.setDirectoryForTemplateLoading(new File(templatesDirectory));
     }
 
-    public static TemplateUtils getInstance() {
+    public static TemplateHelpers getInstance() {
         if (m_instance == null)
-            m_instance = new TemplateUtils();
+            m_instance = new TemplateHelpers();
         return m_instance;
     }
 

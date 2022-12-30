@@ -32,6 +32,11 @@ public class WebUI {
         return WebUIAbstract.getText(driver, testObject);
     }
 
+    public static List<String> getTexts(TestObject testObject) throws Exception {
+        WebDriver driver = BrowserManagement.getInstance().getDriver();
+        return WebUIAbstract.getTexts(driver, testObject);
+    }
+
     public static void moveToElement(TestObject testObject) throws Exception {
         WebDriver driver = BrowserManagement.getInstance().getDriver();
         WebUIAbstract.moveToElement(driver, testObject);
