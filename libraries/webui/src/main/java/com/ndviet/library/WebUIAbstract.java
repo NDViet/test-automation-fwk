@@ -36,7 +36,9 @@ public class WebUIAbstract {
 
     public static String getText(WebDriver driver, TestObject testObject) {
         WebElement element = Waiting.Element.PRESENCE_OF_ELEMENT_LOCATED.waitForElement(driver, testObject, true, -1);
-        return Waiting.Element.ELEMENT_TO_BE_CLICKABLE.waitForElement(driver, testObject, true, -1).getText();
+        String text = Waiting.Element.ELEMENT_TO_BE_CLICKABLE.waitForElement(driver, testObject, true, -1).getText();
+        LOGGER.info("Text in element: " + text);
+        return text;
     }
 
     public static List<String> getTexts(WebDriver driver, TestObject testObject) {
@@ -45,6 +47,7 @@ public class WebUIAbstract {
         for (WebElement element : listElements) {
             listTexts.add(element.getText().trim());
         }
+        LOGGER.info("List texts: " + listTexts);
         return listTexts;
     }
 
@@ -78,22 +81,20 @@ public class WebUIAbstract {
     }
 
     public static void verifyElementTextEquals(WebDriver driver, TestObject testObject, String expectText) {
+        LOGGER.info("Verify text is present in element should equal: " + expectText);
         WebElement element = Waiting.Element.PRESENCE_OF_ELEMENT_LOCATED.waitForElement(driver, testObject, true, -1);
         element = Waiting.ElementText.TEXT_TO_BE_PRESENT_IN_ELEMENT.waitForElement(driver, testObject, true, -1, expectText);
         String actualText = element.getText().trim();
-        LOGGER.info("Actual value: " + actualText);
-        LOGGER.info("Expect value: " + expectText);
         if (!actualText.equals(expectText.trim())) {
             throw new RuntimeException("Actual value: " + actualText + " does not equal the expect value: " + expectText);
         }
     }
 
     public static void verifyElementTextContains(WebDriver driver, TestObject testObject, String expectText) {
+        LOGGER.info("Verify text is present in element should contain: " + expectText);
         WebElement element = Waiting.Element.PRESENCE_OF_ELEMENT_LOCATED.waitForElement(driver, testObject, true, -1);
         element = Waiting.ElementText.TEXT_TO_BE_PRESENT_IN_ELEMENT.waitForElement(driver, testObject, true, -1, expectText);
         String actualText = element.getText().trim();
-        LOGGER.info("Actual value: " + actualText);
-        LOGGER.info("Expect value: " + expectText);
         if (!actualText.contains(expectText.trim())) {
             throw new RuntimeException("Actual value: " + actualText + " does not contain the expect value: " + expectText);
         }

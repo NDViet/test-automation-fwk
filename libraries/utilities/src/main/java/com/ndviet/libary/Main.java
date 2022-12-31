@@ -1,29 +1,25 @@
 package com.ndviet.libary;
 
-import com.ndviet.libary.string.StringHelpers;
-
-import java.util.ArrayList;
-import java.util.List;
-
 public class Main {
     public static void main(String[] args) throws Exception {
-        List<String> results = StringHelpers.getListStringMatchesRegex("Principal (million SGD): ", "(\\w+)");
-        System.out.println(results);
-        String result = StringHelpers.getStringMatchesRegex("Repayment● Total (million SGD): 3,853.3", ".*●");
-        System.out.println(result);
-        result = StringHelpers.getStringMatchesRegex("Repayment● Total (million SGD): 3,853.3", "●.*\\(.*\\)");
-        System.out.println(result);
-        result = StringHelpers.getStringMatchesRegex("Repayment● Total (million SGD): 3,853.3", ":.*");
-        System.out.println(result);
-        List<String> listRegex = new ArrayList<>();
-        listRegex.add(".*●");
-        listRegex.add("●.*\\(|●.*:");
-        listRegex.add(":.*");
-        listRegex.add("\\(.*\\)");
-        List<String> listResult1 = StringHelpers.getListStringMatchesListRegex("Repayment● Total (million SGD): 3,853.3", listRegex);
-        System.out.println(listResult1);
-        listResult1 = StringHelpers.getListStringMatchesListRegex("Repayment● Total: 3,853.3", listRegex);
-        System.out.println(listResult1);
+//        System.out.println(MathHelpers.numberDecimalFormat("1.596", "#.00", null));
+//        List<String> results = StringHelpers.getListStringMatchesRegex("Principal (million SGD): ", "(\\w+)");
+//        System.out.println(results);
+//        String result = StringHelpers.getStringMatchesRegex("Repayment● Total (million SGD): 3,853.3", ".*●");
+//        System.out.println(result);
+//        result = StringHelpers.getStringMatchesRegex("Repayment● Total (million SGD): 3,853.3", "●.*\\(.*\\)");
+//        System.out.println(result);
+//        result = StringHelpers.getStringMatchesRegex("Repayment● Total (million SGD): 3,853.3", ":.*");
+//        System.out.println(result);
+//        List<String> listRegex = new ArrayList<>();
+//        listRegex.add(".*●");
+//        listRegex.add("●.*\\(|●.*:");
+//        listRegex.add(":.*");
+//        listRegex.add("\\(.*\\)");
+//        List<String> listResult1 = StringHelpers.getListStringMatchesListRegex("Repayment● Total (million SGD): 3,853.3", listRegex);
+//        System.out.println(listResult1);
+//        listResult1 = StringHelpers.getListStringMatchesListRegex("Repayment● Total: 3,853.3", listRegex);
+//        System.out.println(listResult1);
 //        LinkedHashMap locators = YamlUtils.readAllYamlInDirectory(System.getProperty(CURRENT_WORKING_DIR) + "/libraries/utilities/src/main/resources/WebIdentifiers");
 //        System.out.println("" + locators);
 //        System.setProperty(PROP_CONFIGURATION_BASE, System.getProperty(CURRENT_WORKING_DIR) + "/libraries/utilities/src/main/resources/sample.yaml");
