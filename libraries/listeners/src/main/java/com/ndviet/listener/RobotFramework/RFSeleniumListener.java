@@ -15,7 +15,7 @@ public class RFSeleniumListener implements RFListenerInterface {
         if (attributes.get("status").toString().equalsIgnoreCase("FAIL") &&
                 attributes.get("libname").toString().equalsIgnoreCase("WebUI")) {
             try {
-                TakeScreenshot.captureFullPageScreenshot(null);
+                TakeScreenshot.capturePageScreenshot(null);
             } catch (Exception e) {
                 LOGGER.error("Failed to take screenshot for debugging.");
             }

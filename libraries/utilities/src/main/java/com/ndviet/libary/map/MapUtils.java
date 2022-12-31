@@ -8,6 +8,8 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+import static org.apache.commons.lang3.math.NumberUtils.isCreatable;
+
 public class MapUtils {
 
     private static List<String> getSegments(String segmentsPath) {
@@ -47,13 +49,35 @@ public class MapUtils {
         return null;
     }
 
-    public static <K extends Comparable, V extends Comparable> Map<K, V> sortByValues(Map<K, V> map, boolean reverse) {
+    public static <K extends Comparable, V> Map<K, V> sortByKeys(Map<K, V> map, boolean reverse) {
+        List<K> keys = new LinkedList<K>(map.keySet());
+        if (!reverse) {
+            Collections.sort(keys);
+        } else {
+            Collections.sort(keys, Collections.reverseOrder());
+        }
+        Map<K, V> sortedMap = new LinkedHashMap<K, V>();
+        for (K key : keys) {
+            sortedMap.put(key, map.get(key));
+        }
+        return sortedMap;
+    }
+
+    public static <K, V extends Comparable> Map<K, V> sortByValues(Map<K, V> map, boolean reverse) {
         List<Map.Entry<K, V>> entries = new LinkedList<>(map.entrySet());
         Collections.sort(entries, (o1, o2) -> {
-            if (!reverse) {
-                return o1.getValue().compareTo(o2.getValue());
+            if (isCreatable(o1.getValue().toString()) && isCreatable(o2.getValue().toString())) {
+                if (!reverse) {
+                    return Double.valueOf(o1.getValue().toString()).compareTo(Double.valueOf(o2.getValue().toString()));
+                } else {
+                    return Double.valueOf(o2.getValue().toString()).compareTo(Double.valueOf(o1.getValue().toString()));
+                }
             } else {
-                return o2.getValue().compareTo(o1.getValue());
+                if (!reverse) {
+                    return o1.getValue().compareTo(o2.getValue());
+                } else {
+                    return o2.getValue().compareTo(o1.getValue());
+                }
             }
         });
         Map<K, V> sortedMap = new LinkedHashMap<K, V>();
