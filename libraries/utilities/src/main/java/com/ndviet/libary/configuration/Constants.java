@@ -28,5 +28,5 @@ public class Constants {
     public static final String SELENIUM_BROWSER_TYPE = "selenium.browser.type";
     public static final String SELENIUM_DEFAULT_TIMEOUT = "selenium.default.timeOut";
     public static final String SELENIUM_CHROME_ARGS = "selenium.browser.chrome.args";
-    public static final String SELENIUM_FIREFOX_ARGS = "selenium.browser.chrome.args";
+    public static final String SELENIUM_FIREFOX_ARGS = "selenium.browser.firefox.args";
 }
