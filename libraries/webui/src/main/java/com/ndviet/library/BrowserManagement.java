@@ -1,13 +1,13 @@
 package com.ndviet.library;
 
-import com.ndviet.libary.configuration.ConfigurationFactory;
+import com.ndviet.library.configuration.ConfigurationFactory;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.ndviet.libary.configuration.Constants.SELENIUM_BROWSER_TYPE;
+import static com.ndviet.library.configuration.Constants.SELENIUM_BROWSER_TYPE;
 
 public class BrowserManagement {
     private static WebDriver m_driver = null;

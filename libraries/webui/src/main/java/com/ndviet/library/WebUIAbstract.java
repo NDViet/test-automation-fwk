@@ -1,6 +1,6 @@
 package com.ndviet.library;
 
-import com.ndviet.libary.TestObject.TestObject;
+import com.ndviet.library.TestObject.TestObject;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.WebDriver;

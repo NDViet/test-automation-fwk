@@ -1,7 +1,7 @@
 package com.ndviet.library;
 
-import com.ndviet.libary.configuration.ConfigurationFactory;
-import com.ndviet.libary.file.FileHelpers;
+import com.ndviet.library.configuration.ConfigurationFactory;
+import com.ndviet.library.file.FileHelpers;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.OutputType;
@@ -14,11 +14,11 @@ import ru.yandex.qatools.ashot.shooting.ShootingStrategies;
 import javax.imageio.ImageIO;
 import java.io.File;
 
-import static com.ndviet.libary.configuration.Constants.CURRENT_WORKING_DIR;
-import static com.ndviet.libary.configuration.Constants.DEFAULT_SCREENSHOT_COUNT;
-import static com.ndviet.libary.configuration.Constants.SCREENSHOT_DIR;
-import static com.ndviet.libary.configuration.Constants.SELENIUM_SCREENSHOT_FILE_TYPE;
-import static com.ndviet.libary.configuration.Constants.TARGET_DIR;
+import static com.ndviet.library.configuration.Constants.CURRENT_WORKING_DIR;
+import static com.ndviet.library.configuration.Constants.DEFAULT_SCREENSHOT_COUNT;
+import static com.ndviet.library.configuration.Constants.SCREENSHOT_DIR;
+import static com.ndviet.library.configuration.Constants.SELENIUM_SCREENSHOT_FILE_TYPE;
+import static com.ndviet.library.configuration.Constants.TARGET_DIR;
 
 public class TakeScreenshot {
     private static final String m_directory = System.getProperty(CURRENT_WORKING_DIR) + File.separator + TARGET_DIR + File.separator + SCREENSHOT_DIR;

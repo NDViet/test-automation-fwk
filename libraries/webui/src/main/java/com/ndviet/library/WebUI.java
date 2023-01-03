@@ -1,6 +1,6 @@
 package com.ndviet.library;
 
-import com.ndviet.libary.TestObject.TestObject;
+import com.ndviet.library.TestObject.TestObject;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 

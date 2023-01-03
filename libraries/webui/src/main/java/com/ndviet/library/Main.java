@@ -5,11 +5,11 @@ import org.openqa.selenium.WebElement;
 import java.util.List;
 import java.util.Map;
 
-import static com.ndviet.libary.TestObject.ObjectRepository.findTestObject;
-import static com.ndviet.libary.configuration.Constants.CURRENT_WORKING_DIR;
-import static com.ndviet.libary.configuration.Constants.OBJECT_REPOSITORY_DIRECTORY;
-import static com.ndviet.libary.configuration.Constants.PROP_CONFIGURATION_BASE;
-import static com.ndviet.libary.configuration.Constants.WEB_IDENTIFIERS_DIRECTORY;
+import static com.ndviet.library.TestObject.ObjectRepository.findTestObject;
+import static com.ndviet.library.configuration.Constants.CURRENT_WORKING_DIR;
+import static com.ndviet.library.configuration.Constants.OBJECT_REPOSITORY_DIRECTORY;
+import static com.ndviet.library.configuration.Constants.PROP_CONFIGURATION_BASE;
+import static com.ndviet.library.configuration.Constants.WEB_IDENTIFIERS_DIRECTORY;
 
 public class Main {
     public static void main(String[] args) throws Exception {
