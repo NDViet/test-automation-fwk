@@ -16,7 +16,7 @@ public class WebUIAbstract {
     public static void click(WebDriver driver, TestObject testObject) {
         try {
             WebElement element = Waiting.Element.ELEMENT_TO_BE_CLICKABLE.waitForElement(driver, testObject, true, -1);
-            Helpers.scrollIntoView(driver, element);
+            WebElementHelpers.scrollIntoView(driver, element);
             element.click();
         } catch (Exception e) {
             LOGGER.error(testObject + " could not click successfully.");
@@ -27,7 +27,7 @@ public class WebUIAbstract {
     public static void setText(WebDriver driver, TestObject testObject, String text) {
         try {
             WebElement element = Waiting.Element.ELEMENT_TO_BE_CLICKABLE.waitForElement(driver, testObject, true, -1);
-            Helpers.scrollIntoView(driver, element);
+            WebElementHelpers.scrollIntoView(driver, element);
             element.sendKeys(text);
         } catch (Exception e) {
             LOGGER.error(testObject + " could not set text successfully.");
@@ -80,7 +80,7 @@ public class WebUIAbstract {
         LOGGER.info("Verify text is present in element should equal: " + expectText);
         try {
             Waiting.Condition.TEXT_TO_BE_PRESENT_IN_ELEMENT.waitForElement(driver, testObject, true, -1, expectText);
-            String actualText = Helpers.getWebElement(driver, testObject).getText();
+            String actualText = WebElementHelpers.getWebElement(driver, testObject).getText();
             if (actualText.equals(expectText)) {
                 LOGGER.info("Value: " + actualText + " is present in element and equal to: " + expectText);
             } else {
@@ -96,7 +96,7 @@ public class WebUIAbstract {
         LOGGER.info("Verify text is present in element should contain: " + expectText);
         try {
             Waiting.Condition.TEXT_TO_BE_PRESENT_IN_ELEMENT.waitForElement(driver, testObject, true, -1, expectText);
-            String actualText = Helpers.getWebElement(driver, testObject).getText();
+            String actualText = WebElementHelpers.getWebElement(driver, testObject).getText();
             if (actualText.contains(expectText)) {
                 LOGGER.info("Value: " + actualText + " is present in element and contain: " + expectText);
             } else {

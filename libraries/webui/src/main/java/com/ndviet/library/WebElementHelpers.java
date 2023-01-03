@@ -10,11 +10,10 @@ import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
-import java.util.ArrayList;
 import java.util.List;
 
-public class Helpers {
-    private static final Logger LOGGER = LogManager.getLogger(Helpers.class);
+public class WebElementHelpers {
+    private static final Logger LOGGER = LogManager.getLogger(WebElementHelpers.class);
 
     public static By getBy(Object object) {
         String textObject;
@@ -48,7 +47,7 @@ public class Helpers {
     public static WebElement getWebElement(WebDriver driver, Object object) {
         WebElement element;
         if (object instanceof TestObject) {
-            element = Helpers.findWebElement(driver, (TestObject) object);
+            element = WebElementHelpers.findWebElement(driver, (TestObject) object);
         } else if (object instanceof WebElement) {
             element = isRefreshed(driver, (WebElement) object);
         } else {

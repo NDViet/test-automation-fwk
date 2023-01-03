@@ -9,12 +9,12 @@ import java.util.List;
 public class WebUI {
     public static WebElement findWebElement(TestObject testObject) throws Exception {
         WebDriver driver = BrowserManagement.getInstance().getDriver();
-        return Helpers.findWebElement(driver, testObject);
+        return WebElementHelpers.findWebElement(driver, testObject);
     }
 
     public static List<WebElement> findWebElements(TestObject testObject) throws Exception {
         WebDriver driver = BrowserManagement.getInstance().getDriver();
-        return Helpers.findWebElements(driver, testObject);
+        return WebElementHelpers.findWebElements(driver, testObject);
     }
 
     public static void click(TestObject testObject) throws Exception {

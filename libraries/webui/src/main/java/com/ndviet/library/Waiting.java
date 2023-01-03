@@ -10,6 +10,7 @@ import java.time.Duration;
 import java.util.List;
 
 import static com.ndviet.libary.configuration.Constants.SELENIUM_DEFAULT_TIMEOUT;
+import static com.ndviet.library.WebElementHelpers.getBy;
 
 public class Waiting {
     private static final String configDefaultTimeOut = ConfigurationFactory.getInstance().getValue(SELENIUM_DEFAULT_TIMEOUT);
@@ -39,7 +40,7 @@ public class Waiting {
             public WebElement waitForElement(WebDriver driver, Object object, boolean isWait, int timeOut) {
                 return getWaitDriver(driver, isWait, timeOut).until(
                         ExpectedConditions.refreshed(
-                                ExpectedConditions.presenceOfElementLocated(Helpers.getBy(object))));
+                                ExpectedConditions.presenceOfElementLocated(getBy(object))));
             }
         },
         ELEMENT_TO_BE_CLICKABLE {
@@ -49,7 +50,7 @@ public class Waiting {
                         ExpectedConditions.refreshed(
                                 ExpectedConditions.elementToBeClickable(
                                         ExpectedConditions.visibilityOf(
-                                                ExpectedConditions.presenceOfElementLocated(Helpers.getBy(object)).apply(driver)
+                                                ExpectedConditions.presenceOfElementLocated(getBy(object)).apply(driver)
                                         ).apply(driver))));
             }
         },
@@ -58,7 +59,7 @@ public class Waiting {
             public WebElement waitForElement(WebDriver driver, Object object, boolean isWait, int timeOut) {
                 return getWaitDriver(driver, isWait, timeOut).until(
                         ExpectedConditions.visibilityOf(
-                                ExpectedConditions.presenceOfElementLocated(Helpers.getBy(object)).apply(driver)));
+                                ExpectedConditions.presenceOfElementLocated(getBy(object)).apply(driver)));
             }
         },
     }
@@ -67,13 +68,13 @@ public class Waiting {
         PRESENCE_OF_ALL_ELEMENTS_LOCATED {
             @Override
             public List<WebElement> waitForElements(WebDriver driver, Object object, boolean isWait, int timeOut) {
-                return getWaitDriver(driver, isWait, timeOut).until(ExpectedConditions.presenceOfAllElementsLocatedBy(Helpers.getBy(object)));
+                return getWaitDriver(driver, isWait, timeOut).until(ExpectedConditions.presenceOfAllElementsLocatedBy(getBy(object)));
             }
         },
         VISIBILITY_OF_ALL_ELEMENTS_LOCATED_BY {
             @Override
             public List<WebElement> waitForElements(WebDriver driver, Object object, boolean isWait, int timeOut) {
-                return getWaitDriver(driver, isWait, timeOut).until(ExpectedConditions.visibilityOfAllElementsLocatedBy(Helpers.getBy(object)));
+                return getWaitDriver(driver, isWait, timeOut).until(ExpectedConditions.visibilityOfAllElementsLocatedBy(getBy(object)));
             }
         }
     }
@@ -84,7 +85,7 @@ public class Waiting {
             public boolean waitForElement(WebDriver driver, Object object, boolean isWait, int timeOut, String expectText) {
                 return getWaitDriver(driver, isWait, timeOut).until(
                         ExpectedConditions.refreshed(
-                                ExpectedConditions.invisibilityOfElementLocated(Helpers.getBy(object))));
+                                ExpectedConditions.invisibilityOfElementLocated(getBy(object))));
             }
         },
         TEXT_TO_BE_PRESENT_IN_ELEMENT_LOCATED {
@@ -92,7 +93,7 @@ public class Waiting {
             public boolean waitForElement(WebDriver driver, Object object, boolean isWait, int timeOut, String expectText) {
                 return getWaitDriver(driver, isWait, timeOut).until(
                         ExpectedConditions.refreshed(
-                                ExpectedConditions.textToBePresentInElementLocated(Helpers.getBy(object), expectText)));
+                                ExpectedConditions.textToBePresentInElementLocated(getBy(object), expectText)));
             }
         },
         TEXT_TO_BE_PRESENT_IN_ELEMENT {
@@ -101,7 +102,7 @@ public class Waiting {
                 return getWaitDriver(driver, isWait, timeOut).until(
                         ExpectedConditions.refreshed(
                                 ExpectedConditions.textToBePresentInElement(
-                                        ExpectedConditions.presenceOfElementLocated(Helpers.getBy(object)).apply(driver), expectText)));
+                                        ExpectedConditions.presenceOfElementLocated(getBy(object)).apply(driver), expectText)));
             }
         },
     }
