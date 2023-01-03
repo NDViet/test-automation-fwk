@@ -10,6 +10,6 @@ public abstract class TestObject {
 
     @Override
     public String toString() {
-        return this.value;
+        return String.format("Object ID: %s - Object value: %s", this.relativeObjectId, this.value);
     }
 }

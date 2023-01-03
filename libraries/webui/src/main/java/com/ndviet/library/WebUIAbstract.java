@@ -3,7 +3,6 @@ package com.ndviet.library;
 import com.ndviet.libary.TestObject.TestObject;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
@@ -14,35 +13,36 @@ import java.util.List;
 public class WebUIAbstract {
     private static final Logger LOGGER = LogManager.getLogger(WebUIAbstract.class);
 
-    public static WebElement findWebElement(WebDriver driver, TestObject testObject) {
-        return driver.findElement(By.xpath(testObject.getValue()));
-    }
-
-    public static List<WebElement> findWebElements(WebDriver driver, TestObject testObject) {
-        return driver.findElements(By.xpath(testObject.getValue()));
-    }
-
     public static void click(WebDriver driver, TestObject testObject) {
-        WebElement element = Waiting.Element.PRESENCE_OF_ELEMENT_LOCATED.waitForElement(driver, testObject, true, -1);
-        element = Waiting.Element.ELEMENT_TO_BE_CLICKABLE.waitForElement(driver, testObject, true, -1);
-        element.click();
+        try {
+            WebElement element = Waiting.Element.ELEMENT_TO_BE_CLICKABLE.waitForElement(driver, testObject, true, -1);
+            Helpers.scrollIntoView(driver, element);
+            element.click();
+        } catch (Exception e) {
+            LOGGER.error(testObject + " could not click successfully.");
+            throw e;
+        }
     }
 
     public static void setText(WebDriver driver, TestObject testObject, String text) {
-        WebElement element = Waiting.Element.PRESENCE_OF_ELEMENT_LOCATED.waitForElement(driver, testObject, true, -1);
-        element = Waiting.Element.ELEMENT_TO_BE_CLICKABLE.waitForElement(driver, testObject, true, -1);
-        element.sendKeys(text);
+        try {
+            WebElement element = Waiting.Element.ELEMENT_TO_BE_CLICKABLE.waitForElement(driver, testObject, true, -1);
+            Helpers.scrollIntoView(driver, element);
+            element.sendKeys(text);
+        } catch (Exception e) {
+            LOGGER.error(testObject + " could not set text successfully.");
+            throw e;
+        }
     }
 
     public static String getText(WebDriver driver, TestObject testObject) {
-        WebElement element = Waiting.Element.PRESENCE_OF_ELEMENT_LOCATED.waitForElement(driver, testObject, true, -1);
         String text = Waiting.Element.ELEMENT_TO_BE_CLICKABLE.waitForElement(driver, testObject, true, -1).getText();
         LOGGER.info("Text in element: " + text);
         return text;
     }
 
     public static List<String> getTexts(WebDriver driver, TestObject testObject) {
-        List<WebElement> listElements = findWebElements(driver, testObject);
+        List<WebElement> listElements = Waiting.Elements.PRESENCE_OF_ALL_ELEMENTS_LOCATED.waitForElements(driver, testObject, true, -1);
         List<String> listTexts = new ArrayList<>();
         for (WebElement element : listElements) {
             listTexts.add(element.getText().trim());
@@ -52,22 +52,19 @@ public class WebUIAbstract {
     }
 
     public static void moveToElement(WebDriver driver, TestObject testObject) {
-        WebElement element = Waiting.Element.PRESENCE_OF_ELEMENT_LOCATED.waitForElement(driver, testObject, true, -1);
-        element = Waiting.Element.VISIBILITY_OF.waitForElement(driver, testObject, true, -1);
-        element = Waiting.Element.ELEMENT_TO_BE_CLICKABLE.waitForElement(driver, testObject, true, -1);
+        WebElement element = Waiting.Element.ELEMENT_TO_BE_CLICKABLE.waitForElement(driver, testObject, true, -1);
         Actions action = new Actions(driver);
         action.moveToElement(element).perform();
     }
 
     public static void scrollToElement(WebDriver driver, TestObject testObject) {
-        WebElement element = Waiting.Element.PRESENCE_OF_ELEMENT_LOCATED.waitForElement(driver, testObject, true, -1);
-        element = Waiting.Element.VISIBILITY_OF.waitForElement(driver, element, true, -1);
+        WebElement element = Waiting.Element.VISIBILITY_OF.waitForElement(driver, testObject, true, -1);
         Actions action = new Actions(driver);
         action.scrollToElement(element).perform();
     }
 
     public static void uploadFile(WebDriver driver, TestObject testObject, String absolutePath) {
-        WebElement element = Waiting.Element.VISIBILITY_OF.waitForElement(driver, testObject, true, -1);
+        WebElement element = Waiting.Element.ELEMENT_TO_BE_CLICKABLE.waitForElement(driver, testObject, true, -1);
         element.sendKeys(absolutePath);
     }
 
@@ -76,27 +73,38 @@ public class WebUIAbstract {
     }
 
     public static void verifyElementVisible(WebDriver driver, TestObject testObject) {
-        WebElement element = Waiting.Element.PRESENCE_OF_ELEMENT_LOCATED.waitForElement(driver, testObject, true, -1);
-        Waiting.Element.VISIBILITY_OF.waitForElement(driver, testObject, true, -1);
+        WebElement element = Waiting.Element.VISIBILITY_OF.waitForElement(driver, testObject, true, -1);
     }
 
     public static void verifyElementTextEquals(WebDriver driver, TestObject testObject, String expectText) {
         LOGGER.info("Verify text is present in element should equal: " + expectText);
-        WebElement element = Waiting.Element.PRESENCE_OF_ELEMENT_LOCATED.waitForElement(driver, testObject, true, -1);
-        element = Waiting.ElementText.TEXT_TO_BE_PRESENT_IN_ELEMENT.waitForElement(driver, testObject, true, -1, expectText);
-        String actualText = element.getText().trim();
-        if (!actualText.equals(expectText.trim())) {
-            throw new RuntimeException("Actual value: " + actualText + " does not equal the expect value: " + expectText);
+        try {
+            Waiting.Condition.TEXT_TO_BE_PRESENT_IN_ELEMENT.waitForElement(driver, testObject, true, -1, expectText);
+            String actualText = Helpers.getWebElement(driver, testObject).getText();
+            if (actualText.equals(expectText)) {
+                LOGGER.info("Value: " + actualText + " is present in element and equal to: " + expectText);
+            } else {
+                throw new RuntimeException("Actual value: " + actualText + " does not equal the expect value: " + expectText);
+            }
+        } catch (Exception e) {
+            LOGGER.error("Expect value: " + expectText + " is not present in element");
+            throw e;
         }
     }
 
     public static void verifyElementTextContains(WebDriver driver, TestObject testObject, String expectText) {
         LOGGER.info("Verify text is present in element should contain: " + expectText);
-        WebElement element = Waiting.Element.PRESENCE_OF_ELEMENT_LOCATED.waitForElement(driver, testObject, true, -1);
-        element = Waiting.ElementText.TEXT_TO_BE_PRESENT_IN_ELEMENT.waitForElement(driver, testObject, true, -1, expectText);
-        String actualText = element.getText().trim();
-        if (!actualText.contains(expectText.trim())) {
-            throw new RuntimeException("Actual value: " + actualText + " does not contain the expect value: " + expectText);
+        try {
+            Waiting.Condition.TEXT_TO_BE_PRESENT_IN_ELEMENT.waitForElement(driver, testObject, true, -1, expectText);
+            String actualText = Helpers.getWebElement(driver, testObject).getText();
+            if (actualText.contains(expectText)) {
+                LOGGER.info("Value: " + actualText + " is present in element and contain: " + expectText);
+            } else {
+                throw new RuntimeException("Actual value: " + actualText + " does not contain the expect value: " + expectText);
+            }
+        } catch (Exception e) {
+            LOGGER.error("Expect value: " + expectText + " is not present in element");
+            throw e;
         }
     }
 }
