@@ -49,6 +49,14 @@ public class MapUtils {
         return null;
     }
 
+    public static String getTheLastKey(Map map, boolean reverse) {
+        List<String> keys = new LinkedList<String>(map.keySet());
+        if (reverse) {
+            Collections.reverse(keys);
+        }
+        return keys.get(keys.size() - 1);
+    }
+
     public static <K extends Comparable, V> Map<K, V> sortByKeys(Map<K, V> map, boolean reverse) {
         List<K> keys = new LinkedList<K>(map.keySet());
         if (!reverse) {
