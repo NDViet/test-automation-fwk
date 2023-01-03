@@ -1,6 +1,7 @@
 package com.ndviet.libary.configuration;
 
 public class Constants {
+    public static final String LOCALE_LANGUAGE_TAG = "locale.language_tag";
     public static final String TARGET_DIR = "target";
     public static final String SCREENSHOT_DIR = "screenshots";
     public static final String APPLICATION_CONTEXT_PATH = "applicationContextPath";

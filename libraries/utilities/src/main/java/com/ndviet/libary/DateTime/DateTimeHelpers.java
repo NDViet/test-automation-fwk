@@ -8,6 +8,8 @@ import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import static com.ndviet.libary.configuration.ConfigurationHelpers.getSystemLocale;
+
 public class DateTimeHelpers {
     public static Map getCurrentQuarterYear() {
         LocalDate localDate = LocalDate.now();
@@ -25,6 +27,6 @@ public class DateTimeHelpers {
         calendar.setTime(today);
         calendar.add(Calendar.MONTH, increase);
         Date date = calendar.getTime();
-        return new SimpleDateFormat(format).format(date);
+        return new SimpleDateFormat(format, getSystemLocale()).format(date);
     }
 }

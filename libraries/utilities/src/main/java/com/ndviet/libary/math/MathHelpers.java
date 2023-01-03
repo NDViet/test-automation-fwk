@@ -5,7 +5,9 @@ import org.apache.logging.log4j.Logger;
 
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 
+import static com.ndviet.libary.configuration.ConfigurationHelpers.getSystemLocale;
 import static org.apache.commons.lang3.math.NumberUtils.isCreatable;
 
 public class MathHelpers {
@@ -35,7 +37,7 @@ public class MathHelpers {
                     rm = RoundingMode.HALF_UP;
                     break;
             }
-            DecimalFormat df = new DecimalFormat(decimal);
+            DecimalFormat df = new DecimalFormat(decimal, DecimalFormatSymbols.getInstance(getSystemLocale()));
             df.setRoundingMode(rm);
             String returnString = df.format(number);
             LOGGER.info("Decimal format: " + decimal + " - Final result: " + returnString);
