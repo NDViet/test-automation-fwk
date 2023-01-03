@@ -49,14 +49,6 @@ public class MapUtils {
         return null;
     }
 
-    public static String getTheLastKey(Map map, boolean reverse) {
-        List<String> keys = new LinkedList<String>(map.keySet());
-        if (reverse) {
-            Collections.reverse(keys);
-        }
-        return keys.get(keys.size() - 1);
-    }
-
     public static <K extends Comparable, V> Map<K, V> sortByKeys(Map<K, V> map, boolean reverse) {
         List<K> keys = new LinkedList<K>(map.keySet());
         if (!reverse) {
@@ -75,19 +67,14 @@ public class MapUtils {
         List<Map.Entry<K, V>> entries = new LinkedList<>(map.entrySet());
         Collections.sort(entries, (o1, o2) -> {
             if (isCreatable(o1.getValue().toString()) && isCreatable(o2.getValue().toString())) {
-                if (!reverse) {
-                    return Double.valueOf(o1.getValue().toString()).compareTo(Double.valueOf(o2.getValue().toString()));
-                } else {
-                    return Double.valueOf(o2.getValue().toString()).compareTo(Double.valueOf(o1.getValue().toString()));
-                }
+                return Double.valueOf(o1.getValue().toString()).compareTo(Double.valueOf(o2.getValue().toString()));
             } else {
-                if (!reverse) {
-                    return o1.getValue().compareTo(o2.getValue());
-                } else {
-                    return o2.getValue().compareTo(o1.getValue());
-                }
+                return o1.getValue().compareTo(o2.getValue());
             }
         });
+        if (reverse) {
+            Collections.reverse(entries);
+        }
         Map<K, V> sortedMap = new LinkedHashMap<K, V>();
         for (Map.Entry<K, V> entry : entries) {
             sortedMap.put(entry.getKey(), entry.getValue());
