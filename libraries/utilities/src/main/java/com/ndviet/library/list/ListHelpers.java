@@ -7,7 +7,8 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
-import static org.apache.commons.lang3.math.NumberUtils.isCreatable;
+import static com.ndviet.library.math.MathHelpers.compareNumber;
+import static com.ndviet.library.math.MathHelpers.isCreatable;
 
 public class ListHelpers {
     private static final Logger LOGGER = LogManager.getLogger(ListHelpers.class);
@@ -34,8 +35,10 @@ public class ListHelpers {
         while (iterator.hasNext()) {
             current = iterator.next();
             if (isCreatable(previous.toString()) && isCreatable(current.toString())) {
-                if (Double.valueOf(previous.toString()).compareTo(Double.valueOf(current.toString())) > 0)
+                if (compareNumber(previous.toString(), current.toString()) > 0) {
+                    LOGGER.error("Unsorted pair: " + previous + " - " + current);
                     return false;
+                }
             } else {
                 if (previous.compareTo(current) > 0)
                     return false;

@@ -8,7 +8,9 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
-import static org.apache.commons.lang3.math.NumberUtils.isCreatable;
+import static com.ndviet.library.math.MathHelpers.compareNumber;
+import static com.ndviet.library.math.MathHelpers.isCreatable;
+
 
 public class MapUtils {
 
@@ -67,7 +69,7 @@ public class MapUtils {
         List<Map.Entry<K, V>> entries = new LinkedList<>(map.entrySet());
         Collections.sort(entries, (o1, o2) -> {
             if (isCreatable(o1.getValue().toString()) && isCreatable(o2.getValue().toString())) {
-                return Double.valueOf(o1.getValue().toString()).compareTo(Double.valueOf(o2.getValue().toString()));
+                return compareNumber(o1.getValue().toString(), o2.getValue().toString());
             } else {
                 return o1.getValue().compareTo(o2.getValue());
             }
