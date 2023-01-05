@@ -3,7 +3,8 @@
 ## Introduction
 
 Common Test Libraries are retained by Java which can be imported to use in other test framework.<br>
-This implementation is on top of some open-source libraries, utilities. For list of details, kindly check Insights > Dependency graph.<br>
+This implementation is on top of some open-source libraries, utilities. For list of details, kindly check Insights >
+Dependency graph.<br>
 
 ## Documentation
 
@@ -13,4 +14,5 @@ This implementation is on top of some open-source libraries, utilities. For list
 ## Referrence
 
 A sample project is using this common test libraries.<br>
+
 * [fs-test-automation](https://github.com/vietnd96/fs-test-automation)
