@@ -13,6 +13,13 @@
         <module>libraries</module>
     </modules>
 
+    <scm>
+        <connection>scm:git:https://github.com/vietnd96/test-automation-fwk.git</connection>
+        <developerConnection>scm:git:ssh://git@github.com:vietnd96/test-automation-fwk.git</developerConnection>
+        <url>https://github.com/vietnd96/test-automation-fwk/tree/master</url>
+        <tag>HEAD</tag>
+    </scm>
+
     <properties>
         <revision>1.0.0-SNAPSHOT</revision>
         <maven-shade-plugin.version>3.4.1</maven-shade-plugin.version>
