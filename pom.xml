@@ -13,11 +13,29 @@
         <module>libraries</module>
     </modules>
 
+    <licenses>
+        <license>
+            <name>The Apache License, Version 2.0</name>
+            <url>https://www.apache.org/licenses/LICENSE-2.0.txt</url>
+        </license>
+    </licenses>
+
+    <developers>
+        <developer>
+            <id>ndviet</id>
+            <name>Nguyen Duc Viet</name>
+            <email>nguyenducviet4496@gmail.com</email>
+            <roles>
+                <role>maintainer</role>
+                <role>developer</role>
+            </roles>
+        </developer>
+    </developers>
+
     <scm>
-        <connection>scm:git:https://github.com/vietnd96/test-automation-fwk.git</connection>
+        <connection>scm:git:git@github.com:vietnd96/test-automation-fwk.git</connection>
         <developerConnection>scm:git:ssh://git@github.com:vietnd96/test-automation-fwk.git</developerConnection>
         <url>https://github.com/vietnd96/test-automation-fwk/tree/master</url>
-        <tag>HEAD</tag>
     </scm>
 
     <properties>
