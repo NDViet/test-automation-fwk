@@ -20,7 +20,7 @@ public class Browser {
     private static final Logger LOGGER = LogManager.getLogger(Browser.class);
 
     public static boolean getEnableTracing() {
-        return Boolean.valueOf(ConfigurationFactory.getInstance().getValue(SELENIUM_ENABLE_TRACING));
+        return Boolean.parseBoolean(ConfigurationFactory.getInstance().getValue(SELENIUM_ENABLE_TRACING));
     }
 
     protected enum Type implements BrowserType {
@@ -34,7 +34,7 @@ public class Browser {
                     String hubUrl = ConfigurationFactory.getInstance().getValue(SELENIUM_HUB_URL);
                     return new RemoteWebDriver(new URL(hubUrl), options, getEnableTracing());
                 } catch (Exception e) {
-                    LOGGER.error("Could not open the browser.\n" + e.getStackTrace());
+                    LOGGER.error("Could not open the browser.\n" + e.getMessage());
                     return null;
                 }
             }
@@ -49,7 +49,7 @@ public class Browser {
                     String hubUrl = ConfigurationFactory.getInstance().getValue(SELENIUM_HUB_URL);
                     return new RemoteWebDriver(new URL(hubUrl), options, getEnableTracing());
                 } catch (Exception e) {
-                    LOGGER.error("Could not open the browser.\n" + e.getStackTrace());
+                    LOGGER.error("Could not open the browser.\n" + e.getMessage());
                     return null;
                 }
             }

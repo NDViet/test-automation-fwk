@@ -24,6 +24,7 @@ public class Constants {
     public static final String SELENIUM_NODE_PASSWORD = "selenium.node.password";
     public static final String SELENIUM_NODE_PORT = "selenium.node.port";
     public static final int DEFAULT_SCREENSHOT_COUNT = 1;
+    public static final String SELENIUM_SCREENSHOT_DIRECTORY = "selenium.screenshot.directory";
     public static final String SELENIUM_SCREENSHOT_FILE_TYPE = "selenium.screenshot.fileType";
     public static final String SELENIUM_ENABLE_TRACING = "selenium.enableTracing";
     public static final String SELENIUM_BROWSER_TYPE = "selenium.browser.type";

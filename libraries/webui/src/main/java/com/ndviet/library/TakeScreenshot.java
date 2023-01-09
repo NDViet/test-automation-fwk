@@ -17,11 +17,12 @@ import java.io.File;
 import static com.ndviet.library.configuration.Constants.CURRENT_WORKING_DIR;
 import static com.ndviet.library.configuration.Constants.DEFAULT_SCREENSHOT_COUNT;
 import static com.ndviet.library.configuration.Constants.SCREENSHOT_DIR;
+import static com.ndviet.library.configuration.Constants.SELENIUM_SCREENSHOT_DIRECTORY;
 import static com.ndviet.library.configuration.Constants.SELENIUM_SCREENSHOT_FILE_TYPE;
 import static com.ndviet.library.configuration.Constants.TARGET_DIR;
 
 public class TakeScreenshot {
-    private static final String m_directory = System.getProperty(CURRENT_WORKING_DIR) + File.separator + TARGET_DIR + File.separator + SCREENSHOT_DIR;
+    private static final String m_directory = getScreenshotDirectory();
     private static final String m_fileType = getScreenshotFileType();
     private static final Logger LOGGER = LogManager.getLogger(TakeScreenshot.class);
     private static int m_count = DEFAULT_SCREENSHOT_COUNT;
@@ -36,6 +37,15 @@ public class TakeScreenshot {
             return fileType;
         } else {
             return "png";
+        }
+    }
+
+    private static String getScreenshotDirectory() {
+        String fileType = ConfigurationFactory.getInstance().getValue(SELENIUM_SCREENSHOT_DIRECTORY);
+        if (fileType != null && !fileType.isEmpty()) {
+            return fileType;
+        } else {
+            return System.getProperty(CURRENT_WORKING_DIR) + File.separator + TARGET_DIR + File.separator + SCREENSHOT_DIR;
         }
     }
 
