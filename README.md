@@ -15,4 +15,4 @@ Dependency graph.<br>
 
 A sample project is using this common test libraries.<br>
 
-* [fs-test-automation](https://github.com/vietnd96/fs-test-automation)
+* [test-automation-project](https://github.com/vietnd96/test-automation-project)
