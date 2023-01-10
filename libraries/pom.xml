@@ -4,8 +4,9 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
         <artifactId>test-automation-fwk</artifactId>
-        <groupId>com.ndviet</groupId>
+        <groupId>io.github.ndviet</groupId>
         <version>${revision}</version>
+        <relativePath>../pom.xml</relativePath>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
@@ -13,29 +14,21 @@
     <name>Test Automation Libraries</name>
     <packaging>pom</packaging>
     <modules>
-        <module>utilities</module>
-        <module>webui</module>
-        <module>api</module>
-        <module>listeners</module>
+        <module>library-utilities</module>
+        <module>library-webui</module>
+        <module>library-api</module>
+        <module>library-listeners</module>
     </modules>
 
     <dependencies>
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-core</artifactId>
-            <version>${log4j2.version}</version>
         </dependency>
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-api</artifactId>
-            <version>${log4j2.version}</version>
         </dependency>
     </dependencies>
-
-    <properties>
-        <maven.compiler.source>11</maven.compiler.source>
-        <maven.compiler.target>11</maven.compiler.target>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    </properties>
 
 </project>

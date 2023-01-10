@@ -2,7 +2,7 @@
 
 ## Introduction
 
-Common Test Libraries are retained by Java which can be imported to use in other test framework.<br>
+Test automation framework with rich test supporting libraries are written in Java.<br>
 This implementation is on top of some open-source libraries, utilities. For list of details, kindly check Insights >
 Dependency graph.<br>
 

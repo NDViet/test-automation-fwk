@@ -4,9 +4,18 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.ndviet</groupId>
+    <parent>
+        <groupId>io.github.ndviet</groupId>
+        <artifactId>test-parent-pom</artifactId>
+        <version>1.0.0-SNAPSHOT</version>
+        <relativePath>../test-parent-pom/pom.xml</relativePath>
+    </parent>
+
     <artifactId>test-automation-fwk</artifactId>
     <name>Test Automation Framework</name>
+    <description>Open source test automation framework with rich test supporting libraries are written in Java.
+    </description>
+    <url>https://github.com/${github.organization}/${project.artifactId}/tree/master</url>
     <packaging>pom</packaging>
     <version>${revision}</version>
     <modules>
@@ -22,9 +31,9 @@
 
     <developers>
         <developer>
-            <id>ndviet</id>
-            <name>Nguyen Duc Viet</name>
-            <email>nguyenducviet4496@gmail.com</email>
+            <id>${github.id}</id>
+            <name>${github.name}</name>
+            <email>${github.email}</email>
             <roles>
                 <role>maintainer</role>
                 <role>developer</role>
@@ -33,61 +42,54 @@
     </developers>
 
     <scm>
-        <connection>scm:git:git@github.com:vietnd96/test-automation-fwk.git</connection>
-        <developerConnection>scm:git:ssh://git@github.com:vietnd96/test-automation-fwk.git</developerConnection>
-        <url>https://github.com/vietnd96/test-automation-fwk/tree/master</url>
+        <connection>scm:git:git@github.com:${github.organization}/${project.artifactId}.git</connection>
+        <developerConnection>scm:git:ssh://git@github.com:${github.organization}/${project.artifactId}.git
+        </developerConnection>
+        <url>https://github.com/${github.organization}/${project.artifactId}/tree/master</url>
     </scm>
 
-    <properties>
-        <revision>1.0.0-SNAPSHOT</revision>
-        <maven-shade-plugin.version>3.4.1</maven-shade-plugin.version>
-        <maven-dependency-plugin.version>3.3.0</maven-dependency-plugin.version>
-        <flatten-maven-plugin.version>1.0.1</flatten-maven-plugin.version>
-        <selenium-java.version>4.6.0</selenium-java.version>
-        <qatools.ashot>1.5.4</qatools.ashot>
-        <snakeyaml.version>1.33</snakeyaml.version>
-        <sshd-core.version>2.9.1</sshd-core.version>
-        <commons-io.version>2.11.0</commons-io.version>
-        <javalib-core.version>2.0.3</javalib-core.version>
-        <json-path.version>2.7.0</json-path.version>
-        <log4j2.version>2.19.0</log4j2.version>
-        <commons-lang3.version>3.12.0</commons-lang3.version>
-        <jackson-databind.version>2.14.1</jackson-databind.version>
-        <freemarker.version>2.3.31</freemarker.version>
-        <spring-core.version>5.3.24</spring-core.version>
-        <maven.compiler.source>11</maven.compiler.source>
-        <maven.compiler.target>11</maven.compiler.target>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    </properties>
-
     <build>
-        <sourceDirectory>src/main/java</sourceDirectory>
         <plugins>
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>flatten-maven-plugin</artifactId>
-                <version>${flatten-maven-plugin.version}</version>
-                <configuration>
-                    <updatePomFile>true</updatePomFile>
-                </configuration>
-                <executions>
-                    <execution>
-                        <id>flatten</id>
-                        <phase>process-resources</phase>
-                        <goals>
-                            <goal>flatten</goal>
-                        </goals>
-                    </execution>
-                    <execution>
-                        <id>flatten.clean</id>
-                        <phase>clean</phase>
-                        <goals>
-                            <goal>clean</goal>
-                        </goals>
-                    </execution>
-                </executions>
             </plugin>
         </plugins>
     </build>
 
+    <profiles>
+        <profile>
+            <id>release</id>
+            <activation>
+                <property>
+                    <name>release</name>
+                    <value>true</value>
+                </property>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-source-plugin</artifactId>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-javadoc-plugin</artifactId>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-gpg-plugin</artifactId>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.sonatype.plugins</groupId>
+                        <artifactId>nexus-staging-maven-plugin</artifactId>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-release-plugin</artifactId>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
 </project>

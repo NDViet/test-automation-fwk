@@ -4,7 +4,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
         <artifactId>libraries</artifactId>
-        <groupId>com.ndviet</groupId>
+        <groupId>io.github.ndviet</groupId>
         <version>${revision}</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
@@ -12,15 +12,9 @@
     <artifactId>library-listeners</artifactId>
     <name>Test Automation Libraries - Listeners</name>
 
-    <properties>
-        <maven.compiler.source>11</maven.compiler.source>
-        <maven.compiler.target>11</maven.compiler.target>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    </properties>
-
     <dependencies>
         <dependency>
-            <groupId>com.ndviet</groupId>
+            <groupId>io.github.ndviet</groupId>
             <artifactId>library-webui</artifactId>
             <classifier>shaded</classifier>
             <version>${revision}</version>
