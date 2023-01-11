@@ -51,4 +51,21 @@
         </developerConnection>
         <url>https://${github.url}/${github.organization}/${github.repository}/tree/${github.branch}</url>
     </scm>
+
+    <profiles>
+        <profile>
+            <id>flatten-pom</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.codehaus.mojo</groupId>
+                        <artifactId>flatten-maven-plugin</artifactId>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
 </project>
