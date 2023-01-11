@@ -11,8 +11,17 @@ Dependency graph.<br>
 * [Test Automation Framework Design](https://drive.google.com/file/d/1rBKc4p7IKA5iQXBX6F2gbWUtoq6sY1D9/view?usp=sharing)
 * [Test Automation Tech Stack Decision](https://drive.google.com/file/d/125eQoai7GzwMWq6vDXe5K2Hum-WmNyzj/view?usp=sharing)
 
-## Referrence
+## List dependency repositories
 
-A sample project is using this common test libraries.<br>
+1. [test-parent-pom](https://github.com/vietnd96/test-parent-pom)
+
+## System requires
+
+Java 17+ [Tested in [17.0.2 (build 17.0.2+8)](https://jdk.java.net/archive/)].<br>
+Maven 3.8.4+.
+
+## Reference
+
+A test project is using this common test framework.<br>
 
 * [test-automation-project](https://github.com/vietnd96/test-automation-project)
