@@ -9,8 +9,8 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>library-webui</artifactId>
-    <name>Test Libraries - Web</name>
+    <artifactId>test-libraries-webui</artifactId>
+    <name>Test Libraries - WebUI</name>
 
     <dependencies>
         <dependency>

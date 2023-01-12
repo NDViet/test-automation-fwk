@@ -15,7 +15,7 @@
     <dependencies>
         <dependency>
             <groupId>io.github.ndviet</groupId>
-            <artifactId>library-webui</artifactId>
+            <artifactId>test-libraries-webui</artifactId>
             <classifier>shaded</classifier>
             <version>${revision}</version>
         </dependency>
