@@ -10,14 +10,14 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>libraries</artifactId>
-    <name>Test Automation Libraries</name>
+    <artifactId>test-libraries</artifactId>
+    <name>Test Libraries</name>
     <packaging>pom</packaging>
     <modules>
-        <module>library-utilities</module>
-        <module>library-webui</module>
-        <module>library-api</module>
-        <module>library-listeners</module>
+        <module>test-libraries-utilities</module>
+        <module>test-libraries-webui</module>
+        <module>test-libraries-api</module>
+        <module>test-libraries-listeners</module>
     </modules>
 
     <dependencies>

@@ -3,19 +3,21 @@
          xmlns="http://maven.apache.org/POM/4.0.0"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <artifactId>libraries</artifactId>
+        <artifactId>test-libraries</artifactId>
         <groupId>io.github.ndviet</groupId>
         <version>${revision}</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>library-api</artifactId>
-    <name>Test Automation Libraries - API</name>
+    <artifactId>test-libraries-listeners</artifactId>
+    <name>Test Libraries - Listeners</name>
 
     <dependencies>
         <dependency>
-            <groupId>io.rest-assured</groupId>
-            <artifactId>rest-assured</artifactId>
+            <groupId>io.github.ndviet</groupId>
+            <artifactId>library-webui</artifactId>
+            <classifier>shaded</classifier>
+            <version>${revision}</version>
         </dependency>
     </dependencies>
 

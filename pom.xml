@@ -19,7 +19,7 @@
     <packaging>pom</packaging>
     <version>${revision}</version>
     <modules>
-        <module>libraries</module>
+        <module>test-libraries</module>
     </modules>
 
     <properties>
