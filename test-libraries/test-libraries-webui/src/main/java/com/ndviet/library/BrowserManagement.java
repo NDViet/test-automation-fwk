@@ -30,7 +30,7 @@ public class BrowserManagement {
     }
 
     public void openBrowser() {
-        if ("FIREFOX".equalsIgnoreCase(m_browser)) {
+        if (Browser.Type.FIREFOX.getName().equalsIgnoreCase(m_browser)) {
             m_driver = Browser.Type.FIREFOX.openBrowser();
         } else {
             m_driver = Browser.Type.CHROME.openBrowser();

@@ -25,6 +25,10 @@ public class PropertiesConfiguration extends Configuration implements Configurat
         }
         for (Object key : properties.keySet()) {
             this.m_data.put(key.toString(), properties.get(key.toString()).toString());
+            //Set property to system if it isn't present
+            if (!System.getProperties().containsKey(key)) {
+                System.setProperty(key.toString(), properties.get(key.toString()).toString());
+            }
         }
     }
 
