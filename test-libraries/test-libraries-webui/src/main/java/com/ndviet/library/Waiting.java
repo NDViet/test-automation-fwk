@@ -49,19 +49,29 @@ public class Waiting {
                 return getWaitDriver(driver, isWait, timeOut).until(
                         ExpectedConditions.refreshed(
                                 ExpectedConditions.elementToBeClickable(
-                                        ExpectedConditions.visibilityOf(
-                                                ExpectedConditions.presenceOfElementLocated(getBy(object)).apply(driver)
-                                        ).apply(driver))));
+                                        ExpectedConditions.presenceOfElementLocated(getBy(object)).apply(driver)
+                                )));
             }
         },
         VISIBILITY_OF {
             @Override
             public WebElement waitForElement(WebDriver driver, Object object, boolean isWait, int timeOut) {
                 return getWaitDriver(driver, isWait, timeOut).until(
-                        ExpectedConditions.visibilityOf(
-                                ExpectedConditions.presenceOfElementLocated(getBy(object)).apply(driver)));
+                        ExpectedConditions.refreshed(
+                                ExpectedConditions.visibilityOf(
+                                        ExpectedConditions.presenceOfElementLocated(getBy(object)).apply(driver)
+                                )));
             }
         },
+        VISIBILITY_OF_ELEMENT_LOCATED {
+            @Override
+            public WebElement waitForElement(WebDriver driver, Object object, boolean isWait, int timeOut) {
+                return getWaitDriver(driver, isWait, timeOut).until(
+                        ExpectedConditions.refreshed(
+                                ExpectedConditions.visibilityOfElementLocated(getBy(object))
+                        ));
+            }
+        }
     }
 
     protected enum Elements implements WaitElements {

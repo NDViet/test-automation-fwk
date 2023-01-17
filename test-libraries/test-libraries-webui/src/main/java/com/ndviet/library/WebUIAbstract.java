@@ -58,13 +58,13 @@ public class WebUIAbstract {
     }
 
     public static void scrollToElement(WebDriver driver, TestObject testObject) {
-        WebElement element = Waiting.Element.VISIBILITY_OF.waitForElement(driver, testObject, true, -1);
+        WebElement element = Waiting.Element.VISIBILITY_OF_ELEMENT_LOCATED.waitForElement(driver, testObject, true, -1);
         Actions action = new Actions(driver);
         action.scrollToElement(element).perform();
     }
 
     public static void uploadFile(WebDriver driver, TestObject testObject, String absolutePath) {
-        WebElement element = Waiting.Element.ELEMENT_TO_BE_CLICKABLE.waitForElement(driver, testObject, true, -1);
+        WebElement element = Waiting.Element.PRESENCE_OF_ELEMENT_LOCATED.waitForElement(driver, testObject, true, -1);
         element.sendKeys(absolutePath);
     }
 
@@ -73,7 +73,7 @@ public class WebUIAbstract {
     }
 
     public static void verifyElementVisible(WebDriver driver, TestObject testObject) {
-        WebElement element = Waiting.Element.VISIBILITY_OF.waitForElement(driver, testObject, true, -1);
+        WebElement element = Waiting.Element.VISIBILITY_OF_ELEMENT_LOCATED.waitForElement(driver, testObject, true, -1);
     }
 
     public static void verifyElementTextEquals(WebDriver driver, TestObject testObject, String expectText) {
