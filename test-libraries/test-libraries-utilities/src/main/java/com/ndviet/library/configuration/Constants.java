@@ -9,7 +9,8 @@ public class Constants {
     public static final String PROP_CONFIGURATION_BASE = "configuration.base";
     public static final String PROP_CONFIGURATION_ORDERING = "configuration.ordering";
     public static final String OBJECT_REPOSITORY_DIRECTORY = "testObjectRepository.directory";
-    public static final String WEB_IDENTIFIERS_DIRECTORY = "testObjectRepository.webIdentifiers";
+    public static final String WEB_ELEMENT_IDENTIFIERS_DIRECTORY = "webElementIdentifiers.directory";
+    public static final String TEST_DATA_DIRECTORY = "testData.directory";
     public static final String REMOTE_MACHINE_HOSTNAME = "machine.hostname";
     public static final String REMOTE_MACHINE_USERNAME = "machine.username";
     public static final String REMOTE_MACHINE_PASSWORD = "machine.password";

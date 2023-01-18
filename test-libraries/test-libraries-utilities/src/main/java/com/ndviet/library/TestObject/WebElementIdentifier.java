@@ -4,11 +4,9 @@ import com.ndviet.library.configuration.ConfigurationFactory;
 import com.ndviet.library.map.MapUtils;
 import com.ndviet.library.yaml.YamlUtils;
 
-import java.io.File;
 import java.util.LinkedHashMap;
 
-import static com.ndviet.library.configuration.Constants.OBJECT_REPOSITORY_DIRECTORY;
-import static com.ndviet.library.configuration.Constants.WEB_IDENTIFIERS_DIRECTORY;
+import static com.ndviet.library.configuration.Constants.WEB_ELEMENT_IDENTIFIERS_DIRECTORY;
 
 public class WebElementIdentifier {
     private static LinkedHashMap m_data = new LinkedHashMap<>();
@@ -26,8 +24,7 @@ public class WebElementIdentifier {
     }
 
     public void setElementFiles() throws Exception {
-        String directory = ConfigurationFactory.getInstance().getValue(OBJECT_REPOSITORY_DIRECTORY)
-                + File.separator + ConfigurationFactory.getInstance().getValue(WEB_IDENTIFIERS_DIRECTORY);
+        String directory = ConfigurationFactory.getInstance().getValue(WEB_ELEMENT_IDENTIFIERS_DIRECTORY);
         setElementFiles(directory);
     }
 
