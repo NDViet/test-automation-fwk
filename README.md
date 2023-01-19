@@ -72,4 +72,4 @@ mvn clean install
 
 A test project is using this common test framework.<br>
 
-* [test-automation-project](https://github.com/vietnd96/test-automation-project)
+* [test-automation-project](../../../test-automation-project)
