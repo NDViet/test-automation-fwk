@@ -13,12 +13,60 @@ Dependency graph.<br>
 
 ## List dependency repositories
 
-1. [test-parent-pom](https://github.com/vietnd96/test-parent-pom)
+* [test-parent-pom](https://github.com/vietnd96/test-parent-pom)
 
 ## System requires
 
 Java 17+ [Tested in [17.0.2 (build 17.0.2+8)](https://jdk.java.net/archive/)].<br>
 Maven 3.8.4+.
+
+## Dependencies declaration
+
+```xml
+<!-- https://mvnrepository.com/artifact/io.github.ndviet/test-libraries-webui -->
+<dependency>
+    <groupId>io.github.ndviet</groupId>
+    <artifactId>test-libraries-webui</artifactId>
+    <version>${version}</version>
+</dependency>
+```
+
+```xml
+<!-- https://mvnrepository.com/artifact/io.github.ndviet/test-libraries-utilities -->
+<dependency>
+    <groupId>io.github.ndviet</groupId>
+    <artifactId>test-libraries-utilities</artifactId>
+    <version>${version}</version>
+</dependency>
+```
+
+## Source code usage
+
+1. Clone repository "test-parent-pom" and this repository in the same directory
+
+```shell
+git clone git@github.com:vietnd96/test-parent-pom.git
+```
+
+```shell
+git clone git@github.com:vietnd96/test-automation-fwk.git
+```
+
+2. Build source code in each repository following the order
+
+- test-parent-pom
+
+```shell
+cd test-parent-pom
+mvn clean install
+```
+
+- test-automation-fwk
+
+```shell
+cd test-automation-fwk
+mvn clean install
+```
 
 ## Reference
 
