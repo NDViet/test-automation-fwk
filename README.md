@@ -13,7 +13,7 @@ Dependency graph.<br>
 
 ## List dependency repositories
 
-* [test-parent-pom](https://github.com/vietnd96/test-parent-pom)
+* [test-parent-pom](../../../test-parent-pom)
 
 ## System requires
 
