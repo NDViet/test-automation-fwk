@@ -23,18 +23,18 @@ Maven 3.8.4+.
 ## Dependencies declaration
 
 ```xml
-<!-- https://mvnrepository.com/artifact/io.github.ndviet/test-libraries-webui -->
+<!-- https://mvnrepository.com/artifact/org.ndviet/test-libraries-webui -->
 <dependency>
-    <groupId>io.github.ndviet</groupId>
+    <groupId>org.ndviet</groupId>
     <artifactId>test-libraries-webui</artifactId>
     <version>${version}</version>
 </dependency>
 ```
 
 ```xml
-<!-- https://mvnrepository.com/artifact/io.github.ndviet/test-libraries-utilities -->
+<!-- https://mvnrepository.com/artifact/org.ndviet/test-libraries-utilities -->
 <dependency>
-    <groupId>io.github.ndviet</groupId>
+    <groupId>org.ndviet</groupId>
     <artifactId>test-libraries-utilities</artifactId>
     <version>${version}</version>
 </dependency>
