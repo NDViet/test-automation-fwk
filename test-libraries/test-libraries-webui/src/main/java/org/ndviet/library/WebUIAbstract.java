@@ -1,8 +1,8 @@
 package org.ndviet.library;
 
-import org.ndviet.library.TestObject.TestObject;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.ndviet.library.TestObject.TestObject;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
@@ -14,8 +14,12 @@ public class WebUIAbstract {
     private static final Logger LOGGER = LogManager.getLogger(WebUIAbstract.class);
 
     public static void click(WebDriver driver, TestObject testObject) {
+        click(driver, testObject, -1);
+    }
+
+    public static void click(WebDriver driver, TestObject testObject, int timeout) {
         try {
-            WebElement element = Waiting.Element.ELEMENT_TO_BE_CLICKABLE.waitForElement(driver, testObject, true, -1);
+            WebElement element = Waiting.Element.ELEMENT_TO_BE_CLICKABLE.waitForElement(driver, testObject, true, timeout);
             WebElementHelpers.scrollIntoView(driver, element);
             element.click();
         } catch (Exception e) {
@@ -72,8 +76,16 @@ public class WebUIAbstract {
         WebElement element = Waiting.Element.PRESENCE_OF_ELEMENT_LOCATED.waitForElement(driver, testObject, true, -1);
     }
 
+    public static void verifyElementNotPresent(WebDriver driver, TestObject testObject) {
+        Waiting.Condition.NOT_PRESENCE_OF_ELEMENT_LOCATED.waitForElement(driver, testObject, true, -1, null);
+    }
+
     public static void verifyElementVisible(WebDriver driver, TestObject testObject) {
         WebElement element = Waiting.Element.VISIBILITY_OF_ELEMENT_LOCATED.waitForElement(driver, testObject, true, -1);
+    }
+
+    public static void verifyElementNotVisible(WebDriver driver, TestObject testObject) {
+        Waiting.Condition.INVISIBILITY_OF_ELEMENT_LOCATED.waitForElement(driver, testObject, true, -1, null);
     }
 
     public static void verifyElementTextEquals(WebDriver driver, TestObject testObject, String expectText) {

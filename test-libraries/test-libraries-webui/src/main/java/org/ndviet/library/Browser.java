@@ -1,8 +1,8 @@
 package org.ndviet.library;
 
-import org.ndviet.library.configuration.ConfigurationFactory;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.ndviet.library.configuration.ConfigurationFactory;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -14,12 +14,12 @@ import org.openqa.selenium.remote.RemoteWebDriver;
 import java.net.URL;
 import java.util.List;
 
+import static org.apache.commons.lang3.StringUtils.isEmpty;
 import static org.ndviet.library.configuration.Constants.SELENIUM_CHROME_ARGS;
 import static org.ndviet.library.configuration.Constants.SELENIUM_ENABLE_TRACING;
 import static org.ndviet.library.configuration.Constants.SELENIUM_FIREFOX_ARGS;
 import static org.ndviet.library.configuration.Constants.SELENIUM_HUB_URL;
 import static org.ndviet.library.configuration.Constants.SELENIUM_WEB_DRIVER_TYPE;
-import static org.apache.commons.lang3.StringUtils.isEmpty;
 
 public class Browser {
     private static final Logger LOGGER = LogManager.getLogger(Browser.class);

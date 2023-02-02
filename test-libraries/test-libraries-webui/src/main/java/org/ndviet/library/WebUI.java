@@ -22,6 +22,11 @@ public class WebUI {
         WebUIAbstract.click(driver, testObject);
     }
 
+    public static void click(TestObject testObject, int timeout) throws Exception {
+        WebDriver driver = BrowserManagement.getInstance().getDriver();
+        WebUIAbstract.click(driver, testObject, timeout);
+    }
+
     public static void setText(TestObject testObject, String text) throws Exception {
         WebDriver driver = BrowserManagement.getInstance().getDriver();
         WebUIAbstract.setText(driver, testObject, text);
@@ -57,9 +62,19 @@ public class WebUI {
         WebUIAbstract.verifyElementPresent(driver, testObject);
     }
 
+    public static void verifyElementNotPresent(TestObject testObject) throws Exception {
+        WebDriver driver = BrowserManagement.getInstance().getDriver();
+        WebUIAbstract.verifyElementNotPresent(driver, testObject);
+    }
+
     public static void verifyElementVisible(TestObject testObject) throws Exception {
         WebDriver driver = BrowserManagement.getInstance().getDriver();
         WebUIAbstract.verifyElementVisible(driver, testObject);
+    }
+
+    public static void verifyElementNotVisible(TestObject testObject) throws Exception {
+        WebDriver driver = BrowserManagement.getInstance().getDriver();
+        WebUIAbstract.verifyElementNotVisible(driver, testObject);
     }
 
     public static void verifyElementTextEquals(TestObject testObject, String expectText) throws Exception {

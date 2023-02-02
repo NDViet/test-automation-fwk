@@ -98,6 +98,12 @@ public class Waiting {
                                 ExpectedConditions.invisibilityOfElementLocated(getBy(object))));
             }
         },
+        NOT_PRESENCE_OF_ELEMENT_LOCATED {
+            @Override
+            public boolean waitForElement(WebDriver driver, Object object, boolean isWait, int timeOut, String expectText) {
+                return getWaitDriver(driver, isWait, timeOut).until(ExpectedConditions.not(ExpectedConditions.presenceOfElementLocated(getBy(object))));
+            }
+        },
         TEXT_TO_BE_PRESENT_IN_ELEMENT_LOCATED {
             @Override
             public boolean waitForElement(WebDriver driver, Object object, boolean isWait, int timeOut, String expectText) {

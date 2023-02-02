@@ -1,9 +1,9 @@
 package org.ndviet.library;
 
-import org.ndviet.library.configuration.ConfigurationFactory;
-import org.ndviet.library.file.FileHelpers;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.ndviet.library.configuration.ConfigurationFactory;
+import org.ndviet.library.file.FileHelpers;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.io.FileHandler;
 import org.openqa.selenium.remote.RemoteWebDriver;
