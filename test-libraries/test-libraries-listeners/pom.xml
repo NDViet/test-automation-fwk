@@ -16,7 +16,6 @@
         <dependency>
             <groupId>org.ndviet</groupId>
             <artifactId>test-libraries-webui</artifactId>
-            <classifier>shaded</classifier>
             <version>${revision}</version>
         </dependency>
     </dependencies>
