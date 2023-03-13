@@ -1,4 +1,4 @@
-[![Java CI with Maven](https://github.com/vietnd96/test-automation-fwk/actions/workflows/maven.yml/badge.svg?branch=master)](https://github.com/vietnd96/test-automation-fwk/actions/workflows/maven.yml)
+[![Java CI with Maven](https://github.com/ndviet/test-automation-fwk/actions/workflows/maven.yml/badge.svg?branch=master)](https://github.com/ndviet/test-automation-fwk/actions/workflows/maven.yml)
 
 ## Introduction
 
@@ -45,11 +45,11 @@ Maven 3.8.4+.
 1. Clone repository "test-parent-pom" and this repository in the same directory
 
 ```shell
-git clone git@github.com:vietnd96/test-parent-pom.git
+git clone git@github.com:ndviet/test-parent-pom.git
 ```
 
 ```shell
-git clone git@github.com:vietnd96/test-automation-fwk.git
+git clone git@github.com:ndviet/test-automation-fwk.git
 ```
 
 2. Build source code in each repository following the order
