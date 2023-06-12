@@ -1,6 +1,7 @@
 package org.ndviet.library.configuration;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -52,7 +53,12 @@ public class ConfigurationFactory implements ConfigurationInterface {
     }
 
     @Override
-    public List<String> getListValues(String key) {
+    public List getListValues(String key) {
         return m_configurations.getListValues(key);
+    }
+
+    @Override
+    public LinkedHashMap getMapValues(String key) {
+        return m_configurations.getMapValues(key);
     }
 }

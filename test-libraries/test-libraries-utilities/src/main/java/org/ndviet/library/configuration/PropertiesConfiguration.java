@@ -38,7 +38,12 @@ public class PropertiesConfiguration extends Configuration implements Configurat
     }
 
     @Override
-    public List<String> getListValues(String key) {
+    public List getListValues(String key) {
+        return null;
+    }
+
+    @Override
+    public LinkedHashMap getMapValues(String key) {
         return null;
     }
 }

@@ -1,7 +1,9 @@
 package org.ndviet.library.configuration;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 public class ConfigurationOrdering implements ConfigurationInterface {
@@ -54,12 +56,23 @@ public class ConfigurationOrdering implements ConfigurationInterface {
     }
 
     @Override
-    public List<String> getListValues(String key) {
-        List<String> values = null;
+    public List getListValues(String key) {
+        List values = null;
         Iterator<Configuration> iterator = m_configurations.iterator();
         do {
             Configuration configuration = iterator.next();
             values = configuration.getListValues(key);
+        } while (values == null && iterator.hasNext());
+        return values;
+    }
+
+    @Override
+    public LinkedHashMap getMapValues(String key) {
+        LinkedHashMap values = null;
+        Iterator<Configuration> iterator = m_configurations.iterator();
+        do {
+            Configuration configuration = iterator.next();
+            values = configuration.getMapValues(key);
         } while (values == null && iterator.hasNext());
         return values;
     }

@@ -19,7 +19,7 @@ import static org.ndviet.library.configuration.Constants.SELENIUM_CHROME_ARGS;
 import static org.ndviet.library.configuration.Constants.SELENIUM_ENABLE_TRACING;
 import static org.ndviet.library.configuration.Constants.SELENIUM_FIREFOX_ARGS;
 import static org.ndviet.library.configuration.Constants.SELENIUM_HUB_URL;
-import static org.ndviet.library.configuration.Constants.SELENIUM_WEB_DRIVER_TYPE;
+import static org.ndviet.library.configuration.Constants.SELENIUM_WEB_DRIVER_TARGET;
 
 public class Browser {
     private static final Logger LOGGER = LogManager.getLogger(Browser.class);
@@ -29,10 +29,10 @@ public class Browser {
     }
 
     public static boolean isRemoteWebDriver() {
-        if (isEmpty(ConfigurationFactory.getInstance().getValue(SELENIUM_WEB_DRIVER_TYPE))) {
+        if (isEmpty(ConfigurationFactory.getInstance().getValue(SELENIUM_WEB_DRIVER_TARGET))) {
             return false;
         } else {
-            return ConfigurationFactory.getInstance().getValue(SELENIUM_WEB_DRIVER_TYPE).equalsIgnoreCase(DRIVER_TYPE.REMOTE.toString());
+            return ConfigurationFactory.getInstance().getValue(SELENIUM_WEB_DRIVER_TARGET).equalsIgnoreCase(DRIVER_TYPE.REMOTE.toString());
         }
     }
 
