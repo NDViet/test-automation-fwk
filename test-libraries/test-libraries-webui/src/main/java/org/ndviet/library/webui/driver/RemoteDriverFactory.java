@@ -2,7 +2,7 @@ package org.ndviet.library.webui.driver;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.ndviet.library.configuration.ConfigurationFactory;
+import org.ndviet.library.configuration.ConfigurationManager;
 import org.openqa.selenium.MutableCapabilities;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.remote.RemoteWebDriver;
@@ -18,7 +18,7 @@ public class RemoteDriverFactory {
     public static WebDriver createRemoteInstance(String browser) {
         MutableCapabilities capability = BrowserFactory.valueOf(browser.toUpperCase()).getOptions();
         try {
-            String hubUrl = ConfigurationFactory.getInstance().getValue(SELENIUM_HUB_URL);
+            String hubUrl = ConfigurationManager.getInstance().getValue(SELENIUM_HUB_URL);
             return new RemoteWebDriver(new URL(hubUrl), capability, getEnableTracing());
         } catch (Exception e) {
             LOGGER.error("Could not open the browser.\n" + e.getMessage());
@@ -27,6 +27,6 @@ public class RemoteDriverFactory {
     }
 
     public static boolean getEnableTracing() {
-        return Boolean.parseBoolean(ConfigurationFactory.getInstance().getValue(SELENIUM_ENABLE_TRACING));
+        return Boolean.parseBoolean(ConfigurationManager.getInstance().getValue(SELENIUM_ENABLE_TRACING));
     }
 }

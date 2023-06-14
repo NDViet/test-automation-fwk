@@ -34,4 +34,5 @@ public class Constants {
     public static final String SELENIUM_CHROME_ARGS = "selenium.browser.chrome.args";
     public static final String SELENIUM_CHROME_PREFS = "selenium.browser.chrome.prefs";
     public static final String SELENIUM_FIREFOX_ARGS = "selenium.browser.firefox.args";
+    public static final String SELENIUM_FIREFOX_PREFS = "selenium.browser.firefox.prefs";
 }

@@ -6,7 +6,7 @@ import org.ndviet.library.map.MapUtils;
 import java.util.LinkedHashMap;
 import java.util.List;
 
-public class JsonConfiguration extends Configuration implements ConfigurationInterface {
+public class JsonConfiguration extends AbstractConfiguration {
     public JsonConfiguration() {
         super();
     }
@@ -23,7 +23,12 @@ public class JsonConfiguration extends Configuration implements ConfigurationInt
 
     @Override
     public List getListValues(String key) {
-        return (List) MapUtils.getValueAsObject(this.m_data, key);
+        Object values = MapUtils.getValueAsObject(this.m_data, key);
+        if (values instanceof List || values == null) {
+            return (List) values;
+        } else {
+            throw new RuntimeException("Return object is not a List");
+        }
     }
 
     @Override

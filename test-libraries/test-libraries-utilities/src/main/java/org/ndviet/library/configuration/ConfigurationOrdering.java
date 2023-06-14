@@ -1,13 +1,12 @@
 package org.ndviet.library.configuration;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 
-public class ConfigurationOrdering implements ConfigurationInterface {
-    private List<Configuration> m_configurations = new ArrayList<>();
+public class ConfigurationOrdering implements IConfiguration {
+    private List<AbstractConfiguration> m_configurations = new ArrayList<>();
 
     public ConfigurationOrdering(String baseConfigFile, List<String> orderingConfigFiles) throws Exception {
         setConfig(initializeConfiguration(null));
@@ -17,14 +16,14 @@ public class ConfigurationOrdering implements ConfigurationInterface {
         setConfig(initializeConfiguration(baseConfigFile));
     }
 
-    private void setConfig(Configuration configuration) {
+    private void setConfig(AbstractConfiguration configuration) {
         if (configuration != null) {
             m_configurations.add(configuration);
         }
     }
 
-    private Configuration initializeConfiguration(String configFilePath) throws Exception {
-        Configuration configuration;
+    private AbstractConfiguration initializeConfiguration(String configFilePath) throws Exception {
+        AbstractConfiguration configuration;
         if (configFilePath == null) {
             configuration = new PropertiesConfiguration();
             configuration.readConfigurationFrom(configFilePath);
@@ -47,9 +46,9 @@ public class ConfigurationOrdering implements ConfigurationInterface {
     @Override
     public String getValue(String key) {
         String value = null;
-        Iterator<Configuration> iterator = m_configurations.iterator();
+        Iterator<AbstractConfiguration> iterator = m_configurations.iterator();
         do {
-            Configuration configuration = iterator.next();
+            AbstractConfiguration configuration = iterator.next();
             value = configuration.getValue(key);
         } while (value == null && iterator.hasNext());
         return value;
@@ -58,9 +57,9 @@ public class ConfigurationOrdering implements ConfigurationInterface {
     @Override
     public List getListValues(String key) {
         List values = null;
-        Iterator<Configuration> iterator = m_configurations.iterator();
+        Iterator<AbstractConfiguration> iterator = m_configurations.iterator();
         do {
-            Configuration configuration = iterator.next();
+            AbstractConfiguration configuration = iterator.next();
             values = configuration.getListValues(key);
         } while (values == null && iterator.hasNext());
         return values;
@@ -69,9 +68,9 @@ public class ConfigurationOrdering implements ConfigurationInterface {
     @Override
     public LinkedHashMap getMapValues(String key) {
         LinkedHashMap values = null;
-        Iterator<Configuration> iterator = m_configurations.iterator();
+        Iterator<AbstractConfiguration> iterator = m_configurations.iterator();
         do {
-            Configuration configuration = iterator.next();
+            AbstractConfiguration configuration = iterator.next();
             values = configuration.getMapValues(key);
         } while (values == null && iterator.hasNext());
         return values;

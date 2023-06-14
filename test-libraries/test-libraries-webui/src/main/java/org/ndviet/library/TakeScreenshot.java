@@ -2,7 +2,7 @@ package org.ndviet.library;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.ndviet.library.configuration.ConfigurationFactory;
+import org.ndviet.library.configuration.ConfigurationManager;
 import org.ndviet.library.file.FileHelpers;
 import org.ndviet.library.webui.driver.DriverManager;
 import org.openqa.selenium.OutputType;
@@ -33,7 +33,7 @@ public class TakeScreenshot {
     }
 
     private static String getScreenshotFileType() {
-        String fileType = ConfigurationFactory.getInstance().getValue(SELENIUM_SCREENSHOT_FILE_TYPE);
+        String fileType = ConfigurationManager.getInstance().getValue(SELENIUM_SCREENSHOT_FILE_TYPE);
         if (fileType != null && !fileType.isEmpty()) {
             return fileType;
         } else {
@@ -42,7 +42,7 @@ public class TakeScreenshot {
     }
 
     private static String getScreenshotDirectory() {
-        String fileType = ConfigurationFactory.getInstance().getValue(SELENIUM_SCREENSHOT_DIRECTORY);
+        String fileType = ConfigurationManager.getInstance().getValue(SELENIUM_SCREENSHOT_DIRECTORY);
         if (fileType != null && !fileType.isEmpty()) {
             return fileType;
         } else {

@@ -2,7 +2,7 @@ package org.ndviet.library.webui.driver;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.ndviet.library.configuration.ConfigurationFactory;
+import org.ndviet.library.configuration.ConfigurationManager;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -17,6 +17,8 @@ import java.util.List;
 
 import static org.ndviet.library.configuration.Constants.SELENIUM_CHROME_ARGS;
 import static org.ndviet.library.configuration.Constants.SELENIUM_CHROME_PREFS;
+import static org.ndviet.library.configuration.Constants.SELENIUM_FIREFOX_ARGS;
+import static org.ndviet.library.configuration.Constants.SELENIUM_FIREFOX_PREFS;
 
 public enum BrowserFactory {
     CHROME {
@@ -28,12 +30,14 @@ public enum BrowserFactory {
         @Override
         public ChromeOptions getOptions() {
             ChromeOptions options = new ChromeOptions();
-            List<String> listArgs = ConfigurationFactory.getInstance().getListValues(SELENIUM_CHROME_ARGS);
+            List<String> listArgs = ConfigurationManager.getInstance().getListValues(SELENIUM_CHROME_ARGS);
             options.addArguments(listArgs.toArray(new String[0]));
-            LinkedHashMap listPrefs = ConfigurationFactory.getInstance().getMapValues(SELENIUM_CHROME_PREFS);
-            listPrefs.forEach((key, value) -> {
-                options.setCapability(key.toString(), value);
-            });
+            LinkedHashMap listPrefs = ConfigurationManager.getInstance().getMapValues(SELENIUM_CHROME_PREFS);
+            if (listPrefs != null) {
+                listPrefs.forEach((key, value) -> {
+                    options.setCapability(key.toString(), value);
+                });
+            }
             return options;
         }
     },
@@ -45,7 +49,16 @@ public enum BrowserFactory {
 
         @Override
         public FirefoxOptions getOptions() {
-            return null;
+            FirefoxOptions options = new FirefoxOptions();
+            List<String> listArgs = ConfigurationManager.getInstance().getListValues(SELENIUM_FIREFOX_ARGS);
+            options.addArguments(listArgs.toArray(new String[0]));
+            LinkedHashMap listPrefs = ConfigurationManager.getInstance().getMapValues(SELENIUM_FIREFOX_PREFS);
+            if (listPrefs != null) {
+                listPrefs.forEach((key, value) -> {
+                    options.setCapability(key.toString(), value);
+                });
+            }
+            return options;
         }
     },
     EDGE {

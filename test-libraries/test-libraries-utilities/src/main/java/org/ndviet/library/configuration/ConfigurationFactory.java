@@ -1,7 +1,6 @@
 package org.ndviet.library.configuration;
 
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -9,29 +8,22 @@ import java.util.stream.Collectors;
 import static org.ndviet.library.configuration.Constants.PROP_CONFIGURATION_BASE;
 import static org.ndviet.library.configuration.Constants.PROP_CONFIGURATION_ORDERING;
 
-public class ConfigurationFactory implements ConfigurationInterface {
+public class ConfigurationFactory {
 
-    private static ConfigurationFactory m_instance = null;
-    private static ConfigurationOrdering m_configurations;
-
-    public ConfigurationFactory() throws Exception {
-        PropertiesConfiguration propertiesConfiguration = new PropertiesConfiguration();
-        propertiesConfiguration.readConfigurationFrom(null);
-        List<String> configurationOrdering = extractOrderingConfigurations(propertiesConfiguration);
-        m_configurations = new ConfigurationOrdering(propertiesConfiguration.getValue(PROP_CONFIGURATION_BASE), configurationOrdering);
+    public static ConfigurationOrdering createInstance() {
+        ConfigurationOrdering configurations;
+        try {
+            PropertiesConfiguration propertiesConfiguration = new PropertiesConfiguration();
+            propertiesConfiguration.readConfigurationFrom(null);
+            List<String> configurationOrdering = extractOrderingConfigurations(propertiesConfiguration);
+            configurations = new ConfigurationOrdering(propertiesConfiguration.getValue(PROP_CONFIGURATION_BASE), configurationOrdering);
+        } catch (Exception e) {
+            throw new RuntimeException("Could not create Configuration instance");
+        }
+        return configurations;
     }
 
-    public static ConfigurationFactory getInstance() {
-        if (m_instance == null)
-            try {
-                m_instance = new ConfigurationFactory();
-            } catch (Exception ex) {
-
-            }
-        return m_instance;
-    }
-
-    private List<String> extractOrderingConfigurations(Configuration configuration) {
+    private static List<String> extractOrderingConfigurations(AbstractConfiguration configuration) {
         List<String> listKeys = new ArrayList<>();
         for (String key : (Set<String>) configuration.getData().keySet()) {
             if (key.contains(PROP_CONFIGURATION_ORDERING)) {
@@ -45,20 +37,5 @@ public class ConfigurationFactory implements ConfigurationInterface {
                 listFiles.add(configuration.getValue(key));
         }
         return listFiles;
-    }
-
-    @Override
-    public String getValue(String key) {
-        return m_configurations.getValue(key);
-    }
-
-    @Override
-    public List getListValues(String key) {
-        return m_configurations.getListValues(key);
-    }
-
-    @Override
-    public LinkedHashMap getMapValues(String key) {
-        return m_configurations.getMapValues(key);
     }
 }
