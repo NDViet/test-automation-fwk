@@ -2,8 +2,9 @@ package org.ndviet.library;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.ndviet.library.configuration.ConfigurationFactory;
+import org.ndviet.library.configuration.ConfigurationManager;
 import org.ndviet.library.file.FileHelpers;
+import org.ndviet.library.webui.driver.DriverManager;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.io.FileHandler;
 import org.openqa.selenium.remote.RemoteWebDriver;
@@ -32,7 +33,7 @@ public class TakeScreenshot {
     }
 
     private static String getScreenshotFileType() {
-        String fileType = ConfigurationFactory.getInstance().getValue(SELENIUM_SCREENSHOT_FILE_TYPE);
+        String fileType = ConfigurationManager.getInstance().getValue(SELENIUM_SCREENSHOT_FILE_TYPE);
         if (fileType != null && !fileType.isEmpty()) {
             return fileType;
         } else {
@@ -41,7 +42,7 @@ public class TakeScreenshot {
     }
 
     private static String getScreenshotDirectory() {
-        String fileType = ConfigurationFactory.getInstance().getValue(SELENIUM_SCREENSHOT_DIRECTORY);
+        String fileType = ConfigurationManager.getInstance().getValue(SELENIUM_SCREENSHOT_DIRECTORY);
         if (fileType != null && !fileType.isEmpty()) {
             return fileType;
         } else {
@@ -50,7 +51,7 @@ public class TakeScreenshot {
     }
 
     public static String captureFullPageScreenshot(String fileName) throws Exception {
-        RemoteWebDriver driver = (RemoteWebDriver) BrowserManagement.getInstance().getDriver();
+        RemoteWebDriver driver = (RemoteWebDriver) DriverManager.getDriver();
         Screenshot screenshot = new AShot().shootingStrategy(ShootingStrategies.viewportPasting(1000)).takeScreenshot(driver);
         File targetFile = getTargetFile(fileName);
         ImageIO.write(screenshot.getImage(), m_fileType, targetFile);
@@ -59,7 +60,7 @@ public class TakeScreenshot {
     }
 
     public static String capturePageScreenshot(String fileName) throws Exception {
-        RemoteWebDriver driver = (RemoteWebDriver) BrowserManagement.getInstance().getDriver();
+        RemoteWebDriver driver = (RemoteWebDriver) DriverManager.getDriver();
         File source = driver.getScreenshotAs(OutputType.FILE);
         File targetFile = getTargetFile(fileName);
         FileHandler.copy(source, targetFile);

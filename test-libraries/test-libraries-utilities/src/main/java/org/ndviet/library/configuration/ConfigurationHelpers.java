@@ -11,7 +11,7 @@ public class ConfigurationHelpers {
     private static final Logger LOGGER = LogManager.getLogger(ConfigurationHelpers.class);
 
     public static Locale getSystemLocale() {
-        String localeLanguageTag = ConfigurationFactory.getInstance().getValue(LOCALE_LANGUAGE_TAG);
+        String localeLanguageTag = ConfigurationManager.getInstance().getValue(LOCALE_LANGUAGE_TAG);
         localeLanguageTag = (localeLanguageTag == null) ? "en-US" : localeLanguageTag;
         String[] components = localeLanguageTag.split("-");
         Locale locale;

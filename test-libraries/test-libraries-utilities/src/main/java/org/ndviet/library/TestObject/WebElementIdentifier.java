@@ -1,6 +1,6 @@
 package org.ndviet.library.TestObject;
 
-import org.ndviet.library.configuration.ConfigurationFactory;
+import org.ndviet.library.configuration.ConfigurationManager;
 import org.ndviet.library.map.MapUtils;
 import org.ndviet.library.yaml.YamlUtils;
 
@@ -24,7 +24,7 @@ public class WebElementIdentifier {
     }
 
     public void setElementFiles() throws Exception {
-        String directory = ConfigurationFactory.getInstance().getValue(WEB_ELEMENT_IDENTIFIERS_DIRECTORY);
+        String directory = ConfigurationManager.getInstance().getValue(WEB_ELEMENT_IDENTIFIERS_DIRECTORY);
         setElementFiles(directory);
     }
 

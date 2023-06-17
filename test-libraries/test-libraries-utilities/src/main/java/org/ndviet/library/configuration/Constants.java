@@ -27,10 +27,12 @@ public class Constants {
     public static final int DEFAULT_SCREENSHOT_COUNT = 1;
     public static final String SELENIUM_SCREENSHOT_DIRECTORY = "selenium.screenshot.directory";
     public static final String SELENIUM_SCREENSHOT_FILE_TYPE = "selenium.screenshot.fileType";
-    public static final String SELENIUM_WEB_DRIVER_TYPE = "selenium.web_driver.type";
+    public static final String SELENIUM_WEB_DRIVER_TARGET = "selenium.web_driver.target";
     public static final String SELENIUM_ENABLE_TRACING = "selenium.enableTracing";
     public static final String SELENIUM_BROWSER_TYPE = "selenium.browser.type";
     public static final String SELENIUM_DEFAULT_TIMEOUT = "selenium.default.timeOut";
     public static final String SELENIUM_CHROME_ARGS = "selenium.browser.chrome.args";
+    public static final String SELENIUM_CHROME_PREFS = "selenium.browser.chrome.prefs";
     public static final String SELENIUM_FIREFOX_ARGS = "selenium.browser.firefox.args";
+    public static final String SELENIUM_FIREFOX_PREFS = "selenium.browser.firefox.prefs";
 }

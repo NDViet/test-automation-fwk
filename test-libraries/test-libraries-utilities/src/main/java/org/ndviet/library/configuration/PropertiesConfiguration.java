@@ -6,7 +6,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Properties;
 
-public class PropertiesConfiguration extends Configuration implements ConfigurationInterface {
+public class PropertiesConfiguration extends AbstractConfiguration {
     public PropertiesConfiguration() {
         super();
         this.m_data = new LinkedHashMap<String, String>();
@@ -38,7 +38,12 @@ public class PropertiesConfiguration extends Configuration implements Configurat
     }
 
     @Override
-    public List<String> getListValues(String key) {
+    public List getListValues(String key) {
+        return null;
+    }
+
+    @Override
+    public LinkedHashMap getMapValues(String key) {
         return null;
     }
 }
