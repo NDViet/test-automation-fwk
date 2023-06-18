@@ -17,6 +17,7 @@
         <module>test-libraries-utilities</module>
         <module>test-libraries-webui</module>
         <module>test-libraries-api</module>
+        <module>test-libraries-kubernetes</module>
         <module>test-libraries-listeners</module>
     </modules>
 
