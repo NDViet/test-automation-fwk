@@ -35,6 +35,11 @@ public class TargetFactory {
         }
     }
 
+    public static boolean isRemoteTarget() {
+        String target = ConfigurationManager.getInstance().getValue(SELENIUM_WEB_DRIVER_TARGET);
+        return Target.valueOf(target.toUpperCase()) == Target.REMOTE;
+    }
+
     public enum Target {
         LOCAL, REMOTE;
     }

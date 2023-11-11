@@ -3,9 +3,12 @@ package org.ndviet.library;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.ndviet.library.TestObject.TestObject;
+import org.ndviet.library.webui.driver.TargetFactory;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.remote.LocalFileDetector;
+import org.openqa.selenium.remote.RemoteWebDriver;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -68,6 +71,9 @@ public class WebUIAbstract {
     }
 
     public static void uploadFile(WebDriver driver, TestObject testObject, String absolutePath) {
+        if (TargetFactory.isRemoteTarget()) {
+            ((RemoteWebDriver) driver).setFileDetector(new LocalFileDetector());
+        }
         WebElement element = Waiting.Element.PRESENCE_OF_ELEMENT_LOCATED.waitForElement(driver, testObject, true, -1);
         element.sendKeys(absolutePath);
     }
