@@ -7,7 +7,7 @@
     <parent>
         <groupId>org.ndviet</groupId>
         <artifactId>test-parent-pom</artifactId>
-        <version>23.11.11</version>
+        <version>${revision}</version>
         <relativePath>../test-parent-pom/pom.xml</relativePath>
     </parent>
 
@@ -23,7 +23,6 @@
     </modules>
 
     <properties>
-        <revision>1.0.0-SNAPSHOT</revision>
         <github.repository>test-automation-fwk</github.repository>
     </properties>
 
