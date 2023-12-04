@@ -48,8 +48,8 @@ public class MathHelpers {
 
     public static boolean isCreatable(String text) {
         try {
-            createNumber(text);
-            return true;
+            Double number = createNumber(text);
+            return number != null;
         } catch (Exception e) {
             return false;
         }

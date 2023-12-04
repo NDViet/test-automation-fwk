@@ -31,7 +31,9 @@ public enum BrowserFactory {
         public ChromeOptions getOptions() {
             ChromeOptions options = new ChromeOptions();
             List<String> listArgs = ConfigurationManager.getInstance().getListValues(SELENIUM_CHROME_ARGS);
-            options.addArguments(listArgs.toArray(new String[0]));
+            if (listArgs != null) {
+                listArgs.forEach(arg -> options.addArguments(arg));
+            }
             LinkedHashMap listPrefs = ConfigurationManager.getInstance().getMapValues(SELENIUM_CHROME_PREFS);
             if (listPrefs != null) {
                 listPrefs.forEach((key, value) -> {
