@@ -22,7 +22,7 @@ public class RemoteDriverFactory {
             return new RemoteWebDriver(new URL(hubUrl), capability, getEnableTracing());
         } catch (Exception e) {
             LOGGER.error("Could not open the browser.\n" + e.getMessage());
-            return null;
+            throw new RuntimeException(e);
         }
     }
 
