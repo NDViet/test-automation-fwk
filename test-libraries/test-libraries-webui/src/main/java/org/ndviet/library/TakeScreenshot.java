@@ -51,7 +51,7 @@ public class TakeScreenshot {
     }
 
     public static String captureFullPageScreenshot(String fileName) throws Exception {
-        RemoteWebDriver driver = (RemoteWebDriver) DriverManager.getDriver();
+        RemoteWebDriver driver = (RemoteWebDriver) DriverManager.getInstance().getDriver();
         Screenshot screenshot = new AShot().shootingStrategy(ShootingStrategies.viewportPasting(1000)).takeScreenshot(driver);
         File targetFile = getTargetFile(fileName);
         ImageIO.write(screenshot.getImage(), m_fileType, targetFile);
@@ -60,7 +60,7 @@ public class TakeScreenshot {
     }
 
     public static String capturePageScreenshot(String fileName) throws Exception {
-        RemoteWebDriver driver = (RemoteWebDriver) DriverManager.getDriver();
+        RemoteWebDriver driver = (RemoteWebDriver) DriverManager.getInstance().getDriver();
         File source = driver.getScreenshotAs(OutputType.FILE);
         File targetFile = getTargetFile(fileName);
         FileHandler.copy(source, targetFile);

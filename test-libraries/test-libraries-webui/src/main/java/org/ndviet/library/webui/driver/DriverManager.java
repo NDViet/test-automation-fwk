@@ -1,24 +1,35 @@
 package org.ndviet.library.webui.driver;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.WebDriver;
 
 public class DriverManager {
-    private static final ThreadLocal<WebDriver> driver = new ThreadLocal<>();
+    private static final Logger LOGGER = LogManager.getLogger(DriverManager.class);
+
+    private WebDriver driver = null;
+    private static DriverManager instance;
 
     private DriverManager() {
     }
 
-    public static WebDriver getDriver() {
-        return driver.get();
+    public static DriverManager getInstance() {
+        if (instance == null) {
+            instance = new DriverManager();
+        }
+        return instance;
     }
 
-    public static void setDriver(WebDriver driver) {
-        DriverManager.driver.set(driver);
+    public WebDriver getDriver() {
+        LOGGER.info("Get driver instance: " + this.driver);
+        return this.driver;
     }
 
-    public static void quit() {
-        DriverManager.driver.get().quit();
-        driver.remove();
+    public void setDriver(WebDriver driver) {
+        this.driver = driver;
     }
 
+    public void quit() {
+        this.driver.quit();
+    }
 }
