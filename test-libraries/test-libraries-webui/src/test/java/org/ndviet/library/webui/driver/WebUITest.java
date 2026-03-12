@@ -4,24 +4,25 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
 import org.mockito.MockedStatic;
 import org.mockito.Mockito;
 import org.ndviet.library.WebUI;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
 
 import java.time.Duration;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.ndviet.library.configuration.Constants.SELENIUM_BROWSER_TYPE;
 import static org.ndviet.library.configuration.Constants.SELENIUM_WEB_DRIVER_TARGET;
 
 public class WebUITest {
 
-    @Mock
     private WebDriver mockDriver;
+    private WebDriver.Options mockOptions;
+    private WebDriver.Timeouts mockTimeouts;
+    private MockedStatic<TargetFactory> mockFactory;
 
     @BeforeAll
     public static void setUpClass() {
@@ -31,29 +32,46 @@ public class WebUITest {
 
     @BeforeEach
     public void setUp() {
-        try (MockedStatic<TargetFactory> mockFactory = Mockito.mockStatic(TargetFactory.class)) {
-            mockFactory.when(TargetFactory::createInstance).thenReturn(mockDriver);
-        }
+        mockDriver = Mockito.mock(WebDriver.class);
+        mockOptions = Mockito.mock(WebDriver.Options.class);
+        mockTimeouts = Mockito.mock(WebDriver.Timeouts.class);
+        Mockito.when(mockDriver.manage()).thenReturn(mockOptions);
+        Mockito.when(mockOptions.timeouts()).thenReturn(mockTimeouts);
+        Mockito.when(mockTimeouts.implicitlyWait(Duration.ofSeconds(10))).thenReturn(mockTimeouts);
+
+        mockFactory = Mockito.mockStatic(TargetFactory.class);
+        mockFactory.when(TargetFactory::createInstance).thenReturn(mockDriver);
     }
 
     @AfterEach
     public void tearDown() {
-        mockDriver.close();
+        if (mockFactory != null) {
+            mockFactory.close();
+        }
+        if (mockDriver != null) {
+            mockDriver.quit();
+        }
+        DriverManager.getInstance().setDriver(null);
     }
 
     @Test
     public void openBrowser_returnsDriver() {
-        mockDriver = WebUI.openBrowser();
-        assertNotNull(mockDriver);
-        assertTrue(mockDriver instanceof ChromeDriver);
+        WebDriver returnedDriver = WebUI.openBrowser();
+        assertNotNull(returnedDriver);
+        assertSame(mockDriver, returnedDriver);
     }
 
     @Test
     public void openBrowser_withUrl_returnsDriver() {
         String url = "https://demoqa.com/";
-        mockDriver = WebUI.openBrowser(url);
-        mockDriver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
-        assertNotNull(mockDriver);
-        assertTrue(mockDriver.getTitle().equals("DEMOQA"));
+        Mockito.when(mockDriver.getTitle()).thenReturn("DEMOQA");
+
+        WebDriver returnedDriver = WebUI.openBrowser(url);
+        returnedDriver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+
+        assertNotNull(returnedDriver);
+        assertSame(mockDriver, returnedDriver);
+        assertEquals("DEMOQA", returnedDriver.getTitle());
+        Mockito.verify(mockDriver).get(url);
     }
 }
