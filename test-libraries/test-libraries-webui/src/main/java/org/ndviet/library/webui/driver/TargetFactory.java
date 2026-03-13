@@ -24,12 +24,14 @@ public class TargetFactory {
     }
 
     public static WebDriver createInstance(String browser, String target) {
-        Target instance = Target.valueOf(target.toUpperCase());
+        String normalizedBrowser = browser == null || browser.isBlank() ? "chrome" : browser;
+        String normalizedTarget = target == null || target.isBlank() ? "local" : target;
+        Target instance = Target.valueOf(normalizedTarget.toUpperCase());
         switch (instance) {
             case LOCAL:
-                return BrowserFactory.valueOf(browser.toUpperCase()).createLocalDriver();
+                return BrowserFactory.valueOf(normalizedBrowser.toUpperCase()).createLocalDriver();
             case REMOTE:
-                return createRemoteInstance(browser);
+                return createRemoteInstance(normalizedBrowser);
             default:
                 throw new RuntimeException("Target is still not support!");
         }
@@ -37,7 +39,8 @@ public class TargetFactory {
 
     public static boolean isRemoteTarget() {
         String target = ConfigurationManager.getInstance().getValue(SELENIUM_WEB_DRIVER_TARGET);
-        return Target.valueOf(target.toUpperCase()) == Target.REMOTE;
+        String normalizedTarget = target == null || target.isBlank() ? "local" : target;
+        return Target.valueOf(normalizedTarget.toUpperCase()) == Target.REMOTE;
     }
 
     public enum Target {

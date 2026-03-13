@@ -11,6 +11,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
 import java.util.List;
+import java.util.Locale;
 
 public class WebElementHelpers {
     private static final Logger LOGGER = LogManager.getLogger(WebElementHelpers.class);
@@ -22,13 +23,37 @@ public class WebElementHelpers {
         } else {
             textObject = object.toString();
         }
-        if (textObject.startsWith("xpath=")) {
-            return By.xpath(StringHelpers.replaceStringUsingRegex(textObject, "xpath=", ""));
-        } else if (textObject.startsWith("cssSelector=")) {
-            return By.cssSelector(StringHelpers.replaceStringUsingRegex(textObject, "cssSelector=", ""));
-        } else {
-            return By.xpath(textObject);
+        if (textObject == null || textObject.isBlank()) {
+            throw new IllegalArgumentException("Locator must not be null or blank.");
         }
+
+        String normalizedLocator = textObject.trim();
+        String lowercase = normalizedLocator.toLowerCase(Locale.ROOT);
+        if (lowercase.startsWith("xpath=")) {
+            return By.xpath(StringHelpers.replaceStringUsingRegex(normalizedLocator, "(?i)^xpath=", ""));
+        }
+        if (lowercase.startsWith("cssselector=")) {
+            return By.cssSelector(StringHelpers.replaceStringUsingRegex(normalizedLocator, "(?i)^cssSelector=", ""));
+        }
+        if (lowercase.startsWith("id=")) {
+            return By.id(StringHelpers.replaceStringUsingRegex(normalizedLocator, "(?i)^id=", ""));
+        }
+        if (lowercase.startsWith("name=")) {
+            return By.name(StringHelpers.replaceStringUsingRegex(normalizedLocator, "(?i)^name=", ""));
+        }
+        if (lowercase.startsWith("classname=")) {
+            return By.className(StringHelpers.replaceStringUsingRegex(normalizedLocator, "(?i)^className=", ""));
+        }
+        if (lowercase.startsWith("tagname=")) {
+            return By.tagName(StringHelpers.replaceStringUsingRegex(normalizedLocator, "(?i)^tagName=", ""));
+        }
+        if (lowercase.startsWith("linktext=")) {
+            return By.linkText(StringHelpers.replaceStringUsingRegex(normalizedLocator, "(?i)^linkText=", ""));
+        }
+        if (lowercase.startsWith("partiallinktext=")) {
+            return By.partialLinkText(StringHelpers.replaceStringUsingRegex(normalizedLocator, "(?i)^partialLinkText=", ""));
+        }
+        return By.xpath(normalizedLocator);
     }
 
     public static WebElement findWebElement(WebDriver driver, TestObject testObject) {
@@ -51,8 +76,8 @@ public class WebElementHelpers {
         } else if (object instanceof WebElement) {
             element = isRefreshed(driver, (WebElement) object);
         } else {
-            List<WebElement> list_element = (List<WebElement>) object;
-            element = list_element.get(0);
+            List<?> listElement = (List<?>) object;
+            element = (WebElement) listElement.get(0);
         }
         scrollIntoView(driver, element);
         return element;

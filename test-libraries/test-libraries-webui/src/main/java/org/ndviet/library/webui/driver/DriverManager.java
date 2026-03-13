@@ -30,6 +30,9 @@ public class DriverManager {
     }
 
     public void quit() {
-        this.driver.quit();
+        if (this.driver != null) {
+            this.driver.quit();
+            this.driver = null;
+        }
     }
 }

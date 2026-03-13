@@ -6,10 +6,12 @@ import org.ndviet.library.configuration.ConfigurationManager;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.edge.EdgeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.remote.AbstractDriverOptions;
+import org.openqa.selenium.safari.SafariDriver;
 import org.openqa.selenium.safari.SafariOptions;
 
 import java.util.LinkedHashMap;
@@ -34,7 +36,7 @@ public enum BrowserFactory {
             if (listArgs != null) {
                 listArgs.forEach(arg -> options.addArguments(arg));
             }
-            LinkedHashMap listPrefs = ConfigurationManager.getInstance().getMapValues(SELENIUM_CHROME_PREFS);
+            LinkedHashMap<?, ?> listPrefs = ConfigurationManager.getInstance().getMapValues(SELENIUM_CHROME_PREFS);
             if (listPrefs != null) {
                 listPrefs.forEach((key, value) -> {
                     options.setCapability(key.toString(), value);
@@ -53,8 +55,10 @@ public enum BrowserFactory {
         public FirefoxOptions getOptions() {
             FirefoxOptions options = new FirefoxOptions();
             List<String> listArgs = ConfigurationManager.getInstance().getListValues(SELENIUM_FIREFOX_ARGS);
-            options.addArguments(listArgs.toArray(new String[0]));
-            LinkedHashMap listPrefs = ConfigurationManager.getInstance().getMapValues(SELENIUM_FIREFOX_PREFS);
+            if (listArgs != null) {
+                options.addArguments(listArgs.toArray(new String[0]));
+            }
+            LinkedHashMap<?, ?> listPrefs = ConfigurationManager.getInstance().getMapValues(SELENIUM_FIREFOX_PREFS);
             if (listPrefs != null) {
                 listPrefs.forEach((key, value) -> {
                     options.setCapability(key.toString(), value);
@@ -66,23 +70,23 @@ public enum BrowserFactory {
     EDGE {
         @Override
         public WebDriver createLocalDriver() {
-            return null;
+            return new EdgeDriver(getOptions());
         }
 
         @Override
         public EdgeOptions getOptions() {
-            return null;
+            return new EdgeOptions();
         }
     },
     SAFARI {
         @Override
         public WebDriver createLocalDriver() {
-            return null;
+            return new SafariDriver(getOptions());
         }
 
         @Override
         public SafariOptions getOptions() {
-            return null;
+            return new SafariOptions();
         }
     };
 
