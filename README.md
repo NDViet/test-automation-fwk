@@ -29,10 +29,6 @@ Required repository secrets:
 - `DOCKER_USERNAME`
 - `DOCKER_PASSWORD`
 
-Optional repository secret:
-
-- `GH_REPO_READ_TOKEN` (only needed if `ndviet/test-parent-pom` is private to the workflow token)
-
 Optional repository variable:
 
 - `DOCKERHUB_JAVA_COMMON_IMAGE` (default fallback is `ndviet/test-automation-java-common`)
@@ -42,7 +38,6 @@ Manual trigger supports:
 
 - `image_name`
 - `push_image` (set `false` for build-only validation)
-- `test_parent_pom_ref`
 
 Workflow tagging behavior:
 
@@ -63,10 +58,6 @@ Workflow: `.github/workflows/publish-maven-github.yml`
 Required permissions:
 
 - `packages: write` (provided by workflow permissions)
-
-Optional repository secret:
-
-- `GH_REPO_READ_TOKEN` (only needed if `ndviet/test-parent-pom` is private to the workflow token)
 
 Workflow version behavior:
 
@@ -125,7 +116,8 @@ mvn clean install
 
 Run from `test-automation-project` root.
 
-1. Build parent POM first (required for local parent resolution):
+1. Ensure `test-parent-pom` is available in local Maven cache (`~/.m2`) or resolvable from GitHub Maven registry.
+   Optional local install:
 
 ```shell
 mvn -f test-parent-pom/pom.xml -DskipTests clean install

@@ -3,7 +3,6 @@ ARG JAVA_BASE_IMAGE=ndviet/test-automation-java-base:latest
 FROM ${JAVA_BASE_IMAGE} AS framework-builder
 
 WORKDIR /opt/framework-src
-COPY test-parent-pom /opt/framework-src/test-parent-pom
 COPY test-automation-fwk /opt/framework-src/test-automation-fwk
 
 # Seed local .m2 from base image cache before building framework artifacts.

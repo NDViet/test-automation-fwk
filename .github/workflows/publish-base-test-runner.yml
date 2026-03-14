@@ -12,10 +12,6 @@ on:
         required: true
         type: boolean
         default: true
-      test_parent_pom_ref:
-        description: "Branch/tag/SHA for ndviet/test-parent-pom"
-        required: false
-        default: "master"
   push:
     branches:
       - master
@@ -41,21 +37,11 @@ jobs:
     env:
       IMAGE_NAME: ${{ github.event_name == 'workflow_dispatch' && inputs.image_name || vars.DOCKERHUB_JAVA_COMMON_IMAGE || 'ndviet/test-automation-java-common' }}
       JAVA_BASE_IMAGE_NAME: ${{ vars.DOCKERHUB_JAVA_BASE_IMAGE || 'ndviet/test-automation-java-base' }}
-      TEST_PARENT_POM_REF: ${{ github.event_name == 'workflow_dispatch' && inputs.test_parent_pom_ref || 'master' }}
     steps:
       - name: Checkout test-automation-fwk
         uses: actions/checkout@v4
         with:
           path: test-automation-fwk
-
-      - name: Checkout test-parent-pom
-        uses: actions/checkout@v4
-        with:
-          repository: ndviet/test-parent-pom
-          ref: ${{ env.TEST_PARENT_POM_REF }}
-          path: test-parent-pom
-          fetch-depth: 1
-          token: ${{ secrets.GH_REPO_READ_TOKEN != '' && secrets.GH_REPO_READ_TOKEN || github.token }}
 
       - name: Set push mode
         id: push_mode
@@ -71,9 +57,9 @@ jobs:
         id: image_meta
         shell: bash
         run: |
-          base_revision="$(sed -n 's|.*<revision>\([^<]*\)</revision>.*|\1|p' test-parent-pom/pom.xml | head -n 1)"
+          base_revision="$(sed -n 's|.*<revision>\([^<]*\)</revision>.*|\1|p' test-automation-fwk/pom.xml | head -n 1)"
           if [ -z "${base_revision}" ]; then
-            echo "Could not resolve <revision> from test-parent-pom/pom.xml"
+            echo "Could not resolve <revision> from test-automation-fwk/pom.xml"
             exit 1
           fi
 
