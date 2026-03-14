@@ -65,7 +65,9 @@ Manual trigger supports:
 
 Workflow tagging behavior:
 
-- `push` on `master`: publishes `ndviet/test-automation-java-common:<revision>-SNAPSHOT`
+- `push` on `master`: publishes
+  - `ndviet/test-automation-java-common:latest`
+  - `ndviet/test-automation-java-common:<revision>-SNAPSHOT`
 - `push` on tag `v*`: publishes release tags
   - `ndviet/test-automation-java-common:latest`
   - `ndviet/test-automation-java-common:<revision-without-SNAPSHOT>`

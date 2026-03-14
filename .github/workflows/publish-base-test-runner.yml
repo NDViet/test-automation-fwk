@@ -66,9 +66,6 @@ jobs:
           if [[ "${GITHUB_REF}" == refs/tags/v* ]]; then
             # Tag pushes are release publishes.
             deploy_revision="${base_revision%-SNAPSHOT}"
-            deploy_tags="${IMAGE_NAME}:latest"
-            deploy_tags+=$'\n'"${IMAGE_NAME}:${deploy_revision}"
-            java_base_image="${JAVA_BASE_IMAGE_NAME}:${deploy_revision}"
           else
             # Master (or manual non-tag) publishes snapshot.
             if [[ "${base_revision}" == *-SNAPSHOT ]]; then
@@ -76,9 +73,10 @@ jobs:
             else
               deploy_revision="${base_revision}-SNAPSHOT"
             fi
-            deploy_tags="${IMAGE_NAME}:${deploy_revision}"
-            java_base_image="${JAVA_BASE_IMAGE_NAME}:${deploy_revision}"
           fi
+          deploy_tags="${IMAGE_NAME}:latest"
+          deploy_tags+=$'\n'"${IMAGE_NAME}:${deploy_revision}"
+          java_base_image="${JAVA_BASE_IMAGE_NAME}:${deploy_revision}"
 
           echo "revision=${deploy_revision}" >> "${GITHUB_OUTPUT}"
           echo "java_base_image=${java_base_image}" >> "${GITHUB_OUTPUT}"
