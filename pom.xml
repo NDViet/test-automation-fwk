@@ -53,6 +53,36 @@
         <url>https://${github.url}/${github.organization}/${github.repository}/tree/${github.branch}</url>
     </scm>
 
+    <repositories>
+        <repository>
+            <id>github</id>
+            <name>GitHub Maven - test-parent-pom</name>
+            <url>https://maven.pkg.github.com/NDViet/test-parent-pom</url>
+            <releases>
+                <enabled>true</enabled>
+                <updatePolicy>always</updatePolicy>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+                <updatePolicy>always</updatePolicy>
+            </snapshots>
+        </repository>
+    </repositories>
+
+    <pluginRepositories>
+        <pluginRepository>
+            <id>github</id>
+            <name>GitHub Maven - test-parent-pom</name>
+            <url>https://maven.pkg.github.com/NDViet/test-parent-pom</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </pluginRepository>
+    </pluginRepositories>
+
     <profiles>
         <profile>
             <id>flatten-pom</id>

@@ -20,6 +20,30 @@ Dependency graph.<br>
 Java 17+ [Tested in [17.0.2 (build 17.0.2+8)](https://jdk.java.net/archive/)].<br>
 Maven 3.8.4+.
 
+## Resolve parent from GitHub Maven
+
+`test-automation-fwk` resolves parent `org.ndviet:test-parent-pom` from GitHub Maven:
+`https://maven.pkg.github.com/NDViet/test-parent-pom`
+
+Configure Maven credentials in `~/.m2/settings.xml`:
+
+```xml
+<settings>
+  <servers>
+    <server>
+      <id>github</id>
+      <username>${env.GITHUB_ACTOR}</username>
+      <password>${env.GITHUB_TOKEN}</password>
+    </server>
+  </servers>
+</settings>
+```
+
+Local token requirements:
+
+- `GITHUB_TOKEN` should be a GitHub PAT with `read:packages`
+- if repository/package is private, include `repo` scope
+
 ## Publish base test runner image
 
 Workflow: `.github/workflows/publish-base-test-runner.yml`
