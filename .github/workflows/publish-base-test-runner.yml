@@ -1,0 +1,134 @@
+name: Publish Base Test Runner Image
+
+on:
+  workflow_dispatch:
+    inputs:
+      image_name:
+        description: "Docker Hub repository (namespace/name)"
+        required: false
+        default: "ndviet/test-automation-java-common"
+      push_image:
+        description: "Push built image to Docker Hub"
+        required: true
+        type: boolean
+        default: true
+      test_parent_pom_ref:
+        description: "Branch/tag/SHA for ndviet/test-parent-pom"
+        required: false
+        default: "master"
+  push:
+    branches:
+      - master
+    tags:
+      - "v*"
+    paths:
+      - ".github/workflows/publish-base-test-runner.yml"
+      - "containers/**"
+      - "pom.xml"
+      - "test-libraries/**"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: publish-base-test-runner-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    env:
+      IMAGE_NAME: ${{ github.event_name == 'workflow_dispatch' && inputs.image_name || vars.DOCKERHUB_JAVA_COMMON_IMAGE || 'ndviet/test-automation-java-common' }}
+      JAVA_BASE_IMAGE_NAME: ${{ vars.DOCKERHUB_JAVA_BASE_IMAGE || 'ndviet/test-automation-java-base' }}
+      TEST_PARENT_POM_REF: ${{ github.event_name == 'workflow_dispatch' && inputs.test_parent_pom_ref || 'master' }}
+    steps:
+      - name: Checkout test-automation-fwk
+        uses: actions/checkout@v4
+        with:
+          path: test-automation-fwk
+
+      - name: Checkout test-parent-pom
+        uses: actions/checkout@v4
+        with:
+          repository: ndviet/test-parent-pom
+          ref: ${{ env.TEST_PARENT_POM_REF }}
+          path: test-parent-pom
+          fetch-depth: 1
+          token: ${{ secrets.GH_REPO_READ_TOKEN != '' && secrets.GH_REPO_READ_TOKEN || github.token }}
+
+      - name: Set push mode
+        id: push_mode
+        shell: bash
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ] && [ "${{ inputs.push_image }}" = "false" ]; then
+            echo "push=false" >> "${GITHUB_OUTPUT}"
+          else
+            echo "push=true" >> "${GITHUB_OUTPUT}"
+          fi
+
+      - name: Resolve image tags
+        id: image_meta
+        shell: bash
+        run: |
+          base_revision="$(sed -n 's|.*<revision>\([^<]*\)</revision>.*|\1|p' test-parent-pom/pom.xml | head -n 1)"
+          if [ -z "${base_revision}" ]; then
+            echo "Could not resolve <revision> from test-parent-pom/pom.xml"
+            exit 1
+          fi
+
+          if [[ "${GITHUB_REF}" == refs/tags/v* ]]; then
+            # Tag pushes are release publishes.
+            deploy_revision="${base_revision%-SNAPSHOT}"
+            deploy_tags="${IMAGE_NAME}:latest"
+            deploy_tags+=$'\n'"${IMAGE_NAME}:${deploy_revision}"
+            java_base_image="${JAVA_BASE_IMAGE_NAME}:${deploy_revision}"
+          else
+            # Master (or manual non-tag) publishes snapshot.
+            if [[ "${base_revision}" == *-SNAPSHOT ]]; then
+              deploy_revision="${base_revision}"
+            else
+              deploy_revision="${base_revision}-SNAPSHOT"
+            fi
+            deploy_tags="${IMAGE_NAME}:${deploy_revision}"
+            java_base_image="${JAVA_BASE_IMAGE_NAME}:${deploy_revision}"
+          fi
+
+          echo "revision=${deploy_revision}" >> "${GITHUB_OUTPUT}"
+          echo "java_base_image=${java_base_image}" >> "${GITHUB_OUTPUT}"
+          {
+            echo "tags<<EOF"
+            echo "${deploy_tags}"
+            echo "EOF"
+          } >> "${GITHUB_OUTPUT}"
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Log in to Docker Hub
+        if: steps.push_mode.outputs.push == 'true'
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Build and publish base test runner
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: test-automation-fwk/containers/base-test-runner/Dockerfile
+          push: ${{ steps.push_mode.outputs.push }}
+          tags: ${{ steps.image_meta.outputs.tags }}
+          build-args: |
+            SKIP_FRAMEWORK_TESTS=true
+            JAVA_BASE_IMAGE=${{ steps.image_meta.outputs.java_base_image }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+      - name: Print published tags
+        if: steps.push_mode.outputs.push == 'true'
+        run: |
+          echo "Published image tags:"
+          echo "${{ steps.image_meta.outputs.tags }}"
+          echo "Built from base image:"
+          echo "${{ steps.image_meta.outputs.java_base_image }}"

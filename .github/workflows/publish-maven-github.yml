@@ -1,0 +1,82 @@
+name: Publish Maven Package to GitHub Packages
+
+on:
+  workflow_dispatch:
+    inputs:
+      test_parent_pom_ref:
+        description: "Branch/tag/SHA for ndviet/test-parent-pom"
+        required: false
+        default: "master"
+  push:
+    branches:
+      - master
+    tags:
+      - "v*"
+
+permissions:
+  contents: read
+  packages: write
+
+concurrency:
+  group: publish-maven-github-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    env:
+      TEST_PARENT_POM_REF: ${{ github.event_name == 'workflow_dispatch' && inputs.test_parent_pom_ref || 'master' }}
+    steps:
+      - name: Checkout test-automation-fwk
+        uses: actions/checkout@v4
+        with:
+          path: test-automation-fwk
+
+      - name: Checkout test-parent-pom
+        uses: actions/checkout@v4
+        with:
+          repository: ndviet/test-parent-pom
+          ref: ${{ env.TEST_PARENT_POM_REF }}
+          path: test-parent-pom
+          fetch-depth: 1
+          token: ${{ secrets.GH_REPO_READ_TOKEN != '' && secrets.GH_REPO_READ_TOKEN || github.token }}
+
+      - name: Set up JDK 17 and Maven settings
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "17"
+          cache: maven
+          server-id: github
+          server-username: GITHUB_ACTOR
+          server-password: GITHUB_TOKEN
+
+      - name: Resolve deploy revision
+        shell: bash
+        run: |
+          base_revision="$(sed -n 's|.*<revision>\([^<]*\)</revision>.*|\1|p' test-parent-pom/pom.xml | head -n 1)"
+          if [ -z "${base_revision}" ]; then
+            echo "Could not resolve <revision> from test-parent-pom/pom.xml"
+            exit 1
+          fi
+
+          if [[ "${GITHUB_REF}" == refs/tags/v* ]]; then
+            deploy_revision="${base_revision%-SNAPSHOT}"
+          else
+            if [[ "${base_revision}" == *-SNAPSHOT ]]; then
+              deploy_revision="${base_revision}"
+            else
+              deploy_revision="${base_revision}-SNAPSHOT"
+            fi
+          fi
+
+          echo "DEPLOY_REVISION=${deploy_revision}" >> "${GITHUB_ENV}"
+          echo "Deploy revision: ${deploy_revision}"
+
+      - name: Publish to GitHub Maven Registry
+        run: >
+          mvn -B -ntp -DskipTests -Drevision=${{ env.DEPLOY_REVISION }} clean deploy
+          -f test-automation-fwk/pom.xml
+          -DaltDeploymentRepository=github::https://maven.pkg.github.com/${{ github.repository }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
