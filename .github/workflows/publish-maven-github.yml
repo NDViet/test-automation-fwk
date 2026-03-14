@@ -88,6 +88,13 @@ jobs:
             exit 1
           fi
 
+      - name: Install test-parent-pom locally for publish
+        run: >
+          mvn -B -ntp -DskipTests -Drevision=${{ env.DEPLOY_REVISION }} clean install
+          -f test-parent-pom/pom.xml
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
       - name: Publish to GitHub Maven Registry
         run: >
           mvn -B -ntp -DskipTests -Drevision=${{ env.DEPLOY_REVISION }} clean deploy
