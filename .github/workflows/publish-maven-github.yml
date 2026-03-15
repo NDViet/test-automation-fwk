@@ -26,6 +26,8 @@ jobs:
     runs-on: ubuntu-latest
     env:
       TEST_PARENT_POM_REF: ${{ github.event_name == 'workflow_dispatch' && inputs.test_parent_pom_ref || 'master' }}
+      GH_MAVEN_USERNAME: ${{ secrets.GH_PACKAGES_USERNAME != '' && secrets.GH_PACKAGES_USERNAME || github.actor }}
+      GH_MAVEN_TOKEN: ${{ secrets.GH_PACKAGES_TOKEN != '' && secrets.GH_PACKAGES_TOKEN || secrets.GITHUB_TOKEN }}
     steps:
       - name: Checkout test-automation-fwk
         uses: actions/checkout@v4
@@ -48,8 +50,8 @@ jobs:
           java-version: "17"
           cache: maven
           server-id: github
-          server-username: GITHUB_ACTOR
-          server-password: GITHUB_TOKEN
+          server-username: GH_MAVEN_USERNAME
+          server-password: GH_MAVEN_TOKEN
 
       - name: Resolve deploy revision
         shell: bash
@@ -75,6 +77,9 @@ jobs:
 
       - name: Verify flattened POMs resolve ${revision}
         shell: bash
+        env:
+          GH_MAVEN_USERNAME: ${{ env.GH_MAVEN_USERNAME }}
+          GH_MAVEN_TOKEN: ${{ env.GH_MAVEN_TOKEN }}
         run: |
           local_repo="${RUNNER_TEMP}/m2-verify"
           rm -rf "${local_repo}"
@@ -93,7 +98,8 @@ jobs:
           mvn -B -ntp -DskipTests -Drevision=${{ env.DEPLOY_REVISION }} clean install
           -f test-parent-pom/pom.xml
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_MAVEN_USERNAME: ${{ env.GH_MAVEN_USERNAME }}
+          GH_MAVEN_TOKEN: ${{ env.GH_MAVEN_TOKEN }}
 
       - name: Publish to GitHub Maven Registry
         run: >
@@ -101,4 +107,5 @@ jobs:
           -f test-automation-fwk/pom.xml
           -DaltDeploymentRepository=github::https://maven.pkg.github.com/${{ github.repository }}
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_MAVEN_USERNAME: ${{ env.GH_MAVEN_USERNAME }}
+          GH_MAVEN_TOKEN: ${{ env.GH_MAVEN_TOKEN }}
