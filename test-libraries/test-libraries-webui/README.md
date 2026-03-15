@@ -36,8 +36,88 @@ Keyword-driven WebUI automation library built on Selenium.
 - `tagName=...`
 - `linkText=...`
 - `partialLinkText=...`
+- `role=...` (translated to CSS selector `[role="..."]`)
 
 If no prefix is used, locator is treated as XPath.
+
+## Self-Healing Locators (Primary + Fallbacks)
+
+`TestObject` is backward-compatible:
+
+- Existing scalar locator entries still work.
+- New multi-locator entries can define `primary` and `fallbacks`.
+- The framework tries locators in order until one works.
+- Optional `parent`/`parents` can define context path for `iframe` and `shadow` roots.
+
+YAML examples:
+
+```yaml
+Login Page:
+  # Existing format (still supported)
+  Username: id=username
+
+  # New format for self-healing
+  Login Button:
+    primary: cssSelector=button[type='submit']
+    fallbacks:
+      - id=login-btn
+      - xpath=//button[normalize-space()='Login']
+
+  # Optional typed style (same execution order)
+  Login Button Typed:
+    primary:
+      cssSelector: button[type='submit']
+    fallbacks:
+      - id: login-btn
+      - role: button
+
+  # Nested under iframe then shadow root
+  Secure Action:
+    locator:
+      primary: role=button
+      fallbacks:
+        - xpath=//button[normalize-space()='Confirm']
+    parents:
+      - type: frame
+        locator:
+          primary: id=payment-iframe
+          fallbacks:
+            - cssSelector=iframe[data-testid='payment']
+      - type: shadow
+        locator:
+          primary: cssSelector=checkout-shell
+
+  # Parent shorthand also supported
+  Quick Action:
+    locator: id=quick-action
+    parent:
+      frame: id=quick-frame
+
+  # Reuse shared parent by key (avoid duplicated parent locator blocks)
+  Shared:
+    Payment Frame:
+      locator: id=payment-iframe
+    Checkout Host:
+      locator:
+        primary: cssSelector=checkout-shell
+      parent:
+        type: frame
+        ref: Shared.Payment Frame
+
+  Confirm:
+    locator: id=confirm
+    parents:
+      - type: frame
+        ref: Shared.Payment Frame
+      - type: shadow
+        ref: Shared.Checkout Host
+
+  # Shorthand references
+  Confirm Shorthand:
+    locator: id=confirm
+    parent:
+      frameRef: Shared.Payment Frame
+```
 
 ## Example Usage
 

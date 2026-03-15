@@ -7,17 +7,15 @@ import org.openqa.selenium.WebDriver;
 public class DriverManager {
     private static final Logger LOGGER = LogManager.getLogger(DriverManager.class);
 
+    private static final ThreadLocal<DriverManager> INSTANCE = ThreadLocal.withInitial(DriverManager::new);
+
     private WebDriver driver = null;
-    private static DriverManager instance;
 
     private DriverManager() {
     }
 
     public static DriverManager getInstance() {
-        if (instance == null) {
-            instance = new DriverManager();
-        }
-        return instance;
+        return INSTANCE.get();
     }
 
     public WebDriver getDriver() {
@@ -34,5 +32,6 @@ public class DriverManager {
             this.driver.quit();
             this.driver = null;
         }
+        INSTANCE.remove();
     }
 }
