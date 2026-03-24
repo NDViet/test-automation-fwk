@@ -43,11 +43,11 @@ jobs:
           fetch-depth: 1
           token: ${{ secrets.GH_REPO_READ_TOKEN != '' && secrets.GH_REPO_READ_TOKEN || github.token }}
 
-      - name: Set up JDK 17 and Maven settings
+      - name: Set up JDK 21 and Maven settings
         uses: actions/setup-java@v4
         with:
           distribution: temurin
-          java-version: "17"
+          java-version: "21"
           cache: maven
           server-id: github
           server-username: GH_MAVEN_USERNAME
