@@ -19,6 +19,8 @@ import java.util.List;
 
 import static org.ndviet.library.configuration.Constants.SELENIUM_CHROME_ARGS;
 import static org.ndviet.library.configuration.Constants.SELENIUM_CHROME_PREFS;
+import static org.ndviet.library.configuration.Constants.SELENIUM_EDGE_ARGS;
+import static org.ndviet.library.configuration.Constants.SELENIUM_EDGE_PREFS;
 import static org.ndviet.library.configuration.Constants.SELENIUM_FIREFOX_ARGS;
 import static org.ndviet.library.configuration.Constants.SELENIUM_FIREFOX_PREFS;
 
@@ -75,7 +77,18 @@ public enum BrowserFactory {
 
         @Override
         public EdgeOptions getOptions() {
-            return new EdgeOptions();
+            EdgeOptions options = new EdgeOptions();
+            List<String> listArgs = ConfigurationManager.getInstance().getListValues(SELENIUM_EDGE_ARGS);
+            if (listArgs != null) {
+                listArgs.forEach(arg -> options.addArguments(arg));
+            }
+            LinkedHashMap<?, ?> listPrefs = ConfigurationManager.getInstance().getMapValues(SELENIUM_EDGE_PREFS);
+            if (listPrefs != null) {
+                listPrefs.forEach((key, value) -> {
+                    options.setCapability(key.toString(), value);
+                });
+            }
+            return options;
         }
     },
     SAFARI {
