@@ -37,4 +37,15 @@ public class Constants {
     public static final String SELENIUM_FIREFOX_PREFS = "selenium.browser.firefox.prefs";
     public static final String SELENIUM_EDGE_ARGS = "selenium.browser.edge.args";
     public static final String SELENIUM_EDGE_PREFS = "selenium.browser.edge.prefs";
+    public static final String API_BASE_URL = "api.base.url";
+    public static final String API_BASE_PATH = "api.base.path";
+    public static final String API_GRAPHQL_PATH = "api.graphql.path";
+    public static final String API_DEFAULT_CONTENT_TYPE = "api.default.contentType";
+    public static final String API_DEFAULT_ACCEPT = "api.default.accept";
+    public static final String API_HEADERS = "api.headers";
+    public static final String API_AUTH_TYPE = "api.auth.type";
+    public static final String API_AUTH_BEARER_TOKEN = "api.auth.bearer.token";
+    public static final String API_AUTH_BASIC_USERNAME = "api.auth.basic.username";
+    public static final String API_AUTH_BASIC_PASSWORD = "api.auth.basic.password";
+    public static final String API_RELAXED_HTTPS_VALIDATION = "api.relaxedHttpsValidation";
 }
