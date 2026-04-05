@@ -18,7 +18,7 @@ WORKSPACE_DIR="${WORKSPACE_DIR:-/workspace}"
 cd "${WORKSPACE_DIR}"
 
 if [ "$#" -eq 0 ]; then
-  echo "No command provided. Example: mvn -B -f test-testng-framework/pom.xml test"
+  echo "No command provided. Example: ./gradlew test"
   exec bash
 fi
 

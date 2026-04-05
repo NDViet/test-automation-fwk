@@ -1,4 +1,4 @@
-package org.ndviet.library;
+package org.ndviet.library.webui.selenium;
 
 import org.junit.jupiter.api.Test;
 import org.ndviet.library.TestObject.TestObject;

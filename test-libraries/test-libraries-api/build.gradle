@@ -1,0 +1,4 @@
+dependencies {
+    api project(':test-libraries-utilities')
+    api libs.rest.assured
+}

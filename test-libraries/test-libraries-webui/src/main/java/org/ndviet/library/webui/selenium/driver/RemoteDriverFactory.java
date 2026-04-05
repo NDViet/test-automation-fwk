@@ -1,15 +1,15 @@
-package org.ndviet.library.webui.driver;
+package org.ndviet.library.webui.selenium.driver;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.ndviet.library.configuration.ConfigurationManager;
+import org.ndviet.library.webui.config.WebUiConfiguration;
 import org.openqa.selenium.MutableCapabilities;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.remote.RemoteWebDriver;
 
 import java.net.URL;
 
-import static org.ndviet.library.configuration.Constants.SELENIUM_ENABLE_TRACING;
 import static org.ndviet.library.configuration.Constants.SELENIUM_HUB_URL;
 
 public class RemoteDriverFactory {
@@ -27,6 +27,6 @@ public class RemoteDriverFactory {
     }
 
     public static boolean getEnableTracing() {
-        return Boolean.parseBoolean(ConfigurationManager.getInstance().getValue(SELENIUM_ENABLE_TRACING));
+        return WebUiConfiguration.isSeleniumTracingEnabled();
     }
 }

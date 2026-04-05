@@ -1,4 +1,4 @@
-package org.ndviet.library.webui.driver;
+package org.ndviet.library.webui.selenium.driver;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
@@ -6,7 +6,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.MockedStatic;
 import org.mockito.Mockito;
-import org.ndviet.library.WebUI;
+import org.ndviet.library.webui.selenium.WebUI;
 import org.openqa.selenium.WebDriver;
 
 import java.time.Duration;

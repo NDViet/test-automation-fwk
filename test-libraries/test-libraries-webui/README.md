@@ -1,12 +1,65 @@
 # Test Libraries - WebUI
 
-Keyword-driven WebUI automation library built on Selenium.
+Keyword-driven WebUI automation library with import-based engine selection.
 
 ## Design
 
-- `WebUI`: public keyword facade for downstream tests.
-- `WebUIAbstract`: implementation layer for browser, waits, elements, windows, alerts, JavaScript, storage, cookies, screenshots.
+- `org.ndviet.library.webui.selenium.*`: Selenium engine, waits, elements, screenshots, driver support, and BiDi integration.
+- `org.ndviet.library.webui.playwright.*`: Playwright engine facade and browser-context lifecycle.
 - `TestObject`: locator abstraction from `test-libraries-utilities`.
+
+## Engine Facades
+
+- `org.ndviet.library.webui.selenium.WebUI`: Selenium facade.
+- `org.ndviet.library.webui.playwright.WebUI`: Playwright facade.
+
+Context isolation:
+
+- Selenium BiDi collectors now default to the current browsing context instead of the entire driver session.
+- Selenium BiDi also exposes user-context and browsing-context helpers for isolated tabs/windows.
+- Playwright exposes explicit browser-context lifecycle helpers so parallel tests can isolate storage, cookies, and pages per context.
+
+## Configuration
+
+Layered framework configuration is supported for both engines through `ConfigurationManager`.
+
+Resolution order is:
+
+- Engine-specific key
+- Shared `webui.*` key
+- Built-in default
+
+Shared keys:
+
+- `webui.browser.type`
+- `webui.default.timeOut`
+- `webui.screenshot.directory`
+- `webui.screenshot.fileType`
+- `webui.target`
+- `webui.enableTracing`
+- `webui.headless`
+
+Playwright-specific overrides:
+
+- `playwright.browser.type`
+- `playwright.default.timeOut`
+- `playwright.headless`
+- `playwright.screenshot.directory`
+- `playwright.screenshot.fileType`
+
+Selenium-specific overrides:
+
+- Existing `selenium.*` keys remain supported and override `webui.*`.
+
+Import examples:
+
+```java
+import org.ndviet.library.webui.selenium.WebUI;
+```
+
+```java
+import org.ndviet.library.webui.playwright.WebUI;
+```
 
 ## Supported Keyword Groups
 

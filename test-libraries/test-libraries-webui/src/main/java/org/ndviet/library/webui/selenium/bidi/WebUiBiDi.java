@@ -1,13 +1,17 @@
-package org.ndviet.library.bidi;
+package org.ndviet.library.webui.selenium.bidi;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.UsernameAndPassword;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WindowType;
 import org.openqa.selenium.bidi.BiDi;
 import org.openqa.selenium.bidi.BiDiSessionStatus;
 import org.openqa.selenium.bidi.HasBiDi;
+import org.openqa.selenium.bidi.browsingcontext.BrowsingContext;
+import org.openqa.selenium.bidi.browsingcontext.CreateContextParameters;
 import org.openqa.selenium.bidi.log.ConsoleLogEntry;
+import org.openqa.selenium.bidi.module.Browser;
 import org.openqa.selenium.bidi.log.JavascriptLogEntry;
 import org.openqa.selenium.bidi.module.LogInspector;
 import org.openqa.selenium.bidi.module.Network;
@@ -23,6 +27,7 @@ import org.openqa.selenium.bidi.network.ResponseDetails;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.function.BooleanSupplier;
 
@@ -50,20 +55,74 @@ public final class WebUiBiDi {
         return getBiDi(driver).getBidiSessionStatus();
     }
 
+    public static String getCurrentBrowsingContextId(WebDriver driver) {
+        return driver.getWindowHandle();
+    }
+
+    public static String createUserContext(WebDriver driver) {
+        return new Browser(driver).createUserContext();
+    }
+
+    public static List<String> getUserContexts(WebDriver driver) {
+        return new Browser(driver).getUserContexts();
+    }
+
+    public static void removeUserContext(String userContextId, WebDriver driver) {
+        new Browser(driver).removeUserContext(userContextId);
+    }
+
+    public static BrowsingContext createBrowsingContext(WebDriver driver, WindowType type) {
+        return createBrowsingContext(type, null, getCurrentBrowsingContextId(driver), driver);
+    }
+
+    public static BrowsingContext createBrowsingContext(WindowType type, String userContextId, WebDriver driver) {
+        return createBrowsingContext(type, userContextId, getCurrentBrowsingContextId(driver), driver);
+    }
+
+    public static BrowsingContext createBrowsingContext(
+            WindowType type, String userContextId, String referenceBrowsingContextId, WebDriver driver) {
+        CreateContextParameters parameters = new CreateContextParameters(type);
+        if (referenceBrowsingContextId != null && !referenceBrowsingContextId.isBlank()) {
+            parameters.referenceContext(referenceBrowsingContextId);
+        }
+        if (userContextId != null && !userContextId.isBlank()) {
+            parameters.userContext(userContextId);
+        }
+        BrowsingContext browsingContext = new BrowsingContext(driver, parameters);
+        driver.switchTo().window(browsingContext.getId());
+        return browsingContext;
+    }
+
+    public static void switchToBrowsingContext(String browsingContextId, WebDriver driver) {
+        driver.switchTo().window(browsingContextId);
+    }
+
+    public static void closeBrowsingContext(String browsingContextId, WebDriver driver) {
+        new BrowsingContext(driver, browsingContextId).close();
+    }
+
     public static BiDiLogCollector startLogCollector(WebDriver driver) {
-        return new BiDiLogCollector(driver);
+        return new BiDiLogCollector(getCurrentBrowsingContextId(driver), driver);
     }
 
     public static BiDiLogCollector startLogCollector(String browsingContextId, WebDriver driver) {
         return new BiDiLogCollector(browsingContextId, driver);
     }
 
+    public static BiDiLogCollector startLogCollector(Set<String> browsingContextIds, WebDriver driver) {
+        return new BiDiLogCollector(browsingContextIds, driver);
+    }
+
     public static BiDiNetworkCollector startNetworkCollector(WebDriver driver) {
-        return new BiDiNetworkCollector(driver);
+        return new BiDiNetworkCollector(getCurrentBrowsingContextId(driver), driver);
     }
 
     public static BiDiNetworkCollector startNetworkCollector(String browsingContextId, WebDriver driver) {
         return new BiDiNetworkCollector(browsingContextId, driver);
+    }
+
+    public static BiDiNetworkCollector startNetworkCollector(Set<String> browsingContextIds, WebDriver driver) {
+        return new BiDiNetworkCollector(browsingContextIds, driver);
     }
 
     private static BiDi getBiDi(WebDriver driver) {
@@ -103,6 +162,11 @@ public final class WebUiBiDi {
 
         private BiDiLogCollector(String browsingContextId, WebDriver driver) {
             this.logInspector = new LogInspector(browsingContextId, driver);
+            subscribe();
+        }
+
+        private BiDiLogCollector(Set<String> browsingContextIds, WebDriver driver) {
+            this.logInspector = new LogInspector(browsingContextIds, driver);
             subscribe();
         }
 
@@ -177,6 +241,11 @@ public final class WebUiBiDi {
 
         private BiDiNetworkCollector(String browsingContextId, WebDriver driver) {
             this.network = new Network(browsingContextId, driver);
+            subscribe();
+        }
+
+        private BiDiNetworkCollector(Set<String> browsingContextIds, WebDriver driver) {
+            this.network = new Network(browsingContextIds, driver);
             subscribe();
         }
 

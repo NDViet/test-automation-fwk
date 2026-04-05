@@ -22,12 +22,12 @@ Containerized test execution is implemented by each downstream project repositor
 Override target image tag:
 
 ```bash
-./test-automation-fwk/containers/build-base-image.sh ndviet/test-automation-java-common:local
+./test-automation-fwk/containers/build-base-image.sh ghcr.io/ndviet/test-automation-java-common:local
 ```
 
 Override source base image:
 
 ```bash
-JAVA_BASE_IMAGE=ndviet/test-automation-java-base:25.3.0 \
+JAVA_BASE_IMAGE=ghcr.io/ndviet/test-automation-java-base:25.3.0 \
   ./test-automation-fwk/containers/build-base-image.sh
 ```

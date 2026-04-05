@@ -1,9 +1,9 @@
-package org.ndviet.library;
+package org.ndviet.library.webui.selenium;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.ndviet.library.TestObject.TestObject;
-import org.ndviet.library.webui.driver.TargetFactory;
+import org.ndviet.library.webui.selenium.driver.TargetFactory;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.Cookie;
 import org.openqa.selenium.JavascriptExecutor;
