@@ -14,7 +14,7 @@ poi = "5.5.1"
 rest-assured = "6.0.0"
 selenium = "4.41.0"
 snakeyaml = "2.6"
-spring-context-support = "7.0.5"
+spring-context-support = "7.0.6"
 sshd-core = "3.0.0-M2"
 json-path = "3.0.0"
 
