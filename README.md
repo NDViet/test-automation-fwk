@@ -108,6 +108,7 @@ Build locally:
 ```
 
 The image build now seeds `/root/.m2/repository` by running `./gradlew publishToMavenLocal` inside the framework build stage.
+
 It also keeps the parent image's offline-first defaults for both `mvn` and `gradle`/`./gradlew` at runtime.
 The parent base image is now treated as an explicit image reference, defaulting to `ghcr.io/ndviet/test-automation-java-base:latest`, instead of being derived from the framework version.
 
