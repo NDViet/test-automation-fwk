@@ -22,6 +22,14 @@ if [ "$#" -eq 0 ]; then
   exec bash
 fi
 
+if [ "${FORCE_MAVEN_OFFLINE:-true}" = "true" ] && [ "$1" = "mvn" ]; then
+  set -- mvn -o "${@:2}"
+fi
+
+if [ "${FORCE_GRADLE_OFFLINE:-true}" = "true" ] && { [ "$1" = "gradle" ] || [ "$1" = "./gradlew" ] || [ "$1" = "gradlew" ]; }; then
+  set -- "$1" --offline "${@:2}"
+fi
+
 echo "[test-runner] Working directory: $(pwd)"
 echo "[test-runner] Executing: $*"
 exec "$@"
