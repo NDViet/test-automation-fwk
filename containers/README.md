@@ -5,7 +5,7 @@ This folder is scoped to building and publishing the common framework image only
 ## What is included
 
 - `base-test-runner/Dockerfile`: image layer for `test-automation-fwk` libraries, built on top of `test-automation-java-base`.
-- `base-test-runner/entrypoint.sh`: runtime entrypoint to seed Maven cache and execute container commands.
+- `base-test-runner/entrypoint.sh`: runtime entrypoint to seed Maven cache, preserve offline-first `mvn`/`gradle` defaults, and execute container commands.
 - `build-base-image.sh`: local image build helper.
 
 ## Scope
@@ -31,3 +31,5 @@ Override source base image:
 JAVA_BASE_IMAGE=ghcr.io/ndviet/test-automation-java-base:25.3.0 \
   ./test-automation-fwk/containers/build-base-image.sh
 ```
+
+The GitHub workflow also accepts the parent image as a full reference and defaults to `ghcr.io/ndviet/test-automation-java-base:latest`.
