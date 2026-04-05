@@ -1,26 +1,20 @@
-package org.ndviet.library.webui.driver;
+package org.ndviet.library.webui.selenium.driver;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.ndviet.library.configuration.ConfigurationManager;
+import org.ndviet.library.webui.config.WebUiConfiguration;
 import org.openqa.selenium.WebDriver;
-
-import static org.ndviet.library.configuration.Constants.SELENIUM_BROWSER_TYPE;
-import static org.ndviet.library.configuration.Constants.SELENIUM_WEB_DRIVER_TARGET;
-import static org.ndviet.library.webui.driver.RemoteDriverFactory.createRemoteInstance;
+import static org.ndviet.library.webui.selenium.driver.RemoteDriverFactory.createRemoteInstance;
 
 public class TargetFactory {
     private static final Logger LOGGER = LogManager.getLogger(TargetFactory.class);
 
     public static WebDriver createInstance() {
-        String browser = ConfigurationManager.getInstance().getValue(SELENIUM_BROWSER_TYPE);
-        String target = ConfigurationManager.getInstance().getValue(SELENIUM_WEB_DRIVER_TARGET);
-        return createInstance(browser, target);
+        return createInstance(WebUiConfiguration.getSeleniumBrowserType(), WebUiConfiguration.getSeleniumTarget());
     }
 
     public static WebDriver createInstance(String browser) {
-        String target = ConfigurationManager.getInstance().getValue(SELENIUM_WEB_DRIVER_TARGET);
-        return createInstance(browser, target);
+        return createInstance(browser, WebUiConfiguration.getSeleniumTarget());
     }
 
     public static WebDriver createInstance(String browser, String target) {
@@ -38,8 +32,7 @@ public class TargetFactory {
     }
 
     public static boolean isRemoteTarget() {
-        String target = ConfigurationManager.getInstance().getValue(SELENIUM_WEB_DRIVER_TARGET);
-        String normalizedTarget = target == null || target.isBlank() ? "local" : target;
+        String normalizedTarget = WebUiConfiguration.getSeleniumTarget();
         return Target.valueOf(normalizedTarget.toUpperCase()) == Target.REMOTE;
     }
 

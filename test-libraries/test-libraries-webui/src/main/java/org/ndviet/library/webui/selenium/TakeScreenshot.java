@@ -1,10 +1,10 @@
-package org.ndviet.library;
+package org.ndviet.library.webui.selenium;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.ndviet.library.configuration.ConfigurationManager;
 import org.ndviet.library.file.FileHelpers;
-import org.ndviet.library.webui.driver.DriverManager;
+import org.ndviet.library.webui.config.WebUiConfiguration;
+import org.ndviet.library.webui.selenium.driver.DriverManager;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.io.FileHandler;
 import org.openqa.selenium.remote.RemoteWebDriver;
@@ -15,12 +15,7 @@ import ru.yandex.qatools.ashot.shooting.ShootingStrategies;
 import javax.imageio.ImageIO;
 import java.io.File;
 
-import static org.ndviet.library.configuration.Constants.CURRENT_WORKING_DIR;
 import static org.ndviet.library.configuration.Constants.DEFAULT_SCREENSHOT_COUNT;
-import static org.ndviet.library.configuration.Constants.SCREENSHOT_DIR;
-import static org.ndviet.library.configuration.Constants.SELENIUM_SCREENSHOT_DIRECTORY;
-import static org.ndviet.library.configuration.Constants.SELENIUM_SCREENSHOT_FILE_TYPE;
-import static org.ndviet.library.configuration.Constants.TARGET_DIR;
 
 public class TakeScreenshot {
     private static final String m_directory = getScreenshotDirectory();
@@ -33,21 +28,11 @@ public class TakeScreenshot {
     }
 
     private static String getScreenshotFileType() {
-        String fileType = ConfigurationManager.getInstance().getValue(SELENIUM_SCREENSHOT_FILE_TYPE);
-        if (fileType != null && !fileType.isEmpty()) {
-            return fileType;
-        } else {
-            return "png";
-        }
+        return WebUiConfiguration.getSeleniumScreenshotFileType();
     }
 
     private static String getScreenshotDirectory() {
-        String fileType = ConfigurationManager.getInstance().getValue(SELENIUM_SCREENSHOT_DIRECTORY);
-        if (fileType != null && !fileType.isEmpty()) {
-            return fileType;
-        } else {
-            return System.getProperty(CURRENT_WORKING_DIR) + File.separator + TARGET_DIR + File.separator + SCREENSHOT_DIR;
-        }
+        return WebUiConfiguration.getSeleniumScreenshotDirectory();
     }
 
     public static String captureFullPageScreenshot(String fileName) throws Exception {

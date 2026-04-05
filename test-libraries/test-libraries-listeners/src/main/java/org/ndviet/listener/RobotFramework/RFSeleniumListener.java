@@ -2,7 +2,7 @@ package org.ndviet.listener.RobotFramework;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.ndviet.library.TakeScreenshot;
+import org.ndviet.library.webui.selenium.TakeScreenshot;
 
 import java.util.Map;
 

@@ -1,0 +1,10 @@
+dependencies {
+    implementation libs.snakeyaml
+    implementation libs.sshd.core
+    implementation libs.commons.io
+    implementation libs.json.path
+    implementation libs.jackson.databind
+    implementation libs.freemarker
+    implementation libs.spring.context.support
+    implementation libs.commons.lang3
+}

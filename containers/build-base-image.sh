@@ -3,8 +3,8 @@ set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 PROJECT_ROOT="$(cd "${SCRIPT_DIR}/../.." && pwd)"
-IMAGE_TAG="${1:-ndviet/test-automation-java-common:local}"
-JAVA_BASE_IMAGE="${JAVA_BASE_IMAGE:-ndviet/test-automation-java-base:latest}"
+IMAGE_TAG="${1:-ghcr.io/ndviet/test-automation-java-common:local}"
+JAVA_BASE_IMAGE="${JAVA_BASE_IMAGE:-ghcr.io/ndviet/test-automation-java-base:latest}"
 
 if ! command -v docker >/dev/null 2>&1; then
   echo "docker is required but was not found in PATH"

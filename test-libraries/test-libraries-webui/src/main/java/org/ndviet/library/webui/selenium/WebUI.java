@@ -1,13 +1,14 @@
-package org.ndviet.library;
+package org.ndviet.library.webui.selenium;
 
 import org.ndviet.library.TestObject.TestObject;
-import org.ndviet.library.bidi.WebUiBiDi;
-import org.ndviet.library.webui.driver.DriverManager;
-import org.ndviet.library.webui.driver.TargetFactory;
+import org.ndviet.library.webui.selenium.bidi.WebUiBiDi;
+import org.ndviet.library.webui.selenium.driver.DriverManager;
+import org.ndviet.library.webui.selenium.driver.TargetFactory;
 import org.openqa.selenium.Cookie;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.bidi.BiDiSessionStatus;
+import org.openqa.selenium.WindowType;
 
 import java.util.List;
 import java.util.Set;
@@ -526,6 +527,46 @@ public class WebUI {
 
     public static boolean isBiDiSupported() {
         return WebUiBiDi.isBiDiSupported(getDriver());
+    }
+
+    public static String getCurrentBiDiBrowsingContextId() {
+        return WebUiBiDi.getCurrentBrowsingContextId(getDriver());
+    }
+
+    public static String createBiDiUserContext() {
+        return WebUiBiDi.createUserContext(getDriver());
+    }
+
+    public static List<String> getBiDiUserContexts() {
+        return WebUiBiDi.getUserContexts(getDriver());
+    }
+
+    public static void removeBiDiUserContext(String userContextId) {
+        WebUiBiDi.removeUserContext(userContextId, getDriver());
+    }
+
+    public static String openNewBiDiTab() {
+        return WebUiBiDi.createBrowsingContext(getDriver(), WindowType.TAB).getId();
+    }
+
+    public static String openNewBiDiTab(String userContextId) {
+        return WebUiBiDi.createBrowsingContext(WindowType.TAB, userContextId, getDriver()).getId();
+    }
+
+    public static String openNewBiDiWindow() {
+        return WebUiBiDi.createBrowsingContext(getDriver(), WindowType.WINDOW).getId();
+    }
+
+    public static String openNewBiDiWindow(String userContextId) {
+        return WebUiBiDi.createBrowsingContext(WindowType.WINDOW, userContextId, getDriver()).getId();
+    }
+
+    public static void switchToBiDiBrowsingContext(String browsingContextId) {
+        WebUiBiDi.switchToBrowsingContext(browsingContextId, getDriver());
+    }
+
+    public static void closeBiDiBrowsingContext(String browsingContextId) {
+        WebUiBiDi.closeBrowsingContext(browsingContextId, getDriver());
     }
 
     public static BiDiSessionStatus getBiDiSessionStatus() {

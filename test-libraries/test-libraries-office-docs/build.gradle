@@ -1,0 +1,4 @@
+dependencies {
+    api libs.poi
+    api libs.poi.ooxml
+}

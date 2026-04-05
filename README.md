@@ -1,99 +1,85 @@
-[![Java CI with Maven](https://github.com/ndviet/test-automation-fwk/actions/workflows/maven.yml/badge.svg?branch=master)](https://github.com/ndviet/test-automation-fwk/actions/workflows/maven.yml)
+[![Gradle Build](https://github.com/ndviet/test-automation-fwk/actions/workflows/gradle.yml/badge.svg?branch=master)](https://github.com/ndviet/test-automation-fwk/actions/workflows/gradle.yml)
 
 ## Introduction
 
-Test automation framework with rich test supporting libraries are written in Java.<br>
-This implementation is on top of some open-source libraries, utilities. For list of details, kindly check Insights >
-Dependency graph.<br>
+Test automation framework with reusable Java libraries for UI, API, Kubernetes, Office document, utility, and listener automation support.
 
 ## Documentation
 
 * [Test Automation Framework Design](https://drive.google.com/file/d/1rBKc4p7IKA5iQXBX6F2gbWUtoq6sY1D9/view?usp=sharing)
 * [Test Automation Tech Stack Decision](https://drive.google.com/file/d/125eQoai7GzwMWq6vDXe5K2Hum-WmNyzj/view?usp=sharing)
 
-## List dependency repositories
+## Requirements
 
-* [test-parent-pom](../../../test-parent-pom)
+* Java 21+
+* Gradle wrapper via `./gradlew`
 
-## System requires
+## Modules
 
-Java 17+ [Tested in [17.0.2 (build 17.0.2+8)](https://jdk.java.net/archive/)].<br>
-Maven 3.8.4+.
+* `test-libraries-utilities`
+* `test-libraries-webui`
+* `test-libraries-api`
+* `test-libraries-kubernetes`
+* `test-libraries-office-docs`
+* `test-libraries-listeners`
 
-## Resolve parent from GitHub Maven
+## Local usage
 
-`test-automation-fwk` resolves parent `org.ndviet:test-parent-pom` from GitHub Maven:
-`https://maven.pkg.github.com/NDViet/test-parent-pom`
+Clone and build:
 
-Configure Maven credentials in `~/.m2/settings.xml`:
-
-```xml
-<settings>
-  <servers>
-    <server>
-      <id>github</id>
-      <username>${env.GITHUB_ACTOR}</username>
-      <password>${env.GITHUB_TOKEN}</password>
-    </server>
-  </servers>
-</settings>
+```bash
+git clone git@github.com:ndviet/test-automation-fwk.git
+cd test-automation-fwk
+./gradlew build
 ```
 
-Local token requirements:
+Fast local loops:
 
-- `GITHUB_TOKEN` should be a GitHub PAT with `read:packages`
-- if repository/package is private, include `repo` scope
+```bash
+./gradlew :test-libraries-webui:test
+./gradlew :test-libraries-api:test
+```
 
-## Publish base test runner image
+Publish all framework artifacts to the local Maven cache for downstream projects:
 
-Workflow: `.github/workflows/publish-base-test-runner.yml`
+```bash
+./gradlew publishToMavenLocal
+```
 
-Required repository secrets:
+Build without tests:
 
-- `DOCKER_USERNAME`
-- `DOCKER_PASSWORD`
+```bash
+./gradlew assemble
+```
 
-Optional repository variable:
+## Publishing
 
-- `DOCKERHUB_JAVA_COMMON_IMAGE` (default fallback is `ndviet/test-automation-java-common`)
-- `DOCKERHUB_JAVA_BASE_IMAGE` (default fallback is `ndviet/test-automation-java-base`)
+GitHub Packages publish workflow:
 
-Manual trigger supports:
+* Workflow: `.github/workflows/publish-packages-github.yml`
+* `push` on `master`: publishes snapshot packages
+* `push` on tag `v*`: publishes release packages and creates a GitHub Release
 
-- `image_name`
-- `push_image` (set `false` for build-only validation)
+Publishing credentials:
 
-Workflow tagging behavior:
+* `GH_PACKAGES_USERNAME` or default `github.actor`
+* `GH_PACKAGES_TOKEN` or default `GITHUB_TOKEN`
 
-- `push` on `master`: publishes
-  - `ndviet/test-automation-java-common:latest`
-  - `ndviet/test-automation-java-common:<revision>-SNAPSHOT`
-- `push` on tag `v*`: publishes release tags
-  - `ndviet/test-automation-java-common:latest`
-  - `ndviet/test-automation-java-common:<revision-without-SNAPSHOT>`
+Manual publish from a workstation:
 
-Build base relationship:
+```bash
+./gradlew publishAllPublicationsToGitHubPackagesRepository
+```
 
-- `test-automation-java-common` is built `FROM test-automation-java-base`
-- Tag strategy for source base image matches the same revision policy (`master` -> `-SNAPSHOT`, `v*` -> release)
+Override the version at publish time:
 
-## Publish Maven package to GitHub Packages
+```bash
+./gradlew publishAllPublicationsToGitHubPackagesRepository -Pversion=26.3.0
+```
 
-Workflow: `.github/workflows/publish-maven-github.yml`
-
-Required permissions:
-
-- `packages: write` (provided by workflow permissions)
-
-Workflow version behavior:
-
-- `push` on `master`: deploys `<revision>-SNAPSHOT`
-- `push` on tag `v*`: deploys release `<revision-without-SNAPSHOT>`
-
-## Dependencies declaration
+## Consuming the libraries
 
 ```xml
-<!-- https://mvnrepository.com/artifact/org.ndviet/test-libraries-webui -->
 <dependency>
     <groupId>org.ndviet</groupId>
     <artifactId>test-libraries-webui</artifactId>
@@ -102,7 +88,6 @@ Workflow version behavior:
 ```
 
 ```xml
-<!-- https://mvnrepository.com/artifact/org.ndviet/test-libraries-utilities -->
 <dependency>
     <groupId>org.ndviet</groupId>
     <artifactId>test-libraries-utilities</artifactId>
@@ -110,74 +95,24 @@ Workflow version behavior:
 </dependency>
 ```
 
-## Source code usage
+## Base test runner image
 
-1. Clone repository "test-parent-pom" and this repository in the same directory
+Workflow: `.github/workflows/publish-base-test-runner.yml`
 
-```shell
-git clone git@github.com:ndviet/test-parent-pom.git
+The image is published to GHCR using `GH_PACKAGES_USERNAME` and `GH_PACKAGES_TOKEN`.
+
+Build locally:
+
+```bash
+./containers/build-base-image.sh
 ```
 
-```shell
-git clone git@github.com:ndviet/test-automation-fwk.git
-```
+The image build now seeds `/root/.m2/repository` by running `./gradlew publishToMavenLocal` inside the framework build stage.
 
-2. Build source code in each repository following the order
+## Notes
 
-- test-parent-pom
-
-```shell
-cd test-parent-pom
-mvn clean install
-```
-
-- test-automation-fwk
-
-```shell
-cd test-automation-fwk
-mvn clean install
-```
-
-## Local build and test workflow for any change
-
-Run from `test-automation-project` root.
-
-1. Ensure `test-parent-pom` is available in local Maven cache (`~/.m2`) or resolvable from GitHub Maven registry.
-   Optional local install:
-
-```shell
-mvn -f test-parent-pom/pom.xml -DskipTests clean install
-```
-
-2. Run full framework build + tests:
-
-```shell
-mvn -f test-automation-fwk/pom.xml -DskipTests=false clean verify
-```
-
-3. Fast loop for WebUI-only changes:
-
-```shell
-mvn -f test-automation-fwk/test-libraries/test-libraries-webui/pom.xml -DskipTests=false clean test
-```
-
-4. Rebuild runner image used by downstream test repos:
-
-```shell
-./test-automation-fwk/containers/build-base-image.sh
-```
-
-If you are validating only compilation without tests:
-
-```shell
-mvn -f test-automation-fwk/pom.xml -DskipTests clean install
-```
-
-Note: this repository only builds framework libraries and base image layers.
-Selenium Grid orchestration and end-to-end test execution are handled by downstream project repositories.
+This repository builds framework libraries and base image layers only. Selenium Grid orchestration and downstream end-to-end test execution are handled in consumer repositories.
 
 ## Reference
-
-A test project is using this common test framework.<br>
 
 * [test-automation-project](../../../test-automation-project)

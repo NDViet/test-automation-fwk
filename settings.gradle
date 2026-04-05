@@ -1,0 +1,31 @@
+pluginManagement {
+    repositories {
+        gradlePluginPortal()
+        mavenCentral()
+    }
+}
+
+dependencyResolutionManagement {
+    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+    repositories {
+        mavenCentral()
+    }
+}
+
+rootProject.name = 'test-automation-fwk'
+
+include(
+        'test-libraries-api',
+        'test-libraries-kubernetes',
+        'test-libraries-listeners',
+        'test-libraries-office-docs',
+        'test-libraries-utilities',
+        'test-libraries-webui'
+)
+
+project(':test-libraries-api').projectDir = file('test-libraries/test-libraries-api')
+project(':test-libraries-kubernetes').projectDir = file('test-libraries/test-libraries-kubernetes')
+project(':test-libraries-listeners').projectDir = file('test-libraries/test-libraries-listeners')
+project(':test-libraries-office-docs').projectDir = file('test-libraries/test-libraries-office-docs')
+project(':test-libraries-utilities').projectDir = file('test-libraries/test-libraries-utilities')
+project(':test-libraries-webui').projectDir = file('test-libraries/test-libraries-webui')

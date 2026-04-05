@@ -1,4 +1,4 @@
-ARG JAVA_BASE_IMAGE=ndviet/test-automation-java-base:latest
+ARG JAVA_BASE_IMAGE=ghcr.io/ndviet/test-automation-java-base:latest
 
 FROM ${JAVA_BASE_IMAGE} AS framework-builder
 
@@ -10,9 +10,11 @@ RUN mkdir -p /root/.m2/repository \
     && cp -a /opt/m2-seed/repository/. /root/.m2/repository/
 
 ARG SKIP_FRAMEWORK_TESTS=true
-RUN mvn -B -f /opt/framework-src/test-automation-fwk/pom.xml \
-    -DskipTests=${SKIP_FRAMEWORK_TESTS} \
-    clean install
+RUN if [ "${SKIP_FRAMEWORK_TESTS}" = "true" ]; then \
+      /opt/framework-src/test-automation-fwk/gradlew --no-daemon publishToMavenLocal -x test; \
+    else \
+      /opt/framework-src/test-automation-fwk/gradlew --no-daemon publishToMavenLocal; \
+    fi
 
 FROM ${JAVA_BASE_IMAGE}
 

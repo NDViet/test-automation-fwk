@@ -1,4 +1,4 @@
-package org.ndviet.library.webui.driver;
+package org.ndviet.library.webui.selenium.driver;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;

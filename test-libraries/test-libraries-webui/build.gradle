@@ -1,0 +1,6 @@
+dependencies {
+    api project(':test-libraries-utilities')
+    api libs.selenium.java
+    api libs.playwright
+    implementation libs.ashot
+}

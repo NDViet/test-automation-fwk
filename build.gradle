@@ -1,0 +1,150 @@
+import org.gradle.api.publish.maven.MavenPublication
+
+plugins {
+    id 'base'
+}
+
+ext {
+    modulePomNames = [
+            'test-libraries-api'        : 'Test Libraries - API',
+            'test-libraries-kubernetes' : 'Test Libraries - Kubernetes',
+            'test-libraries-listeners'  : 'Test Libraries - Listeners',
+            'test-libraries-office-docs': 'Test Libraries - Office Docs',
+            'test-libraries-utilities'  : 'Test Libraries - Utilities',
+            'test-libraries-webui'      : 'Test Libraries - WebUI'
+    ]
+}
+
+def githubPackagesRepositoryPath = providers.gradleProperty('githubPackagesRepository')
+        .orElse(providers.environmentVariable('GITHUB_REPOSITORY'))
+        .orElse("${providers.gradleProperty('githubOrganization').get()}/${providers.gradleProperty('githubRepository').get()}")
+def githubPackagesUsername = providers.gradleProperty('githubPackagesUsername')
+        .orElse(providers.environmentVariable('GH_MAVEN_USERNAME'))
+        .orElse(providers.environmentVariable('GITHUB_ACTOR'))
+def githubPackagesToken = providers.gradleProperty('githubPackagesToken')
+        .orElse(providers.environmentVariable('GH_MAVEN_TOKEN'))
+        .orElse(providers.environmentVariable('GITHUB_TOKEN'))
+def signingKey = providers.gradleProperty('signingKey')
+        .orElse(providers.environmentVariable('SIGNING_KEY'))
+def signingPassword = providers.gradleProperty('signingPassword')
+        .orElse(providers.environmentVariable('SIGNING_PASSWORD'))
+
+subprojects {
+    apply plugin: 'java-library'
+    apply plugin: 'maven-publish'
+    apply plugin: 'signing'
+
+    group = rootProject.group
+    version = rootProject.version
+
+    java {
+        toolchain {
+            languageVersion = JavaLanguageVersion.of(providers.gradleProperty('javaVersion').get().toInteger())
+        }
+        withSourcesJar()
+        withJavadocJar()
+    }
+
+    tasks.withType(JavaCompile).configureEach {
+        options.encoding = 'UTF-8'
+    }
+
+    tasks.withType(Test).configureEach {
+        useJUnitPlatform()
+
+        doFirst {
+            File mockitoAgent = classpath.files.find { it.name.startsWith('mockito-core-') }
+            if (mockitoAgent != null) {
+                jvmArgs("-javaagent:${mockitoAgent.absolutePath}")
+            }
+        }
+    }
+
+    tasks.withType(Jar).configureEach {
+        reproducibleFileOrder = true
+        preserveFileTimestamps = false
+    }
+
+    dependencies {
+        implementation libs.log4j.api
+        implementation libs.log4j.core
+
+        testImplementation libs.junit.jupiter.api
+        testImplementation libs.junit.jupiter.params
+        testImplementation libs.mockito.core
+        testImplementation libs.mockito.inline
+        testRuntimeOnly libs.junit.jupiter.engine
+        testRuntimeOnly libs.junit.platform.launcher
+    }
+
+    publishing {
+        publications {
+            mavenJava(MavenPublication) {
+                from components.java
+
+                pom {
+                    name = rootProject.ext.modulePomNames.get(project.name, project.name)
+                    description = providers.gradleProperty('projectDescription').get()
+
+                    def repoWebUrl = "https://${providers.gradleProperty('githubUrl').get()}/${providers.gradleProperty('githubOrganization').get()}/${providers.gradleProperty('githubRepository').get()}"
+                    def modulePath = rootProject.projectDir.toPath().relativize(project.projectDir.toPath()).toString()
+                            .replace(File.separator, '/')
+
+                    url = "${repoWebUrl}/tree/${providers.gradleProperty('githubBranch').get()}/${modulePath}"
+
+                    licenses {
+                        license {
+                            name = providers.gradleProperty('licenseName').get()
+                            url = providers.gradleProperty('licenseUrl').get()
+                        }
+                    }
+
+                    developers {
+                        developer {
+                            id = providers.gradleProperty('developerId').get()
+                            name = providers.gradleProperty('developerName').get()
+                            email = providers.gradleProperty('developerEmail').get()
+                        }
+                    }
+
+                    scm {
+                        connection = "scm:git:git@${providers.gradleProperty('githubUrl').get()}:${providers.gradleProperty('githubOrganization').get()}/${providers.gradleProperty('githubRepository').get()}.git"
+                        developerConnection = "scm:git:ssh://git@${providers.gradleProperty('githubUrl').get()}/${providers.gradleProperty('githubOrganization').get()}/${providers.gradleProperty('githubRepository').get()}.git"
+                        url = repoWebUrl
+                    }
+                }
+            }
+        }
+
+        repositories {
+            maven {
+                name = 'GitHubPackages'
+                url = uri("https://maven.pkg.github.com/${githubPackagesRepositoryPath.get()}")
+                credentials {
+                    username = githubPackagesUsername.orNull
+                    password = githubPackagesToken.orNull
+                }
+            }
+        }
+    }
+
+    signing {
+        required = {
+            !project.version.toString().endsWith('-SNAPSHOT') &&
+                    gradle.taskGraph.allTasks.any { it.path.startsWith("${project.path}:publish") } &&
+                    signingKey.isPresent()
+        }
+        if (signingKey.isPresent()) {
+            useInMemoryPgpKeys(signingKey.get(), signingPassword.orNull)
+        }
+        sign publishing.publications.mavenJava
+    }
+}
+
+tasks.register('printVersion') {
+    group = 'help'
+    description = 'Prints the project version used by the Gradle build.'
+    doLast {
+        println project.version
+    }
+}

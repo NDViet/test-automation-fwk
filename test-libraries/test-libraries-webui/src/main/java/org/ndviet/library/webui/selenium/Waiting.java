@@ -1,7 +1,7 @@
-package org.ndviet.library;
+package org.ndviet.library.webui.selenium;
 
 import org.ndviet.library.TestObject.TestObject;
-import org.ndviet.library.configuration.ConfigurationManager;
+import org.ndviet.library.webui.config.WebUiConfiguration;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -9,11 +9,8 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import java.time.Duration;
 import java.util.List;
 
-import static org.ndviet.library.configuration.Constants.SELENIUM_DEFAULT_TIMEOUT;
-
 public class Waiting {
-    private static final String configDefaultTimeOut = ConfigurationManager.getInstance().getValue(SELENIUM_DEFAULT_TIMEOUT);
-    public static int m_defaultTimeOut = (configDefaultTimeOut == null) ? 10 : Integer.parseInt(configDefaultTimeOut);
+    public static int m_defaultTimeOut = WebUiConfiguration.getSeleniumDefaultTimeout();
 
     public static WebDriverWait getWaitDriver(WebDriver driver, boolean isWait) {
         return getWaitDriver(driver, isWait, m_defaultTimeOut);
