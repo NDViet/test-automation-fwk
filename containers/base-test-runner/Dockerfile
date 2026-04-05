@@ -9,11 +9,13 @@ COPY test-automation-fwk /opt/framework-src/test-automation-fwk
 RUN mkdir -p /root/.m2/repository \
     && cp -a /opt/m2-seed/repository/. /root/.m2/repository/
 
+WORKDIR /opt/framework-src/test-automation-fwk
+
 ARG SKIP_FRAMEWORK_TESTS=true
 RUN if [ "${SKIP_FRAMEWORK_TESTS}" = "true" ]; then \
-      /opt/framework-src/test-automation-fwk/gradlew --no-daemon publishToMavenLocal -x test; \
+      gradle --no-daemon publishToMavenLocal -x test; \
     else \
-      /opt/framework-src/test-automation-fwk/gradlew --no-daemon publishToMavenLocal; \
+      gradle --no-daemon publishToMavenLocal; \
     fi
 
 FROM ${JAVA_BASE_IMAGE}
