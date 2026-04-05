@@ -47,7 +47,7 @@ jobs:
       JAVA_BASE_IMAGE: ${{ github.event_name == 'workflow_dispatch' && inputs.java_base_image || vars.GHCR_JAVA_BASE_IMAGE || 'ghcr.io/ndviet/test-automation-java-base:latest' }}
     steps:
       - name: Checkout test-automation-fwk
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           path: test-automation-fwk
 
