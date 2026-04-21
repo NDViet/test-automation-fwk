@@ -8,6 +8,27 @@ Test automation framework with reusable Java libraries for UI, API, Kubernetes, 
 
 * [Test Automation Framework Design](https://drive.google.com/file/d/1rBKc4p7IKA5iQXBX6F2gbWUtoq6sY1D9/view?usp=sharing)
 * [Test Automation Tech Stack Decision](https://drive.google.com/file/d/125eQoai7GzwMWq6vDXe5K2Hum-WmNyzj/view?usp=sharing)
+* [High-Level Project Specification](docs/high-level-spec.md)
+* [Module Specifications](docs/modules/README.md)
+* [Change Specifications](docs/changes/README.md)
+
+## Spec-Driven Changes
+
+Consumer-visible module changes must include a lightweight change spec under `docs/changes/`.
+
+Use the template at `docs/changes/_template.md` and name the file as:
+
+```text
+docs/changes/YYYY-MM-DD-module-short-name.md
+```
+
+This is required for pull requests that change consumer-visible module behavior such as:
+
+* public code under `src/main`
+* configuration keys or configuration resolution behavior
+* module packaging that affects consumers
+
+PRs use a checklist for this, and GitHub Actions enforces it for module-facing source and module build metadata changes.
 
 ## Requirements
 

@@ -1,0 +1,63 @@
+name: Change Spec Guard
+
+on:
+  pull_request:
+    branches:
+      - master
+
+permissions:
+  contents: read
+
+jobs:
+  guard:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Require change spec for consumer-visible module changes
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          BASE_SHA="${{ github.event.pull_request.base.sha }}"
+          HEAD_SHA="${{ github.event.pull_request.head.sha }}"
+
+          CHANGED_FILES="$(git diff --name-only "$BASE_SHA" "$HEAD_SHA")"
+
+          echo "Changed files:"
+          echo "$CHANGED_FILES"
+
+          requires_change_spec=false
+          has_change_spec_file=false
+
+          while IFS= read -r file; do
+            [ -z "$file" ] && continue
+
+            case "$file" in
+              test-libraries/test-libraries-*/src/main/*|test-libraries/test-libraries-*/build.gradle|test-libraries/test-libraries-*/pom.xml)
+                requires_change_spec=true
+                ;;
+            esac
+
+            case "$file" in
+              docs/changes/*.md)
+                base_name="$(basename "$file")"
+                if [ "$base_name" != "README.md" ] && [ "$base_name" != "_template.md" ]; then
+                  has_change_spec_file=true
+                fi
+                ;;
+            esac
+          done <<< "$CHANGED_FILES"
+
+          if [ "$requires_change_spec" = true ] && [ "$has_change_spec_file" = false ]; then
+            echo "Consumer-visible module files changed, but no change spec was added under docs/changes/."
+            echo "Add a file like docs/changes/YYYY-MM-DD-module-short-name.md based on docs/changes/_template.md."
+            exit 1
+          fi
+
+          echo "Change spec guard passed."
